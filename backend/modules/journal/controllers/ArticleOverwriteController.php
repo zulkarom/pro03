@@ -1,0 +1,165 @@
+<?php
+
+namespace backend\modules\journal\controllers;
+
+use Yii;
+use backend\modules\journal\models\ArticleOverwrite;
+use backend\modules\journal\models\ArticleOverwriteSearch;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use common\models\Upload;
+
+/**
+ * ArticleOverwriteController implements the CRUD actions for ArticleOverwrite model.
+ */
+class ArticleOverwriteController extends Controller
+{
+    /**
+     * {@inheritdoc}
+     */
+    
+
+	public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+
+    /**
+     * Lists all ArticleOverwrite models.
+     * @return mixed
+     */
+    public function actionIndex()
+    {
+        $searchModel = new ArticleOverwriteSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Displays a single ArticleOverwrite model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new ArticleOverwrite model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new ArticleOverwrite();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['update', 'id' => $model->id]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Updates an existing ArticleOverwrite model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			Yii::$app->session->addFlash('success', "Data Updated");
+            return $this->redirect(['update', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Deletes an existing ArticleOverwrite model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDeleteArticle($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the ArticleOverwrite model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return ArticleOverwrite the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = ArticleOverwrite::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+	
+	public function actionDownload($attr, $id, $identity = true){
+		$attr = $this->clean($attr);
+        $model = $this->findModel($id);
+		$filename = strtoupper($attr);
+		Upload::download($model, $attr, $filename);
+	}
+	
+	public function actionUpload($attr, $id){
+        $attr = $this->clean($attr);
+        $model = $this->findModel($id);
+        $model->file_controller = 'submission';
+
+        return Upload::upload($model, $attr, 'updated_at');
+
+    }
+	
+	protected function clean($string){
+        $allowed = ['submission', 'review', 'reviewed', 'correction', 'cameraready'];
+        
+        foreach($allowed as $a){
+            if($string == $a){
+                return $a;
+            }
+        }
+        
+        throw new NotFoundHttpException('Not available attribute to download');
+
+    }
+}
