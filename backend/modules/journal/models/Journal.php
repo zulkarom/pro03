@@ -16,6 +16,10 @@ use Yii;
  */
 class Journal extends \yii\db\ActiveRecord
 {
+	public $template_instance;
+	public $template2_instance;
+	public $file_controller;
+	
     /**
      * @inheritdoc
      */
@@ -41,6 +45,18 @@ class Journal extends \yii\db\ActiveRecord
             [['journal_abbr', 'phone1', 'phone2'], 'string', 'max' => 100],
 			
 			[['editorial_board', 'submission_guideline', 'publication_ethics'], 'string'],
+			
+			[['template_file'], 'required', 'on' => 'template_upload'],
+			
+			[['template2_file'], 'required', 'on' => 'template2_upload'],
+			
+			
+			
+            [['template_instance'], 'file', 'skipOnEmpty' => true, 'extensions' => 'doc, docx, pdf', 'maxSize' => 5000000],
+            [['updated_at'], 'required', 'on' => 'template_delete'],
+			
+			[['template2_instance'], 'file', 'skipOnEmpty' => true, 'extensions' => 'doc, docx, pdf', 'maxSize' => 5000000],
+            [['updated_at'], 'required', 'on' => 'template2_delete'],
         ];
     }
 
@@ -59,6 +75,8 @@ class Journal extends \yii\db\ActiveRecord
 			'journal_doi' => 'Journal DOI',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+			'template_file' => 'Template File (EN)',
+			'template2_file' => 'Template File (BM)',
         ];
     }
 	

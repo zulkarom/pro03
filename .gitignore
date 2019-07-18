@@ -42,3 +42,7 @@ phpunit.phar
 # web
 /backend/web
 /ijeob/web
+
+#uploaded
+
+/frontend/uploaded
