@@ -124,7 +124,7 @@ class Upload
             }",
             'progressall'=> "function (e, data) {
 				
-                var progress = parseInt(data.loaded / data.total * 100, 10);
+                var progress = parseInt(data.loaded / data.total * 99, 10);
                 $('#progress_".$attr."_".$model->id ." .progress-bar').css(
                     'width',
                     progress + '%'
