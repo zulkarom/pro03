@@ -618,6 +618,11 @@ class SubmissionController extends Controller
 	
 	public function actionInvoice($id){
 		$model = $this->findInvoice($id);
+		//check access
+		if($model->client_id != Yii::$app->user->identity->id){
+			throw new NotFoundHttpException('No Access to invoice');
+		}
+		
 		$pdf = new InvoicePdf;
 		$pdf->model = $model;
 		$pdf->generatePdf();
