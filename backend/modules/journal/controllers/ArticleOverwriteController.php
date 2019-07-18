@@ -4,12 +4,15 @@ namespace backend\modules\journal\controllers;
 
 use Yii;
 use backend\modules\journal\models\ArticleOverwrite;
+use backend\modules\journal\models\ArticleAuthor;
 use backend\modules\journal\models\ArticleOverwriteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\Upload;
+use yii\helpers\ArrayHelper;
+use common\models\Model;
 
 /**
  * ArticleOverwriteController implements the CRUD actions for ArticleOverwrite model.
@@ -93,14 +96,70 @@ class ArticleOverwriteController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+		
+		$authors = $model->articleAuthors;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			Yii::$app->session->addFlash('success', "Data Updated");
-            return $this->redirect(['update', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+			
+			$oldAuthorIDs = ArrayHelper::map($authors, 'id', 'id');
+            
+            $authors = Model::createMultiple(ArticleAuthor::classname());
+			
+            Model::loadMultiple($authors, Yii::$app->request->post());
+			
+			$deletedAuthorIDs = array_diff($oldAuthorIDs, array_filter(ArrayHelper::map($authors, 'id', 'id')));
+            
+            $valid = $model->validate();
+            
+            $valid = Model::validateMultiple($authors) && $valid;
+            
+            if ($valid) {
+
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+						
+						if (! empty($deletedAuthorIDs)) {
+                            ArticleAuthor::deleteAll(['id' => $deletedAuthorIDs]);
+                        }
+                        
+                        foreach ($authors as $indexAu => $author) {
+                            
+                            if ($flag === false) {
+                                break;
+                            }
+
+                            $author->article_id = $model->id;
+
+                            if (!($flag = $author->save(false))) {
+                                break;
+                            }
+                        }
+
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+						Yii::$app->session->addFlash('success', "Data Updated");
+						return $this->redirect(['update', 'id' => $model->id]);
+						
+						
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    
+                }
+            }
+			
+			
+			
         }
 
         return $this->render('update', [
             'model' => $model,
+			'authors' => (empty($authors)) ? [new ArticleAuthor] : $authors
         ]);
     }
 

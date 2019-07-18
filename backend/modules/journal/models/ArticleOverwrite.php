@@ -269,4 +269,9 @@ class ArticleOverwrite extends \yii\db\ActiveRecord
 		$status = $status[1]; */
 		return substr($status, 19);
 	}
+	
+	public function getArticleAuthors()
+    {
+        return $this->hasMany(ArticleAuthor::className(), ['article_id' => 'id']);
+    }
 }

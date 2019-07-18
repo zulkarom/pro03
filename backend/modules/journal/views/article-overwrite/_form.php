@@ -13,6 +13,7 @@ use backend\modules\journal\models\Scope;
 use backend\modules\journal\models\ReviewForm;
 use common\models\Upload;
 use common\models\AuthAssignment;
+use wbraganca\dynamicform\DynamicFormWidget;
 
 /* @var $this yii\web\View */
 /* @var $model backend\modules\journal\models\ArticleOverwrite */
@@ -26,22 +27,22 @@ $model->file_controller = 'article-overwrite';
 
             <div class="card-body"><div class="article-overwrite-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'dynamic-form']);  ?>
 	
 	
 	 
 	    
 		
 		<div class="row">
-<div class="col-md-6"> <?= $form->field($model, 'status')->dropDownList(ArticleStatus::getAllStatusesArray()) ?></div>
+<div class="col-md-6"> <?= $form->field($model, 'status')->dropDownList(ArticleStatus::getAllStatusesArray())->label('Select Manuscript Status') ?></div>
 
-<div class="col-md-6"><?= $form->field($model, 'scope_id')->dropDownList(ArrayHelper::map(Scope::find()->all(), 'id', 'scope_name')) ?>
+<div class="col-md-6"><?= $form->field($model, 'scope_id')->dropDownList(ArrayHelper::map(Scope::find()->all(), 'id', 'scope_name'))->label('Scope') ?>
 </div>
 
 </div>
 	
 	<div class="row">
-<div class="col-md-6"> <?= $form->field($model, 'journal_id')->dropDownList(ArrayHelper::map(Journal::find()->all(), 'id', 'journal_abbr')) ?></div>
+<div class="col-md-6"> <?= $form->field($model, 'journal_id')->dropDownList(ArrayHelper::map(Journal::find()->all(), 'id', 'journal_abbr'))->label('Journal')?></div>
 
 <div class="col-md-6">
 
@@ -66,7 +67,7 @@ echo $form->field($model, 'user_id')->widget(Select2::classname(), [
     'templateResult' => new JsExpression('function(user) { return user.text; }'),
     'templateSelection' => new JsExpression('function (user) { return user.text; }'),
 ],
-]);
+])->label('Select a User');
 
  ?>
 
@@ -86,6 +87,100 @@ echo $form->field($model, 'user_id')->widget(Select2::classname(), [
   
 
     <?= $form->field($model, 'title')->textarea(['rows' => 3]) ?>
+	
+	
+ <?php DynamicFormWidget::begin([
+        'widgetContainer' => 'dynamicform_wrapper',
+        'widgetBody' => '.container-items',
+        'widgetItem' => '.author-item',
+        'limit' => 10,
+        'min' => 1,
+        'insertButton' => '.add-author',
+        'deleteButton' => '.remove-author',
+        'model' => $authors[0],
+        'formId' => 'dynamic-form',
+        'formFields' => [
+            'firstname',
+            'lastname',
+			'email'
+        ],
+    ]); ?>
+    
+    
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th width="35%">Fist Name</th>
+                <th width="35%">Last Name</th>
+				<th width="35%">Email</th>
+                <th class="text-center" style="width: 90px;">
+                    
+                </th>
+            </tr>
+        </thead>
+        <tbody class="container-items">
+        <?php foreach ($authors as $indexAu => $author): ?>
+            <tr class="author-item">
+            
+                <td class="vcenter">
+                    <?php
+                        // necessary for update action.
+                        if (! $author->isNewRecord) {
+                            echo Html::activeHiddenInput($author, "[{$indexAu}]id");
+                        }
+                    ?>
+                    <?= $form->field($author, "[{$indexAu}]firstname")->label(false) ?>
+                </td>
+                
+                <td class="vcenter">
+          
+                    
+                     <?=$form->field($author, "[{$indexAu}]lastname")->label(false);
+
+                    ?>
+
+                </td>
+				
+				<td class="vcenter">
+          
+                    
+                     <?=$form->field($author, "[{$indexAu}]email")->label(false);
+
+                    ?>
+
+                </td>
+                
+                
+
+
+                <td class="text-center vcenter" style="width: 90px; verti">
+                    <button type="button" class="remove-author btn btn-default btn-sm"><span class="fas fa-trash"></span></button>
+                </td>
+            </tr>
+         <?php endforeach; ?>
+        </tbody>
+        
+        <tfoot>
+            <tr>
+                <td colspan="3">
+                <button type="button" class="add-author btn btn-default btn-sm"><span class="fa fa-plus"></span> Add Author</button>
+                
+                </td>
+                <td>
+                
+                
+                </td>
+            </tr>
+        </tfoot>
+        
+    </table>
+    
+    
+    
+    <?php DynamicFormWidget::end(); ?>
+	
+	
+	
 
     <?= $form->field($model, 'keyword')->textarea(['rows' => 2]) ?>
 
