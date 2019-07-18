@@ -1,5 +1,5 @@
 ---
 deployment:
  tasks:
- - export DEPLOYPATH=/home/confvall/esncode/
- - /bin/cp -R /home/confvall/repositories/edusage $DEPLOYPATH
+ - export DEPLOYPATH=/home/confvall/esncode/edusage
+ - /bin/cp -r * $DEPLOYPATH
