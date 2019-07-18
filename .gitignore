@@ -37,4 +37,8 @@ phpunit.phar
 # config
 /frontend/config
 /backend/config
-/commoon/config
+/commoon/
+
+# web
+/backend/web
+/ijeob/web

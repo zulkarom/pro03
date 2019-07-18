@@ -49,6 +49,7 @@ use backend\modules\journal\models\Journal;
 			<a class="collapse-item" href="<?=Url::to(['/journal/journal-update/ethics', 'id' => $id])?>">Publication Ethics</a>
 			
 			<a class="collapse-item" href="<?=Url::to(['/journal/journal-update/submission', 'id' => $id])?>">Submission</a>
+			<a class="collapse-item" href="<?=Url::to(['/journal/journal-update/template', 'id' => $id])?>">Template</a>
           </div>
         </div>
       </li>
