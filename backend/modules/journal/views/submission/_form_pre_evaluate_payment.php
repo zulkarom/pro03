@@ -7,8 +7,11 @@ use kartik\widgets\ActiveForm;
 use common\models\AuthAssignment;
 use common\models\Upload;
 use backend\modules\journal\models\Setting;
+use backend\modules\journal\models\JournalScope;
 
 $model->file_controller = 'submission';
+
+$list_scope = JournalScope::listScopeByJournal($model->journal_id);
 
 
 $form = ActiveForm::begin(); ?>
@@ -21,7 +24,7 @@ $form = ActiveForm::begin(); ?>
 <div class="box-body"> 
 
 
-
+<?=$form->field($model, 'scope_id')->dropDownList($list_scope, ['prompt' => 'Please Select' ]) ?>
 
 
 
