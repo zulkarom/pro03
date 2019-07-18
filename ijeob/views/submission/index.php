@@ -21,7 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="row">
 				<div class="col-md-2">
 					<p>
-        <?= Html::a('New Submission', ['create'], ['class' => 'btn btn-primary']) ?>
+					<div class="form-group"> <?= Html::a('New Submission', ['create'], ['class' => 'btn btn-primary']) ?></div>
+       
     </p>
 				</div>
 				<div class="col-md-8">
