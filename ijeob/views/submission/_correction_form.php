@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use backend\modules\journal\models\ReviewForm;
-use common\models\Upload;
+use frontend\models\Upload;
 use wbraganca\dynamicform\DynamicFormWidget;
 
 $model->file_controller = 'submission';

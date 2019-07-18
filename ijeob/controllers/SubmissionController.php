@@ -18,7 +18,7 @@ use yii\db\Expression;
 use raoul2000\workflow\validation\WorkflowScenario;
 use common\models\Model;
 use yii\helpers\ArrayHelper;
-use common\models\Upload;
+use frontend\models\Upload;
 use yii\helpers\Json;
 use yii\filters\AccessControl;
 use backend\modules\journal\models\EmailTemplate;
@@ -588,7 +588,7 @@ class SubmissionController extends Controller
 	}
 	
 	protected function clean($string){
-        $allowed = ['submission', 'template', 'template2'];
+        $allowed = ['submission', 'template', 'template2', 'correction'];
         
         foreach($allowed as $a){
             if($string == $a){
