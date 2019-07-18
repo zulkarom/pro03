@@ -64,7 +64,7 @@ table.detail-view th {
 			[
 				'label' => 'Template File',
 				'format' => 'raw',
-				'value' => '<a href="'. Url::to(['submission/download-template']) .'" target="_blank"><i class="fa fa-download"></i> TEMPLATE</a>
+				'value' => '<a href="'. Url::to(['submission/download-template-en']) .'" target="_blank"><i class="fa fa-download"></i> TEMPLATE (EN) </a>  <a href="'. Url::to(['submission/download-template-bm']) .'" target="_blank"><i class="fa fa-download"></i> TEMPLATE (BM)</a>
 					
 					'
 			],

@@ -4,6 +4,7 @@ namespace ijeob\controllers;
 
 use Yii;
 use backend\modules\journal\models\Article;
+use backend\modules\journal\models\Journal;
 use backend\modules\journal\models\ArticleAuthor;
 use backend\modules\journal\models\ArticleStatus;
 use backend\modules\journal\models\Setting;
@@ -516,10 +517,8 @@ class SubmissionController extends Controller
 
     }
 	
-	protected function clean($string){
-		return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
 	}
-
+	
 
     /**
      * Deletes an existing Article model.
@@ -589,13 +588,32 @@ class SubmissionController extends Controller
 		Upload::download($model, $attr, $filename);
 	}
 	
-	public function actionDownloadTemplate(){
+	protected function clean($string){
+        $allowed = ['submission', 'template', 'template2'];
+        
+        foreach($allowed as $a){
+            if($string == $a){
+                return $a;
+            }
+        }
+        
+        throw new NotFoundHttpException('Invalid Attribute');
+
+    }
+
+
+	
+	public function actionDownloadTemplateEn(){
         $attr = 'template';
-        $model = Setting::findOne(1);
-        $filename = strtoupper($attr);
-        
-        
-        
+        $model = Journal::findOne(Yii::$app->params['journal_id']);
+        $filename = strtoupper('template-en');
+        Upload::download($model, $attr, $filename);
+    }
+	
+	public function actionDownloadTemplateBm(){
+        $attr = 'template2';
+        $model = Journal::findOne(Yii::$app->params['journal_id']);
+        $filename = strtoupper('template-bm');
         Upload::download($model, $attr, $filename);
     }
 	
