@@ -8,6 +8,7 @@ use raoul2000\workflow\validation\WorkflowScenario;
 use common\models\User;
 use common\models\AuthAssignment;
 use backend\modules\account\models\Invoice;
+use backend\modules\account\models\Receipt;
 
 /**
  * This is the model class for table "jeb_article".
@@ -118,7 +119,7 @@ class Article extends \yii\db\ActiveRecord
 			
 			[['payment_note'], 'required', 'on' => WorkflowScenario::enterStatus('bo-payment-submit')],
 			
-			[['payment_verified_at'], 'required', 'on' => WorkflowScenario::enterStatus('bt-assign-associate')],
+			[['payment_verified_at', 'receipt_id'], 'required', 'on' => WorkflowScenario::enterStatus('bt-assign-associate')],
 			
 			[['associate_editor', 'review_file', 'asgn_associate_at'], 'required', 'on' => WorkflowScenario::enterStatus('ca-assign-reviewer')],
 			
@@ -341,6 +342,10 @@ class Article extends \yii\db\ActiveRecord
 	
 	public function getInvoice(){
 		return $this->hasOne(Invoice::className(), ['id' => 'invoice_id']);
+	}
+	
+	public function getReceipt(){
+		return $this->hasOne(Receipt::className(), ['id' => 'receipt_id']);
 	}
 	
 	public function getJournalIssue(){

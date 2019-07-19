@@ -3,20 +3,20 @@
 namespace backend\modules\account\models;
 
 use Yii;
-
+use backend\modules\journal\models\Setting;
+use yii\db\Expression;
 /**
  * This is the model class for table "acc_receipt".
  *
  * @property int $id
  * @property string $summary
- * @property string $invoice_date
+ * @property string $receipt_date
  * @property string $due_date
  * @property int $client_id
  * @property int $status
  * @property string $discount
  * @property string $gst
  * @property string $note
- * @property int $quotation_id
  * @property int $created_by
  * @property string $created_at
  * @property string $updated_at
@@ -45,7 +45,7 @@ class Receipt extends \yii\db\ActiveRecord
 			
             [['summary', 'note'], 'string'],
             [['invoice_date', 'due_date', 'created_at', 'updated_at'], 'safe'],
-            [['client_id', 'status', 'quotation_id', 'created_by', 'trash'], 'integer'],
+            [['client_id', 'status', 'invoice_id', 'created_by', 'trash'], 'integer'],
             [['discount', 'gst'], 'number'],
             [['token'], 'string', 'max' => 200],
         ];
@@ -120,31 +120,32 @@ class Receipt extends \yii\db\ActiveRecord
 
 	
 	
-	public static function createInvoice($article){
+	public static function createReceipt($article){
 		$setting = Setting::getOne();
-		$invoice = new Invoice;
-		$invoice->scenario = 'create';
-		$invoice->invoice_date = date('Y-m-d');
-		$invoice->client_id = $article->user_id;
-		$invoice->note = $setting->invoice_note;
-		$invoice->created_by = Yii::$app->user->identity->id;
-		$invoice->created_at = new Expression('NOW()');
-		if($invoice->save()){
-			$item = new InvoiceItem;
+		$receipt = new Receipt;
+		$receipt->scenario = 'create';
+		$receipt->receipt_date = date('Y-m-d');
+		$receipt->invoice_id = $article->invoice_id;
+		$receipt->client_id = $article->user_id;
+		$receipt->note = $setting->receipt_note;
+		$receipt->created_by = Yii::$app->user->identity->id;
+		$receipt->created_at = new Expression('NOW()');
+		if($receipt->save()){
+			$item = new ReceiptItem;
 			$item->scenario = 'paper_item';
-			$item->invoice_id = $invoice->id;
+			$item->receipt_id = $receipt->id;
 			$item->product_id = 1;
 			$item->paper_id = $article->id;
-			$item->description = 'Receipt for manuscript "'.$article->title .'"';
-			$item->price = $article->pay_amount;
+			$item->description = 'Payment Receipt for manuscript fee "'.$article->title .'"';
+			$item->price = $article->invoice->invoiceAmount;
 			$item->quantity = 1;
 			if($item->save()){
-				return $invoice->id;
+				return $receipt->id;
 			}else{
 				$item->flashError();
 			}
 		}else{
-			$invoice->flashError();
+			$receipt->flashError();
 		}
 	return false;
 	}

@@ -5,6 +5,7 @@ namespace backend\modules\journal\controllers;
 use Yii;
 use backend\modules\journal\models\Article;
 use backend\modules\account\models\Invoice;
+use backend\modules\account\models\Receipt;
 use backend\modules\account\models\InvoicePdf;
 use backend\modules\journal\models\PaymentSearch;
 use backend\modules\journal\models\UserScope;
@@ -92,6 +93,9 @@ class PaymentController extends \yii\web\Controller
 		$invoice->status = 10;
 		$invoice->save();
 		$model->sendToStatus('bt-assign-associate');
+		
+		//create receipt
+		$model->receipt_id = Receipt::createReceipt($model);
 		/////////////
 		
 		if($model->save()){

@@ -35,7 +35,7 @@ class ReceiptItem extends \yii\db\ActiveRecord
 			
 			[['receipt_id', 'product_id', 'description', 'price', 'quantity'], 'required', 'on' => 'paper_item'],
 			
-            [['invoice_id', 'product_id', 'paper_id'], 'integer'],
+            [['receipt_id', 'product_id', 'paper_id'], 'integer'],
             [['price', 'quantity'], 'number'],
             [['description'], 'string', 'max' => 255],
         ];
