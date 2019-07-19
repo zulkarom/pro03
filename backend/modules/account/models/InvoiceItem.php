@@ -20,6 +20,7 @@ use Yii;
  */
 class InvoiceItem extends \yii\db\ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */

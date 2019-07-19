@@ -80,28 +80,27 @@ class SubmissionController extends \yii\web\Controller
 	
 	protected function acceptManuscript($model){
 		/* ASSIGN ASSOCIATE */
-		$model->pre_evaluate_at = new Expression('NOW()');
-		$model->pre_evaluate_by = Yii::$app->user->identity->id;
-		$model->sendToStatus('bm-payment-pending');
-		$model->invoice_id = Invoice::createInvoice($model);
-		
-		if($model->save()){
+		$transaction = Yii::$app->db->beginTransaction();
+		try {
+			$model->pre_evaluate_at = new Expression('NOW()');
+			$model->pre_evaluate_by = Yii::$app->user->identity->id;
+			$model->sendToStatus('bm-payment-pending');
+			$model->invoice_id = Invoice::createInvoice($model);
+			if($model->save()){
 			$model->sendEmail();
+			
+			$transaction->commit();
 			Yii::$app->session->addFlash('success', "Manuscript has been accepted.");
 			return $this->redirect(['payment/index']);
-			
-		}else{
-			if($model->getErrors()){
-				foreach($model->getErrors() as $error){
-					if($error){
-						foreach($error as $e){
-							Yii::$app->session->addFlash('error', $e);
-						}
-					}
-				}
+			}else{
+				$model->flashError();
 			}
-			return $this->redirect(['/journal/payment/index', 'id' => $model->id]);
-
+			
+		}
+		catch (Exception $e) 
+		{
+			$transaction->rollBack();
+			Yii::$app->session->addFlash('error', $e->getMessage());
 		}
 		
 		return $this->redirect(['/journal/submission/pre-evaluate', 'id' => $model->id]);

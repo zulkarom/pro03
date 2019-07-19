@@ -45,7 +45,7 @@ class Invoice extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['invoice_date', 'client_id', 'note', 'created_by', 'created_at'], 'required', 'on' => 'create'],
+            [['invoice_date', 'client_id', 'note', 'created_by', 'created_at', 'tran_id'], 'required', 'on' => 'create'],
 			
             [['summary', 'note'], 'string'],
             [['invoice_date', 'due_date', 'created_at', 'updated_at'], 'safe'],
@@ -144,43 +144,49 @@ class Invoice extends \yii\db\ActiveRecord
 	
 	public static function createInvoice($article){
 		$setting = Setting::getOne();
-		$invoice = new Invoice;
-		$invoice->scenario = 'create';
-		$invoice->invoice_date = date('Y-m-d');
-		$invoice->client_id = $article->user_id;
-		$invoice->note = $setting->invoice_note;
-		$invoice->created_by = Yii::$app->user->identity->id;
-		$invoice->created_at = new Expression('NOW()');
-		if($invoice->save()){
-			$item = new InvoiceItem;
-			$item->scenario = 'paper_item';
-			$item->invoice_id = $invoice->id;
-			$item->product_id = 1;
-			$item->paper_id = $article->id;
-			$item->description = 'Journal Fee for manuscript "'.$article->title .'"';
-			$item->price = $article->pay_amount;
-			$item->quantity = 1;
-			if($item->save()){
-				//create transaction
-				$tran = new Transaction;
-				$tran->scenario = 'create_invoice';
-				$tran->tran_date =  date('Y-m-d');
-				$tran->debit = 18; //client Debtors
-				$tran->credit = 17; //journal fee
-				$tran->amount = $invoice->invoiceAmount;
-				$tran->assoc_client = $article->user_id;
-				$tran->created_by = Yii::$app->user->identity->id;
-				$tran->created_at = new Expression('NOW()');
-				if(!$tran->save()){
-					$tran->flashError();
+		
+		$tran = new Transaction;
+		$tran->scenario = 'create_invoice';
+		$tran->tran_date =  date('Y-m-d');
+		$tran->debit = 18; //client Debtors
+		$tran->credit = 17; //journal fee
+		$tran->assoc_client = $article->user_id;
+		$tran->created_by = Yii::$app->user->identity->id;
+		$tran->created_at = new Expression('NOW()');
+		if($tran->save()){
+			$invoice = new Invoice;
+			$invoice->scenario = 'create';
+			$invoice->invoice_date = date('Y-m-d');
+			$invoice->tran_id = $tran->id;
+			$invoice->client_id = $article->user_id;
+			$invoice->note = $setting->invoice_note;
+			$invoice->created_by = Yii::$app->user->identity->id;
+			$invoice->created_at = new Expression('NOW()');
+			if($invoice->save()){
+				$item = new InvoiceItem;
+				$item->scenario = 'paper_item';
+				$item->invoice_id = $invoice->id;
+				$item->product_id = 1;
+				$item->paper_id = $article->id;
+				$item->description = 'Journal Fee for manuscript "'.$article->title .'"';
+				$item->price = $article->pay_amount;
+				$item->quantity = 1;
+				if($item->save()){
+					//update transaction
+					$tran->amount = $invoice->invoiceAmount;
+					$tran->save();
+					return $invoice->id;
+				}else{
+					$item->flashError();
 				}
-				return $invoice->id;
 			}else{
-				$item->flashError();
+				$invoice->flashError();
 			}
 		}else{
-			$invoice->flashError();
+			$tran->flashError();
 		}
+				
+		
 	return false;
 	}
 

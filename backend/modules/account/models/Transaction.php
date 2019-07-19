@@ -41,7 +41,7 @@ class Transaction extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tran_date', 'debit', 'credit', 'amount', 'assoc_client', 'created_by', 'created_at'], 'required', 'on' => 'create_invoice'],
+            [['tran_date', 'debit', 'credit', 'assoc_client', 'created_by', 'created_at'], 'required', 'on' => 'create_invoice'],
 			
             [['tran_date', 'created_at', 'modified_at', 'trashed_at'], 'safe'],
 			
@@ -90,4 +90,8 @@ class Transaction extends \yii\db\ActiveRecord
         }
 
     }
+	
+	public static function listClientTransaction($client_id){
+		
+	}
 }
