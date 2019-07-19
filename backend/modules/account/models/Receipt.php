@@ -122,38 +122,45 @@ class Receipt extends \yii\db\ActiveRecord
 	
 	public static function createReceipt($article){
 		$setting = Setting::getOne();
-		$receipt = new Receipt;
-		$receipt->scenario = 'create';
-		$receipt->receipt_date = date('Y-m-d');
-		$receipt->invoice_id = $article->invoice_id;
-		$receipt->client_id = $article->user_id;
-		$receipt->note = $setting->receipt_note;
-		$receipt->created_by = Yii::$app->user->identity->id;
-		$receipt->created_at = new Expression('NOW()');
-		if($receipt->save()){
-			$item = new ReceiptItem;
-			$item->scenario = 'paper_item';
-			$item->receipt_id = $receipt->id;
-			$item->product_id = 1;
-			$item->paper_id = $article->id;
-			$item->description = 'Payment Receipt for manuscript fee "'.$article->title .'"';
-			$item->price = $article->invoice->invoiceAmount;
-			$item->quantity = 1;
-			if($item->save()){
-				//create transaction
-				$tran = new Transaction;
-				$tran->tran_date =  date('Y-m-d');
-				$tran->debit = 2; //cash
-				$tran->credit = 18; //journal fee
-				$tran->amount = $invoice->invoiceAmount;
-				$tran->assoc_client = $article->user_id;
-				$tran->created_by = Yii::$app->user->identity->id;
-				$tran->created_at = new Expression('NOW()');
-				$tran->save();
-				return $receipt->id;
-			}else{
-				$item->flashError();
-			}
+		$tran = new Transaction;
+		$tran->tran_date =  date('Y-m-d');
+		$tran->debit = 2; //cash
+		$tran->credit = 18; //journal fee
+		$tran->assoc_client = $article->user_id;
+		$tran->created_by = Yii::$app->user->identity->id;
+		$tran->created_at = new Expression('NOW()');
+		if($tran->save()){
+			$receipt = new Receipt;
+			$receipt->scenario = 'create';
+			$receipt->tran_id = $tran->id;
+			$receipt->receipt_date = date('Y-m-d');
+			$receipt->invoice_id = $article->invoice_id;
+			$receipt->client_id = $article->user_id;
+			$receipt->note = $setting->receipt_note;
+			$receipt->created_by = Yii::$app->user->identity->id;
+			$receipt->created_at = new Expression('NOW()');
+			if($receipt->save()){
+				$item = new ReceiptItem;
+				$item->scenario = 'paper_item';
+				$item->receipt_id = $receipt->id;
+				$item->product_id = 1;
+				$item->paper_id = $article->id;
+				$item->description = 'Payment Receipt for manuscript fee "'.$article->title .'"';
+				$item->price = $article->invoice->invoiceAmount;
+				$item->quantity = 1;
+				if($item->save()){
+					//update transaction
+					$tran->amount = $receipt->receiptAmount;
+					$tran->save();
+					return $receipt->id;
+				}else{
+					$item->flashError();
+				}
+		}else{
+			$tran->flashError();
+		}
+				
+		
 		}else{
 			$receipt->flashError();
 		}

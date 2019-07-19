@@ -91,7 +91,10 @@ class Transaction extends \yii\db\ActiveRecord
 
     }
 	
-	public static function listClientTransaction($client_id){
-		
+	public static function clientTransactions($client_id){
+		self::find()
+		->leftJoin('acc_invoice','','')
+		->leftJoin('acc_recept','','')
+		->all();
 	}
 }

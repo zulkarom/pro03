@@ -89,24 +89,41 @@ class PaymentController extends \yii\web\Controller
 	protected function verifyPayment($model){
 		
 		/* ASSIGN ASSOCIATE */
-		$invoice = $model->invoice;
-		$invoice->status = 10;
-		$invoice->save();
-		$model->sendToStatus('bt-assign-associate');
-		
-		//create receipt
-		$model->receipt_id = Receipt::createReceipt($model);
-		/////////////
-		
-		if($model->save()){
-			$model->sendEmail();
-			Yii::$app->session->addFlash('success', "The payment has been successfully verified.");
-			return $this->redirect(['/journal/review/assign-associate', 'id' => $model->id]);
-		}else{
-			$model->flashError();
-			return $this->redirect(['/journal/payment/verify', 'id' => $model->id]);
+		$transaction = Yii::$app->db->beginTransaction();
+        try {
+			$invoice = $model->invoice;
+			$invoice->status = 10;
+			$invoice->save();
+			$model->sendToStatus('bt-assign-associate');
+			//create receipt
+			$model->receipt_id = Receipt::createReceipt($model);
+			/////////////
+			
+			if($model->save()){
+				$model->sendEmail();
+				
+				$transaction->commit();
+				
+				Yii::$app->session->addFlash('success', "The payment has been successfully verified.");
+				return $this->redirect(['/journal/review/assign-associate', 'id' => $model->id]);
+			}else{
+				$model->flashError();
+				return $this->redirect(['/journal/payment/verify', 'id' => $model->id]);
 
-		}
+			}
+                        
+            
+            
+        }
+        catch (Exception $e) 
+        {
+            $transaction->rollBack();
+            Yii::$app->session->addFlash('error', $e->getMessage());
+        }
+
+		
+		
+		
 	}
 	
 	protected function rejectPayment($model){
