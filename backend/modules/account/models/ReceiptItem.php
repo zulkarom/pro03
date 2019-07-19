@@ -5,7 +5,7 @@ namespace backend\modules\account\models;
 use Yii;
 
 /**
- * This is the model class for table "acc_invoice_item".
+ * This is the model class for table "acc_receipt_item".
  *
  * @property int $id
  * @property int $invoice_id
@@ -14,18 +14,15 @@ use Yii;
  * @property string $description
  * @property string $price
  * @property double $quantity
- *
- * @property AccInvoice $invoice
- * @property Product $product
  */
-class InvoiceItem extends \yii\db\ActiveRecord
+class ReceiptItem extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'acc_invoice_item';
+        return 'acc_receipt_item';
     }
 
     /**
@@ -34,14 +31,13 @@ class InvoiceItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['invoice_id', 'product_id', 'paper_id', 'description', 'price', 'quantity'], 'required', 'on' => 'paper_item'],
 			
+			
+			[['receipt_id', 'product_id', 'description', 'price', 'quantity'], 'required', 'on' => 'paper_item'],
 			
             [['invoice_id', 'product_id', 'paper_id'], 'integer'],
             [['price', 'quantity'], 'number'],
             [['description'], 'string', 'max' => 255],
-            [['invoice_id'], 'exist', 'skipOnError' => true, 'targetClass' => Invoice::className(), 'targetAttribute' => ['invoice_id' => 'id']],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
 
@@ -60,13 +56,13 @@ class InvoiceItem extends \yii\db\ActiveRecord
             'quantity' => 'Quantity',
         ];
     }
-
-    /**
+	
+	/**
      * @return \yii\db\ActiveQuery
      */
-    public function getInvoice()
+    public function getReceipt()
     {
-        return $this->hasOne(Invoice::className(), ['id' => 'invoice_id']);
+        return $this->hasOne(Receipt::className(), ['id' => 'receipt_id']);
     }
 
     /**
@@ -89,5 +85,4 @@ class InvoiceItem extends \yii\db\ActiveRecord
         }
 
     }
-
 }
