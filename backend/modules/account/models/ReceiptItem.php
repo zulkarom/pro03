@@ -48,7 +48,7 @@ class ReceiptItem extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'invoice_id' => 'Invoice ID',
+            'receipt_id' => 'Receipt ID',
             'product_id' => 'Product ID',
             'paper_id' => 'Paper ID',
             'description' => 'Description',
