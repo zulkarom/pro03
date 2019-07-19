@@ -76,13 +76,60 @@ class ArticleOverwriteController extends Controller
     public function actionCreate()
     {
         $model = new ArticleOverwrite();
+		
+		$authors = [new ArticleAuthor];
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['update', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            
+            $authors = Model::createMultiple(ArticleAuthor::classname());
+			
+            Model::loadMultiple($authors, Yii::$app->request->post());
+		
+            
+            $valid = $model->validate();
+            
+            $valid = Model::validateMultiple($authors) && $valid;
+            
+            if ($valid) {
+
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        
+                        foreach ($authors as $indexAu => $author) {
+                            
+                            if ($flag === false) {
+                                break;
+                            }
+
+                            $author->article_id = $model->id;
+
+                            if (!($flag = $author->save(false))) {
+                                break;
+                            }
+                        }
+
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+						Yii::$app->session->addFlash('success', "Data Updated");
+						return $this->redirect(['update', 'id' => $model->id]);
+						
+						
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    
+                }
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
+			'authors' => (empty($authors)) ? [new ArticleAuthor] : $authors
         ]);
     }
 

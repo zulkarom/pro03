@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 * to upload file, save first...
     <?= $this->render('_form', [
         'model' => $model,
+		'authors' => $authors
     ]) ?>
 
 </div>
