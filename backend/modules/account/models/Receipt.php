@@ -140,6 +140,16 @@ class Receipt extends \yii\db\ActiveRecord
 			$item->price = $article->invoice->invoiceAmount;
 			$item->quantity = 1;
 			if($item->save()){
+				//create transaction
+				$tran = new Transaction;
+				$tran->tran_date =  date('Y-m-d');
+				$tran->debit = 2; //cash
+				$tran->credit = 18; //journal fee
+				$tran->amount = $invoice->invoiceAmount;
+				$tran->assoc_client = $article->user_id;
+				$tran->created_by = Yii::$app->user->identity->id;
+				$tran->created_at = new Expression('NOW()');
+				$tran->save();
 				return $receipt->id;
 			}else{
 				$item->flashError();

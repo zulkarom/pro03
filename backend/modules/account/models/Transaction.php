@@ -41,8 +41,10 @@ class Transaction extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tran_date', 'debit', 'credit', 'amount', 'medium', 'reference', 'description', 'assoc_staff', 'assoc_client', 'assoc_tran', 'created_by', 'created_at', 'modified_at', 'trash', 'trashed_by', 'trashed_at'], 'required'],
+            [['tran_date', 'debit', 'credit', 'amount', 'assoc_client', 'created_by', 'created_at'], 'required', 'on' => 'create_invoice'],
+			
             [['tran_date', 'created_at', 'modified_at', 'trashed_at'], 'safe'],
+			
             [['debit', 'credit', 'medium', 'assoc_staff', 'assoc_client', 'assoc_tran', 'created_by', 'trash', 'trashed_by'], 'integer'],
             [['amount'], 'number'],
             [['description'], 'string'],
@@ -74,5 +76,18 @@ class Transaction extends \yii\db\ActiveRecord
             'trashed_by' => 'Trashed By',
             'trashed_at' => 'Trashed At',
         ];
+    }
+	
+	public function flashError(){
+        if($this->getErrors()){
+            foreach($this->getErrors() as $error){
+                if($error){
+                    foreach($error as $e){
+                        Yii::$app->session->addFlash('error', $e);
+                    }
+                }
+            }
+        }
+
     }
 }

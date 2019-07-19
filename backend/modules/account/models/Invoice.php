@@ -161,6 +161,19 @@ class Invoice extends \yii\db\ActiveRecord
 			$item->price = $article->pay_amount;
 			$item->quantity = 1;
 			if($item->save()){
+				//create transaction
+				$tran = new Transaction;
+				$tran->scenario = 'create_invoice';
+				$tran->tran_date =  date('Y-m-d');
+				$tran->debit = 18; //client Debtors
+				$tran->credit = 17; //journal fee
+				$tran->amount = $invoice->invoiceAmount;
+				$tran->assoc_client = $article->user_id;
+				$tran->created_by = Yii::$app->user->identity->id;
+				$tran->created_at = new Expression('NOW()');
+				if(!$tran->save()){
+					$tran->flashError();
+				}
 				return $invoice->id;
 			}else{
 				$item->flashError();
