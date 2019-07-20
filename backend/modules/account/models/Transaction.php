@@ -59,7 +59,7 @@ class Transaction extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'tran_date' => 'Tran Date',
+            'tran_date' => 'Transaction Date',
             'debit' => 'Debit',
             'credit' => 'Credit',
             'amount' => 'Amount',
@@ -91,10 +91,12 @@ class Transaction extends \yii\db\ActiveRecord
 
     }
 	
-	public static function clientTransactions($client_id){
-		self::find()
-		->leftJoin('acc_invoice','','')
-		->leftJoin('acc_recept','','')
-		->all();
-	}
+	public function getInvoice(){
+        return $this->hasOne(Invoice::className(), ['tran_id' => 'id']);
+    }
+	
+	public function getReceipt(){
+        return $this->hasOne(Receipt::className(), ['tran_id' => 'id']);
+    }
+
 }

@@ -8,8 +8,6 @@ use backend\modules\journal\models\Journal;
 use backend\modules\journal\models\ArticleAuthor;
 use backend\modules\journal\models\ArticleStatus;
 use backend\modules\journal\models\Setting;
-use backend\modules\account\models\Invoice;
-use backend\modules\account\models\InvoicePdf;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -616,24 +614,5 @@ class SubmissionController extends Controller
         Upload::download($model, $attr, $filename);
     }
 	
-	public function actionInvoice($id){
-		$model = $this->findInvoice($id);
-		//check access
-		if($model->client_id != Yii::$app->user->identity->id){
-			throw new NotFoundHttpException('No Access to invoice');
-		}
-		
-		$pdf = new InvoicePdf;
-		$pdf->model = $model;
-		$pdf->generatePdf();
-	}
 	
-	protected function findInvoice($id)
-    {
-        if (($model = Invoice::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist..');
-    }
 }

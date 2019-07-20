@@ -60,7 +60,7 @@ table.detail-view th {
 			],
 			[
 				'value' => function($model){
-					return '<a href="'.Url::to(['invoice', 'id' => $model->invoice->id]) .'" class="btn btn-danger btn-sm" target="_blank"><i class="fa fa-download"></i> DOWNLOAD PDF</a>';
+					return '<a href="'.Url::to(['transaction/invoice', 'id' => $model->invoice->id]) .'" class="btn btn-danger btn-sm" target="_blank"><i class="fa fa-download"></i> DOWNLOAD PDF</a>';
 				},
 				'format' => 'raw',
 				'label' => 'Invoice'

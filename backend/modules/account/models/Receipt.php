@@ -5,6 +5,7 @@ namespace backend\modules\account\models;
 use Yii;
 use backend\modules\journal\models\Setting;
 use yii\db\Expression;
+use common\models\User;
 /**
  * This is the model class for table "acc_receipt".
  *
