@@ -53,8 +53,9 @@ class LoaPdf
 	$str = '';
 		if($authors){
 			$i = 1;
+			$total = count($authors);
 			foreach($authors as $au){
-				$br = $i == 1 ? '' : ', ';
+				$br = $i == $total ? '' : '<br />';
 				$str .= $au->firstname . ' ' . $au->lastname . $br;
 			$i++;
 			}
@@ -63,13 +64,13 @@ class LoaPdf
 	
 	$html = '
 	<table border="0"><tr><td><div align="right"><strong>Ref: '.$this->model->manuscriptNo().'</strong></div></td></tr></table>
-	<p><b>'.$str.'<br/>
+	<p><b>'.$str.' </b><br/>
 	';
 
 	$html .= $assoc->institution
 	. '<br />' . 
 	$assoc->assoc_address . '<br/>
-	 </b></p>
+	</p>
 
 	<table border="0"><tr><td><div align="right"><strong>Dated: '.$hari.'</strong></div></td></tr></table>
 
