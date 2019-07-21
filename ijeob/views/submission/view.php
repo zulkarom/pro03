@@ -53,16 +53,13 @@ table.detail-view th {
 				'attribute' => 'submission_file',
 				'format' => 'raw',
 				'value' => function($model){
+					
 					return '<a href="'. Url::to(['article/download', 'attr' => 'submission', 'id' => $model->id]) .'" target="_blank"><i class="fa fa-download"></i> FILE</a>';
 				}
 			],
 			[
 				'label' => 'Acceptance Letter',
-				'visible' => function($model){
-					return in_array($model->status, ArticleStatus::acceptStatus());
-						
-					
-				},
+				'visible' => in_array($model->status, ArticleStatus::acceptStatus()),
 				'format' => 'raw',
 				'value' => function($model){
 					return '<a href="'. Url::to(['submission/loa', 'id' => $model->id]) .'" target="_blank"><i class="fa fa-download"></i> DOWNLOAD</a>';
