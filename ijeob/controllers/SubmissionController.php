@@ -8,6 +8,7 @@ use backend\modules\journal\models\Journal;
 use backend\modules\journal\models\ArticleAuthor;
 use backend\modules\journal\models\ArticleStatus;
 use backend\modules\journal\models\Setting;
+use backend\modules\journal\models\pdf\LoaPdf;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -613,6 +614,14 @@ class SubmissionController extends Controller
         $filename = strtoupper('template-bm');
         Upload::download($model, $attr, $filename);
     }
+	
+	public function actionLoa($id){
+		$model = $this->findModel($id);
+		$model = $this->findModel($id);
+		$pdf = new LoaPdf;
+		$pdf->model = $model;
+		$pdf->generatePdf();
+	}
 	
 	
 }

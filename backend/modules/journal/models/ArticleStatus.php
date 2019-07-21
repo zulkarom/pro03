@@ -49,6 +49,14 @@ class ArticleStatus
 		];
 	}
 	
+	public static function acceptStatus(){
+		return [
+		'ArticleWorkflow/pa-assign-journal',
+		'ArticleWorkflow/oa-camera-ready',
+		'ArticleWorkflow/qa-publish'
+		];
+	}
+	
 	public static function getAllStatusesArray(){
 		$cl = new ArticleWorkflow;
 		$status = $cl->getDefinition();

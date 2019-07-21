@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <style>
 table.detail-view th {
-    width:15%;
+    width:17%;
 }
 </style>
 
@@ -54,6 +54,18 @@ table.detail-view th {
 				'format' => 'raw',
 				'value' => function($model){
 					return '<a href="'. Url::to(['article/download', 'attr' => 'submission', 'id' => $model->id]) .'" target="_blank"><i class="fa fa-download"></i> FILE</a>';
+				}
+			],
+			[
+				'label' => 'Acceptance Letter',
+				'visible' => function($model){
+					return in_array($model->status, ArticleStatus::acceptStatus());
+						
+					
+				},
+				'format' => 'raw',
+				'value' => function($model){
+					return '<a href="'. Url::to(['submission/loa', 'id' => $model->id]) .'" target="_blank"><i class="fa fa-download"></i> DOWNLOAD</a>';
 				}
 			],
         ],
