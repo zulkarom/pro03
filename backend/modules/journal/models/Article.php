@@ -133,7 +133,7 @@ class Article extends \yii\db\ActiveRecord
 			
 			[['correction_at', 'correction_file'], 'required', 'on' => WorkflowScenario::enterStatus('ia-post-evaluate')],
 			
-			[['post_evaluate_at', 'post_evaluate_by', 'assistant_editor'], 'required', 'on' => WorkflowScenario::enterStatus('oa-camera-ready')],
+			[['post_evaluate_at', 'post_evaluate_by', 'assistant_editor', 'doi_ref', 'page_from', 'page_to'], 'required', 'on' => WorkflowScenario::enterStatus('oa-camera-ready')],
 			
 			[['cameraready_file', 'camera_ready_at', 'camera_ready_by'], 'required', 'on' => WorkflowScenario::enterStatus('pa-assign-journal')],
 			
@@ -147,9 +147,9 @@ class Article extends \yii\db\ActiveRecord
 			
 			[['publish_number'], 'required', 'on' => 'publish_number'],
 			
-           [['title', 'keyword', 'abstract', 'reference', 'pre_evaluate_note', 'response_note', 'correction_note', 'correction_file',  'cameraready_file', 'reject_note', 'publish_number', 'camera_ready_note', 'withdraw_note', 'payment_note'], 'string'],
+           [['title', 'keyword', 'abstract', 'reference', 'pre_evaluate_note', 'response_note', 'correction_note', 'correction_file',  'cameraready_file', 'reject_note', 'publish_number', 'camera_ready_note', 'withdraw_note', 'payment_note', 'doi_ref'], 'string'],
 			
-            [['journal_id', 'journal_issue_id', 'pre_evaluate_by', 'asgn_reviewer_by', 'journal_by', 'scope_id', 'associate_editor', 'response_by', 'assistant_editor', 'withdraw_by', 'response_option', 'yearly_number', 'invoice_id'], 'integer'],
+            [['journal_id', 'journal_issue_id', 'pre_evaluate_by', 'asgn_reviewer_by', 'journal_by', 'scope_id', 'associate_editor', 'response_by', 'assistant_editor', 'withdraw_by', 'response_option', 'yearly_number', 'invoice_id', 'page_from', 'page_to'], 'integer'],
 			
             [['draft_at', 'pre_evaluate_at', 'asgn_reviewer_at', 'evaluate_at', 'correction_at', 'post_evaluate_at', 'galley_proof_at', 'finalise_at', 'asgn_profrdr_at', 'post_finalise_at', 'proofread_at', 'camera_ready_at', 'journal_at', 'updated_at', 'review_at', 'recommend_at', 'response_at', 'withdraw_at', 'withdraw_request_at', 'submit_at', 'finalised_at', 'asgn_associate_at'], 'safe'],
 			

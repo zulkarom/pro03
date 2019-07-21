@@ -126,8 +126,19 @@ $form = ActiveForm::begin(['id' => 'dynamic-form']);  ?>
             <div class="card-body"><div class="row">
 <div class="col-md-8">	 
 
-<?=Upload::fileInput($model, 'cameraready')?>
 
+
+<?=$form->field($model, 'doi_ref') ?>
+<div class="row">
+<div class="col-md-6"><?=$form->field($model, 'page_from') ?></div>
+
+<div class="col-md-6"><?=$form->field($model, 'page_to') ?>
+</div>
+
+</div>
+
+
+<?=Upload::fileInput($model, 'cameraready')?>
 <?=$form->field($model, 'camera_ready_note')->textarea(['rows' => '6']) ?>
 
 
