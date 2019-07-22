@@ -76,13 +76,15 @@ class InvoiceController extends Controller
     public function actionCreate()
     {
         $model = new Invoice();
+		$items = [new InvoiceItem];
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+           $this->processItems($model, $items);
         }
 
         return $this->render('create', [
             'model' => $model,
+			'items' => $items
         ]);
     }
 
