@@ -268,8 +268,23 @@ if($model->id){
 
 </div></div>
 </div>
-<div class="form-group">
-        <?= Html::submitButton('SAVE DATA', ['class' => 'btn btn-primary']) ?>
-    </div>
+
+<div class="row">
+<div class="col-md-6"><div class="form-group">
+        <?= Html::submitButton('<span class="fas fa-save"></span> SAVE DATA', ['class' => 'btn btn-primary']) ?>
+    </div></div>
+
+<div class="col-md-6" align="right">
+<?=Html::a('<span class="fas fa-trash"></span> DELETE DATA', ['delete-article', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this manuscript?',
+                'method' => 'post',
+            ],
+        ])?>
+</div>
+
+</div>
+
 
 <?php ActiveForm::end(); ?>

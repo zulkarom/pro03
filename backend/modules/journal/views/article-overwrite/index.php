@@ -45,22 +45,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ['class' => 'yii\grid\ActionColumn',
                  'contentOptions' => ['style' => 'width: 13%'],
-                'template' => '{update} {delete}',
+                'template' => '{update}',
                 //'visible' => false,
                 'buttons'=>[
                     'update'=>function ($url, $model) {
-                        return Html::a('<span class="fas fa-edit"></span>',['article-overwrite/update/', 'id' => $model->id],['class'=>'btn btn-warning btn-sm']);
+                        return Html::a('<span class="fas fa-edit"></span> Update',['article-overwrite/update/', 'id' => $model->id],['class'=>'btn btn-warning']);
                     },
-					'delete'=>function ($url, $model) {
-                        return Html::a('<span class="fas fa-trash"></span>', ['delete-article', 'id' => $model->id], [
-            'class' => 'btn btn-danger btn-sm',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this manuscript?',
-                'method' => 'post',
-            ],
-        ]) 
-;
-                    }
                 ],
             
             ],
