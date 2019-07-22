@@ -38,7 +38,7 @@ class JournalIssue extends \yii\db\ActiveRecord
 			
             [['description' , 'issue_month'], 'string'],
 			
-            [['published_at', 'archived_at', 'issue_year', 'submit_start', 'submit_end'], 'safe'],
+            [['publish_date', 'published_at', 'archived_at', 'issue_year', 'submit_start', 'submit_end'], 'safe'],
         ];
     }
 

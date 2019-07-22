@@ -7,6 +7,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use ijeob\models\ArchiveSearch;
 use backend\modules\journal\models\Journal;
+use backend\modules\journal\models\Article;
 
 
 /**
@@ -100,6 +101,41 @@ class PageController extends Controller
             'dataProvider' => $dataProvider,
         ]);
 	}
+	
+	public function actionArticle($id){
+		$model = $this->findArticle($id);
+		return $this->render('article', [
+            'model' => $model,
+        ]);
+	}
+	
+	public function actionBibtext($id){
+		if (($model = Article::findOne($id)) == null) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+		
+		return Citation::bibText($id);
+	}
+	
+	public function actionArticleFullpaper($id){
+		
+	}
+	
+	/**
+     * Finds the Article model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Article the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findArticle($id)
+    {
+        if (($model = Article::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
 	
 	
 }

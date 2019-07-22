@@ -467,6 +467,22 @@ class Article extends \yii\db\ActiveRecord
 		return $str;
 	}
 	
+	public function authorString($delimiter = false){
+		$list = $this->articleAuthors;
+		$str = '';
+		if($list){
+			$total = count($list);
+			$sep = $delimiter ? $delimiter : '<br />';
+			$i = 1;
+			foreach($list as $au){
+				$sep = $i == $total ? '' : $sep;
+				$str .= $au->firstname . ' ' . $au->lastname . $sep;
+			$i++;
+			}
+		}
+		return $str;
+	}
+	
 	public function isAssistantEditor(){
 		if($this->assistant_editor == Yii::$app->user->identity->id){
 			return true;

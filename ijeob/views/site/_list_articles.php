@@ -11,7 +11,7 @@ use yii\helpers\Url;
 		
 			$article = $journal->articles;
 		?>
-		<table class="table">
+		<table class="table" id="list-articles">
 		<thead>
 		<tr>
 			<th><div align="center"><?=strtoupper($journal->journalIssueName)?></div></th>
@@ -32,7 +32,7 @@ use yii\helpers\Url;
 					
 <div class="col-md-6 form-group">
 						
-						<a href="#">'.$ar->title .'</a> <br />
+						<a href="'.Url::to(['page/article' , 'id' => $ar->id]).'">'.$ar->title .'</a> <br />
 						<i>'.$ar->stringAuthors .'</i>
 						
 						<br />

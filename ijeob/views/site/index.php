@@ -21,7 +21,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@ijeob/views/myasset
     ]); ?>
 		<div class="row">
 		<div class="col-md-4" style="text-align:center">
-		<h4>Current Issues</h4>
+		<h4><a href="#list-articles">Current Issue</a></h4>
 		<?php 
 		
 		if($journal->currentIssue){

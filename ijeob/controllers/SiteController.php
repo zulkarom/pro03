@@ -16,6 +16,7 @@ use ijeob\models\ResetPasswordForm;
 use ijeob\models\SignupForm;
 use ijeob\models\ContactForm;
 use ijeob\models\SearchArticle;
+use ijeob\models\Citation;
 use yii\web\ForbiddenHttpException;
 use ijeob\models\Page;
 use backend\modules\journal\models\Article;
@@ -386,4 +387,6 @@ class SiteController extends Controller
        
 		
     }
+	
+	
 }

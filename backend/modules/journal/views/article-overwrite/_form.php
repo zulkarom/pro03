@@ -22,12 +22,12 @@ use wbraganca\dynamicform\DynamicFormWidget;
 $model->file_controller = 'article-overwrite';
 
 ?>
-
+<?php $form = ActiveForm::begin(['id' => 'dynamic-form']);  ?>
 <div class="card shadow mb-4">
 
             <div class="card-body"><div class="article-overwrite-form">
 
-    <?php $form = ActiveForm::begin(['id' => 'dynamic-form']);  ?>
+    
 	
 	
 	 
@@ -250,14 +250,26 @@ if($model->id){
 
 </div>
 
+
+
+ <?= $form->field($model, 'doi_ref') ?>
    
+<div class="row">
+<div class="col-md-6"><?= $form->field($model, 'page_from') ?></div>
 
+<div class="col-md-6"><?= $form->field($model, 'page_to') ?>
+</div>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-    </div>
+</div>
 
-    <?php ActiveForm::end(); ?>
+    
+
+    
 
 </div></div>
 </div>
+<div class="form-group">
+        <?= Html::submitButton('SAVE DATA', ['class' => 'btn btn-primary']) ?>
+    </div>
+
+<?php ActiveForm::end(); ?>

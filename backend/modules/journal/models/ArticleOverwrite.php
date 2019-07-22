@@ -100,12 +100,17 @@ class ArticleOverwrite extends \yii\db\ActiveRecord
             [['journal_id', 'user_id'], 'required'],
 			
 			
-            [['journal_id', 'yearly_number', 'user_id', 'scope_id', 'pre_evaluate_by', 'invoice_id', 'associate_editor', 'asgn_reviewer_by', 'response_by', 'response_option', 'post_evaluate_by', 'assistant_editor', 'camera_ready_by', 'journal_by', 'journal_issue_id', 'reject_by', 'withdraw_by'], 'integer'],
+            [['journal_id', 'yearly_number', 'user_id', 'scope_id', 'pre_evaluate_by', 'invoice_id', 'associate_editor', 'asgn_reviewer_by', 'response_by', 'response_option', 'post_evaluate_by', 'assistant_editor', 'camera_ready_by', 'journal_by', 'journal_issue_id', 'reject_by', 'withdraw_by', 'page_from', 'page_to'], 'integer'],
+			
             [['title', 'keyword', 'abstract', 'reference', 'payment_file', 'payment_note', 'pre_evaluate_note', 'response_note', 'correction_note', 'camera_ready_note', 'reject_note', 'withdraw_note'], 'string'],
+			
             [['updated_at', 'draft_at', 'submit_at', 'pre_evaluate_at', 'asgn_reviewer_at', 'asgn_associate_at', 'review_at', 'review_submit_at', 'response_at', 'correction_at', 'post_evaluate_at', 'camera_ready_at', 'assign_journal_at', 'journal_at', 'reject_at', 'withdraw_at', 'withdraw_request_at'], 'safe'],
+			
             [['manuscript_no', 'submission_file', 'review_file', 'cameraready_file', 'doi_ref'], 'string', 'max' => 200],
+			
             [['status', 'correction_file', 'withdraw_at_status'], 'string', 'max' => 100],
             [['publish_number'], 'string', 'max' => 10],
+			
             [['manuscript_no'], 'unique'],
 			
 			[['correction_file', 'submission_file', 'cameraready_file'], 'string', 'max' => 200],
