@@ -34,7 +34,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@ijeob/views/myasset
 			
 			<div class="row">
 				<div class="col">
-					<h2 class="section_title" style="margin-bottom:25px;text-align:justify"><?=$model->title?></h2>
+					<h2 class="section_title" style="margin-bottom:25px;"><?=$model->title?></h2>
 				</div>
 
 			</div>

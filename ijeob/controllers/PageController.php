@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use ijeob\models\ArchiveSearch;
+use ijeob\models\citation;
 use backend\modules\journal\models\Journal;
 use backend\modules\journal\models\Article;
 
