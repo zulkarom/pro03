@@ -21,12 +21,12 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@ijeob/views/myasset
     ]); ?>
 		<div class="row">
 		<div class="col-md-4" style="text-align:center">
-		<h4><a href="#list-articles">Current Issue</a></h4>
+		<h4><a href="#current-issue">Current Issue</a></h4>
 		<?php 
 		
 		if($journal->currentIssue){
 	echo '<p>'.$current->journalIssueName3 .'</p>
-		<i>Published at: '.date('d M Y', strtotime($journal->currentIssue->published_at)) .'<br /></i>';
+		<i>Published at: '.date('d M Y', strtotime($journal->currentIssue->publish_date)) .'<br /></i>';
 }else{
 	
 	echo '<div align="center">CALL FOR PAPER <br /><i>'.$journal->callingIssueName3 .'</i></div>';
@@ -195,7 +195,7 @@ Sign up to EduSage Network newsletter and stay up to date and get notices about 
 
 
 	
-	<div class="front-issues" style="padding-bottom:10px;padding-top:50px">
+	<div class="front-issues" id="current-issue" style="padding-bottom:10px;padding-top:50px">
 		<div class="container">
 		
 		<div class="row">

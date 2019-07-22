@@ -97,6 +97,27 @@ echo $form->field($model, 'status')->dropDownList(
 
  
  </div>
+ <div class="col-md-3">
+  <?php 
+
+if($model->publish_date == '0000-00-00'){
+	$model->publish_date = date('Y-m-d');
+}
+ 
+ echo $form->field($model, 'publish_date')->widget(DatePicker::classname(), [
+    'removeButton' => false,
+    'pluginOptions' => [
+        'autoclose'=>true,
+        'format' => 'yyyy-mm-dd',
+        'todayHighlight' => true,
+        
+    ],
+    
+    
+]);
+?>
+ 
+ </div>
 </div>
 
 <div class="row">
