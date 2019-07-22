@@ -9,11 +9,13 @@ use yii\web\JsExpression;
 use common\models\User;
 use backend\modules\journal\models\ArticleStatus;
 use backend\modules\journal\models\Journal;
+use backend\modules\journal\models\JournalIssue;
 use backend\modules\journal\models\Scope;
 use backend\modules\journal\models\ReviewForm;
 use common\models\Upload;
 use common\models\AuthAssignment;
 use wbraganca\dynamicform\DynamicFormWidget;
+use richardfan\widget\JSRegister;
 
 /* @var $this yii\web\View */
 /* @var $model backend\modules\journal\models\ArticleOverwrite */
@@ -42,7 +44,7 @@ $model->file_controller = 'article-overwrite';
 </div>
 	
 	<div class="row">
-<div class="col-md-6"> <?= $form->field($model, 'journal_id')->dropDownList(ArrayHelper::map(Journal::find()->all(), 'id', 'journal_abbr'))->label('Journal')?></div>
+
 
 <div class="col-md-6">
 
@@ -262,6 +264,20 @@ if($model->id){
 
 </div>
 
+<div class="row">
+<div class="col-md-6"> <?= $form->field($model, 'journal_id')->dropDownList(ArrayHelper::map(Journal::find()->all(), 'id', 'journal_abbr'))->label('Journal')?></div>
+
+<div class="col-md-6">
+</div>
+
+</div>
+
+<?=$form->field($model, 'journal_issue_id')->dropDownList(
+        ArrayHelper::map(JournalIssue::listCompilingJournal($model->journal_id),'id', 'journalIssueName'), ['prompt' => 'Please Select' ]
+    )->label('Choose Journal Volume & Issue');
+?>
+
+
     
 
     
@@ -275,7 +291,7 @@ if($model->id){
     </div></div>
 
 <div class="col-md-6" align="right">
-<?=Html::a('<span class="fas fa-trash"></span> DELETE DATA', ['delete-article', 'id' => $model->id], [
+<?=Html::a('<span class="fas fa-trash"></span>', ['delete-article', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this manuscript?',
@@ -288,3 +304,40 @@ if($model->id){
 
 
 <?php ActiveForm::end(); ?>
+
+
+
+<?php JSRegister::begin(); ?>
+<script>
+$("#articleoverwrite-journal_id").change(function(){
+	putOption();
+});
+
+function putOption(){
+	var target_id =  'articleoverwrite-journal_issue_id';
+	var journal =  $('#articleoverwrite-journal_id').val();
+	$('#' + target_id).html('<option>Loading...</option>');
+	var url = '<?=Url::to(['publish/list-issues', 'journal' => '']) ?>' + journal ;
+	
+	console.log(url)
+	
+	$.ajax({url:  url, success: function(result){
+	var str = '';
+	if(result){
+		var reviewer = JSON.parse(result);
+		console.log(reviewer);
+		
+		for(var id in reviewer) {
+		   str += '<option value=\"' + id +  '\">' + reviewer[id] + '</option>';
+		}
+
+	}
+		
+	$('#' + target_id).html(str);
+	
+	
+    }});
+	
+}
+</script>
+<?php JSRegister::end(); ?>
