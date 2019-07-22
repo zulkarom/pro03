@@ -18,8 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="card shadow mb-4">
 
-            <div class="card-body"><?= GridView::widget([
+            <div class="card-body">
+		<?= GridView::widget([
         'dataProvider' => $dataProvider,
+		'pager' => [
+            'class' => 'yii\bootstrap4\LinkPager',
+        ],
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
