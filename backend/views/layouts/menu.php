@@ -167,6 +167,8 @@ use backend\modules\journal\models\Journal;
 		  
 		  <a class="collapse-item" href="<?=Url::to(['/journal/setting'])?>">General Setting</a>
 		  
+		  <a class="collapse-item" href="<?=Url::to(['/journal/scope-cat'])?>">Scope Category</a>
+		  
 		  
 		
           </div>
@@ -200,7 +202,7 @@ if(in_array($controller, $user)){
 	$js .= '$("#collapseUser").addClass("show");';
 }
 
-$setting = ['email-template', 'setting'];
+$setting = ['email-template', 'setting', 'scope-cat'];
 if(in_array($controller, $setting)){
 	$js .= '$("#collapseSetting").addClass("show");';
 }
