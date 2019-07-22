@@ -14,7 +14,7 @@ class Citation
 		$firstau = strtolower($firstau[0]);
 		$first_title = explode(' ', $model->title);
 		$first_title = strtolower($first_title[0]);
-		$year = date('Y', strtotime($model->journal_at));
+		$year = $model->yearPublish;
 		$ref = $firstau.$year.$first_title;
 		
 		//authors

@@ -352,6 +352,10 @@ class Article extends \yii\db\ActiveRecord
 		return $this->hasOne(JournalIssue::className(), ['id' => 'journal_issue_id']);
 	}
 	
+	public function getYearPublish(){
+		return date('Y', strtotime($this->journalIssue->publish_date));
+	}
+	
 	public function getIssueInfo(){
 		$issue = $this->journalIssue;
 		if($issue){
