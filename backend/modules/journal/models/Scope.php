@@ -27,6 +27,7 @@ class Scope extends \yii\db\ActiveRecord
     {
         return [
             [['scope_name'], 'required'],
+			[['scope_name'], 'unique'],
             [['scope_name'], 'string', 'max' => 200],
         ];
     }
