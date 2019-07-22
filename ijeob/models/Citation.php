@@ -46,10 +46,10 @@ $text = "@article{".$ref.",
 	title={".$model->title ."},
 	author={" . $authors . "},
 	journal={".$model->journal->journalName ."},
-	volume={37},
-	number={2},
-	pages={167--201},
-	year={2004}
+	volume={".$model->journalIssue->volume ."},
+	number={".$model->journalIssue->issue."},
+	pages={".$model->page_from ."--".$model->page_to ."},
+	year={".$year."}
 }"; 
 		
 
