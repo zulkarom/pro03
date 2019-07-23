@@ -39,7 +39,8 @@ class JournalScope extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'scope_id' => 'Scope Name',
+            'scope_id' => 'Scope',
+			'scope_cat' => 'Category',
         ];
     }
 	

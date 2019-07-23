@@ -41,7 +41,7 @@ class JournalScopeSearch extends JournalScope
     public function search($params)
     {
         $query = JournalScope::find()->where(['journal_id' => $this->current_journal]);
-		$query->joinWith(['scope', 'scopeCat']);
+		$query->joinWith(['scope', 'scopeCat'])->orderBy('cat_name ASC, scope_name ASC');
 
         // add conditions that should always apply here
 

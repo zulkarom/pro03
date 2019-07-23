@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\db\Expression;
 
 /**
  * JournalScopeController implements the CRUD actions for JournalScope model.
@@ -45,10 +46,25 @@ class JournalScopeController extends Controller
         $searchModel = new JournalScopeSearch();
 		$searchModel->current_journal = $id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		
+		
+		$model = new JournalScope();
+
+        if ($model->load(Yii::$app->request->post())) {
+			$model->created_at = new Expression('NOW()');
+			$model->journal_id = $id;
+			if($model->save()){
+				Yii::$app->session->addFlash('success', "Data Updated");
+				 return $this->redirect(['index', 'id' => $id]);
+			}
+           
+        }
+
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+			'model' => $model,
         ]);
     }
 
@@ -58,11 +74,9 @@ class JournalScopeController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView()
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+       
     }
 
     /**
@@ -70,12 +84,15 @@ class JournalScopeController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $model = new JournalScope();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+			if($model->save()){
+				Yii::$app->session->addFlash('success', "Data Updated");
+			}
+            return $this->redirect(['index', 'id' => $id]);
         }
 
         return $this->render('create', [
@@ -90,14 +107,17 @@ class JournalScopeController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $scope)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($scope);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+			if($model->save()){
+				Yii::$app->session->addFlash('success', "Data Updated");
+			}
+            return $this->redirect(['index', 'id' => $id, 'scope' => $model->id]);
         }
-
+		
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -110,11 +130,11 @@ class JournalScopeController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $scope)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($scope)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'id' => $id]);
     }
 
     /**
