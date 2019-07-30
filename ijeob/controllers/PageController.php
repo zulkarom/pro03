@@ -9,6 +9,7 @@ use ijeob\models\ArchiveSearch;
 use ijeob\models\Citation;
 use backend\modules\journal\models\Journal;
 use backend\modules\journal\models\Article;
+use common\models\Upload;
 
 
 /**
@@ -110,6 +111,18 @@ class PageController extends Controller
         ]);
 	}
 	
+	public function actionTemplateBm(){
+		$journal_id = Yii::$app->params['journal_id'];
+		$journal = $this->findJournal($journal_id);
+		Upload::download($journal, 'template2', 'template-bm');
+	}
+	
+	public function actionTemplateEn(){
+		$journal_id = Yii::$app->params['journal_id'];
+		$journal = $this->findJournal($journal_id);
+		Upload::download($journal, 'template', 'template-en');
+	}
+	
 	public function actionBibtext($id){
 		if (($model = Article::findOne($id)) == null) {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -137,6 +150,7 @@ class PageController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+	
 	
 	
 }
