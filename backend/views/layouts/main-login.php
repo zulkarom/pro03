@@ -4,7 +4,8 @@ use yii\helpers\Html;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-dmstr\web\AdminLteAsset::register($this);
+backend\assets\TmplAsset::register($this);
+$dirAsset = Yii::$app->assetManager->getPublishedUrl('@backend/views/assets/');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -16,7 +17,7 @@ dmstr\web\AdminLteAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="login-page">
+<body class="bg-gradient-primary">
 
 <?php $this->beginBody() ?>
 

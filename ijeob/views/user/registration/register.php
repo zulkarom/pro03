@@ -52,7 +52,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@ijeob/views/myasset
 							
 			<div class="row">
 			
-			<div class="col-md-3"><?= $form
+			<div class="col-md-4"><?= $form
             ->field($model, 'title', ['template' => '{label}<div id="con-title">{input}</div>{error}']
 )
             ->label('Title')
@@ -77,6 +77,22 @@ echo $form
             ->field($model, 'email')
             ->label('Email')
             ->textInput() ?></div>
+	<div class="col-md-6">
+<?php 
+
+
+echo $form->field($model, 'country_id')->widget(Select2::classname(), [
+    'data' => ArrayHelper::map(Country::find()->all(),'id', 'country_name'),
+    'language' => 'en',
+    'options' => ['multiple' => false,'placeholder' => 'Select a country ...'],
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+])->label('Country');
+
+
+?>
+	</div>
 
 </div>		
 			
@@ -124,30 +140,7 @@ echo $form
                 ->label('Address')?>
 </div>	
 </div>	
-<div class="row">
-<div class="col-md-6">
-
-<?php 
-
-
-echo $form->field($model, 'country_id')->widget(Select2::classname(), [
-    'data' => ArrayHelper::map(Country::find()->all(),'id', 'country_name'),
-    'language' => 'en',
-    'options' => ['multiple' => false,'placeholder' => 'Select a country ...'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-])->label('Country');
-
-
-?>				
-				
-				
-				
-				
-				
-				</div>
-</div>						
+					
 				
 				
 				<div>

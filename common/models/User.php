@@ -116,6 +116,7 @@ class User extends ActiveRecord implements IdentityInterface
 			[['username'], 'string', 'min' => 5],
         ];
     }
+	
 
     /**
      * @inheritdoc

@@ -8,55 +8,69 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = 'Sign In';
 
-$fieldOptions1 = [
-    'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='glyphicon glyphicon-envelope form-control-feedback'></span>"
-];
-
-$fieldOptions2 = [
-    'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='glyphicon glyphicon-lock form-control-feedback'></span>"
-];
 ?>
 
-<div class="login-box">
-    <div class="login-logo">
-        <a href="#"><b>ADMINISTRATOR</b></a>
-    </div>
-    <!-- /.login-logo -->
-    <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
 
-        <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
+<div class="container">
 
-        <?= $form
-            ->field($model, 'username', $fieldOptions1)
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+      <div class="col-xl-6 col-lg-6 col-md-6">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+			<?php $form = ActiveForm::begin(['id' => 'login-form',
+				'options' => [
+                'class' => 'user'
+             ]
+
+			]); ?>
+
+            <div class="row">
+             
+              <div class="col-lg-12">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Administrator</h1>
+                  </div>
+              
+                    
+					
+					<?= $form
+            ->field($model, 'username')
             ->label(false)
-            ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
-
-        <?= $form
-            ->field($model, 'password', $fieldOptions2)
+            ->textInput(['class' => 'form-control form-control-user', 'placeholder' => $model->getAttributeLabel('username')]) ?>
+					
+                     
+					  <?= $form
+            ->field($model, 'password')
             ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
-
-        <div class="row">
-            <div class="col-xs-8">
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
+            ->passwordInput(['class' => 'form-control form-control-user','placeholder' => $model->getAttributeLabel('password')]) ?>
+                    
+          
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox small">
+                       
+						 <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                        
+                      </div>
+                    </div>
+					<?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-user btn-block', 'name' => 'login-button']) ?>
+                   
+            
+                 
+        
+                </div>
+              </div>
             </div>
-            <!-- /.col -->
-            <div class="col-xs-4">
-                <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
-            </div>
-            <!-- /.col -->
+			 <?php ActiveForm::end(); ?>
+          </div>
         </div>
 
-
-        <?php ActiveForm::end(); ?>
-        <!-- /.social-auth-links -->
-
-        <a href="#">I forgot my password</a><br>
-
+      </div>
 
     </div>
-    <!-- /.login-box-body -->
-</div><!-- /.login-box -->
+
+  </div>
