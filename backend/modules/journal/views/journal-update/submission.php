@@ -36,12 +36,12 @@ $this->params['breadcrumbs'][] = 'Update';
 ]);?>
 	
 	
-
-    
+<p>Template(EN) Link: <?=$model->journal_url?>/page/template-en</p>
+<p>Template(BM) Link: <?=$model->journal_url?>/page/template-bm</p>  
 
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save Submission Info', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
