@@ -139,21 +139,19 @@ $fieldOptions1 = [
         
         <?php if ($module->enableRegistration): ?>
             <p class="text-center">
-                <?= Html::a('SIGN UP / REGISTRATION', ['/user/registration/register'], ['class' => 'field-label text-muted mb10']) ?>
+                <?= Html::a('SIGN UP / REGISTRATION', ['/page/register']) ?>
             </p>
         <?php endif ?>
 		
 		<?php if ($module->enablePasswordRecovery): ?>
             <p class="text-center">
-                <?= Html::a('FORGOT PASSWORD',
-                           ['/user/recovery/request'],['class' => 'field-label text-muted mb10', 'tabindex' => '5']
-                                ) ?>
+                <?= Html::a('FORGOT PASSWORD',['/user/recovery/request']) ?>
             </p>
         <?php endif ?>
 		
 		<?php if ($module->enableConfirmation): ?>
             <p class="text-center">
-                <?= Html::a('RESEND EMAIL CONFIRMATION', ['/user/registration/resend'],['class' => 'field-label text-muted mb10', 'tabindex' => '6']) ?>
+                <?= Html::a('RESEND EMAIL CONFIRMATION', ['/user/registration/resend']) ?>
             </p>
         <?php endif ?>
 		

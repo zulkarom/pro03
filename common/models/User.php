@@ -75,6 +75,8 @@ class User extends ActiveRecord implements IdentityInterface
 			
 			[['username', 'password', 'rawPassword', 'password_repeat', 'fullname', 'email'], 'required', 'on' => 'create'],
 			
+			[['email'], 'required', 'on' => 'checkemail'],
+			
 			[['email', 'fullname', 'country', 'institution'], 'required', 'on' => 'create_external'],
 			
 			[['email', 'fullname'], 'required', 'on' => 'update_external'],
@@ -252,9 +254,6 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_reset_token = null;
     }
 	
-	public function getStaff(){
-		return $this->hasOne(Staff::className(), ['user_id' => 'id']);
-	}
 	
 	public function getAssociate(){
 		return $this->hasOne(Associate::className(), ['user_id' => 'id']);
@@ -284,6 +283,14 @@ class User extends ActiveRecord implements IdentityInterface
 	
 	public function defaultTitle(){
 		return Associate::defaultTitle();
+	}
+	
+	public function isEmailExist(){
+		if(self::findOne(['email' => $this->email])){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 

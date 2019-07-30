@@ -71,7 +71,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@ijeob/views/myasset
 
 <div class="row">
 
-<div class="col-md-6"><?= $form
+<div class="col-md-6"><?php 
+$model->email = $email;
+echo $form
             ->field($model, 'email')
             ->label('Email')
             ->textInput() ?></div>

@@ -14,13 +14,14 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var yii\widgets\ActiveForm $form
- * @var dektrium\user\models\RecoveryForm $model
+ * @var dektrium\user\models\ResendForm $model
  */
 
-$this->title = Yii::t('user', 'Reset your password');
+$this->title = Yii::t('user', 'Request new confirmation message');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
 <div class="block-content">
 		<div class="container">
 		
@@ -35,14 +36,14 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="col-lg-6" align="center">
 			
 			<?php $form = ActiveForm::begin([
-                    'id' => 'password-recovery-form',
+                    'id' => 'resend-form',
                     'enableAjaxValidation' => true,
                     'enableClientValidation' => false,
                 ]); ?>
 
-                <?= $form->field($model, 'password')->passwordInput() ?>
+                <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
-                <?= Html::submitButton(Yii::t('user', 'Finish'), ['class' => 'btn btn-success btn-block']) ?><br>
+                <?= Html::submitButton(Yii::t('user', 'Continue'), ['class' => 'btn btn-primary']) ?><br>
 
                 <?php ActiveForm::end(); ?>
 			
@@ -56,6 +57,3 @@ $this->params['breadcrumbs'][] = $this->title;
 			
 		</div>
 	</div>
-
-
-

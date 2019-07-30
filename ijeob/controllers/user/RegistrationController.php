@@ -15,7 +15,7 @@ class RegistrationController extends BaseRegistrationController
      * @return string
      * @throws \yii\web\HttpException
      */
-    public function actionRegister()
+    public function actionRegister($email='')
     {
 		//$this->layout = "//main-login";
 		//\Yii::$app->session->addFlash('success', "Data Successful");
@@ -39,7 +39,7 @@ class RegistrationController extends BaseRegistrationController
 				$this->trigger(self::EVENT_AFTER_REGISTER, $event);
 
 				return $this->render('/message', [
-					'title'  => \Yii::t('user', 'Your account has been created'),
+					'title'  => \Yii::t('user', 'Congratulation, your account has been created'),
 					'module' => $this->module,
 				]);
 			}else{
@@ -52,6 +52,7 @@ class RegistrationController extends BaseRegistrationController
         return $this->render('register', [
             'model'  => $model,
             'module' => $this->module,
+			'email' => $email
         ]);
 	}
 	

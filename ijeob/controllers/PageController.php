@@ -7,6 +7,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use ijeob\models\ArchiveSearch;
 use ijeob\models\Citation;
+use common\models\User;
 use backend\modules\journal\models\Journal;
 use backend\modules\journal\models\Article;
 use common\models\Upload;
@@ -121,6 +122,23 @@ class PageController extends Controller
 		$journal_id = Yii::$app->params['journal_id'];
 		$journal = $this->findJournal($journal_id);
 		Upload::download($journal, 'template', 'template-en');
+	}
+	
+	public function actionRegister(){
+		$user = new User;
+		$user->scenario = 'checkemail';
+		
+		if ($user->load(Yii::$app->request->post())) {
+			if($user->isEmailExist()){
+				Yii::$app->session->addFlash('error', "You have already registered, please proceed to login page. You can use forgot password feature in case you forgot your password");
+			}else{
+				$this->redirect(['user/register', 'email' => $user->email]);
+			}
+		}
+
+		return $this->render('register',[
+			'user' => $user
+		]);
 	}
 	
 	public function actionBibtext($id){

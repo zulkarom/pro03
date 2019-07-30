@@ -63,7 +63,7 @@ $journal = Journal::findOne($journal_id);
 										
 			<?php 
 			if(Yii::$app->user->isGuest){
-				echo '<i class="fa fa-user"></i> <a href="' . Url::to(["/user/login"]) . '">LOGIN</a> OR <a href="'.Url::to(["/user/register"]) . '">REGISTER</a></span>';
+				echo '<i class="fa fa-user"></i> <a href="' . Url::to(["/user/login"]) . '">LOGIN</a> OR <a href="'.Url::to(["/page/register"]) . '">REGISTER</a></span>';
 			}else{
 				
 				echo Html::a('<i class="fa fa-user"></i> ' . Yii::$app->user->identity->fullname, ['user-setting/change-password'], ['data-method' => 'POST']);
@@ -132,7 +132,7 @@ $journal = Journal::findOne($journal_id);
 						<div class="header_content d-flex flex-row align-items-center justify-content-start">
 							<div class="logo_container mr-auto">
 								
-							<div class="logo_text" ><a href="<?=Url::to(['/site/index'])?>" style="color:#000000">IJEOB</a></div>
+							<div class="logo_text" ><a href="<?=Url::to(['/site/index'])?>" style="color:#000000"><?=$journal->journal_abbr?></a></div>
 								
 							</div>
 				<?php 
@@ -152,7 +152,7 @@ $journal = Journal::findOne($journal_id);
 						];
 						if($mm){
 							$arr['LOGIN'] = Url::to(['/user/login']);
-							$arr['REGISTER'] = Url::to(['/user/register']);
+							$arr['REGISTER'] = Url::to(['/page/register']);
 						}
 					}else{
 						$submission = Stats::mySubmission();
@@ -235,8 +235,13 @@ $journal = Journal::findOne($journal_id);
 
 	</div>
 	
-	
-	<?= Alert::widget() ?>
+	<div class="row">
+	<div class="col-md-2"></div>
+<div class="col-md-8">	<?= Alert::widget() ?></div>
+</div>
+
+</div>
+
 	
 	<?=$content?>
 
