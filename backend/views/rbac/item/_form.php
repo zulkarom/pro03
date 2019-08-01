@@ -27,9 +27,9 @@ AutocompleteAsset::register($this);
 $this->registerJs($js);
 ?>
 
-<div class="box">
-<div class="box-header"></div>
-<div class="box-body"><div class="auth-item-form">
+<div class="card shadow mb-4">
+
+            <div class="card-body"><div class="auth-item-form">
     <?php $form = ActiveForm::begin(['id' => 'item-form']); ?>
     <div class="row">
         <div class="col-sm-6">

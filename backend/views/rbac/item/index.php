@@ -19,12 +19,14 @@ $rules = array_keys(Configs::authManager()->getRules());
 $rules = array_combine($rules, $rules);
 unset($rules[RouteRule::RULE_NAME]);
 ?>
-<div class="box">
-<div class="box-header"></div>
-<div class="box-body"><div class="role-index">
-    <p>
+  <p>
         <?= Html::a(Yii::t('rbac-admin', 'Create ' . $labels['Item']), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+<div class="card shadow mb-4">
+
+            <div class="card-body">
+		<div class="role-index">
+  
     <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
@@ -44,10 +46,36 @@ unset($rules[RouteRule::RULE_NAME]);
                 'attribute' => 'description',
                 'label' => Yii::t('rbac-admin', 'Description'),
             ],
-            ['class' => 'yii\grid\ActionColumn',],
+			
+            ['class' => 'yii\grid\ActionColumn',
+                 'contentOptions' => ['style' => 'width: 13%'],
+                'template' => '{view} {update} {delete}',
+                //'visible' => false,
+                'buttons'=>[
+                    'update' => function ($url, $model) {
+                        return Html::a('<span class="fas fa-edit"></span>',['update', 'id' => $model->name],['class'=>'btn btn-warning btn-sm']);
+                    },
+					'view' => function ($url, $model) {
+                        return Html::a('<span class="fas fa-eye"></span>',['view', 'id' => $model->name],['class'=>'btn btn-success btn-sm']);
+                    },
+                    'delete' => function ($url, $model) {
+                        return Html::a('<span class="fas fa-trash"></span>', ['delete-article', 'id' => $model->name], [
+							'class' => 'btn btn-danger btn-sm',
+							'data' => [
+								'confirm' => 'Are you sure you want to delete this manuscript?',
+								'method' => 'post',
+							],
+						]) ;
+                    }
+                ],
+            
+            ],
+
         ],
     ])
     ?>
 
-</div></div>
+</div>	
+			
+			</div>
 </div>

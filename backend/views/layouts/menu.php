@@ -102,6 +102,26 @@ use backend\modules\journal\models\Journal;
           </div>
         </div>
       </li>
+	  
+	  <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseConf" aria-expanded="false" aria-controls="collapseConf">
+          <i class="fas fa-fw fa-book"></i>
+          <span>Conference</span>
+        </a>
+        <div id="collapseConf" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+	
+          <div class="bg-white py-2 collapse-inner rounded">
+		  
+			<a class="collapse-item" href="<?=Url::to(['/conference/conference/create'])?>">New Conference <span class="badge badge-danger badge-counter"></span></a>
+			
+			<a class="collapse-item" href="<?=Url::to(['/conference/conference/index'])?>">List of Conference <span class="badge badge-info badge-counter"></span></a>
+
+			 
+			 
+
+          </div>
+        </div>
+      </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -145,8 +165,8 @@ use backend\modules\journal\models\Journal;
 		  
             <a class="collapse-item" href="<?=Url::to(['/user/assignment'])?>">All Users</a>
 			
-            <a class="collapse-item" href="#">Role List</a>
-            <a class="collapse-item" href="#">Route List</a>
+            <a class="collapse-item" href="<?=Url::to(['/admin/role'])?>">Role List</a>
+            <a class="collapse-item" href="<?=Url::to(['/admin/route'])?>">Route List</a>
           </div>
         </div>
       </li>
@@ -197,7 +217,7 @@ $journal = ['journal', 'journal-issue'];
 if(in_array($controller, $journal)){
 	$js .= '$("#collapseJournal").addClass("show");';
 }
-$user = ['user'];
+$user = ['user','role'];
 if(in_array($controller, $user)){
 	$js .= '$("#collapseUser").addClass("show");';
 }
