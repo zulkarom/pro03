@@ -3,6 +3,7 @@
 namespace backend\modules\conference\models;
 
 use Yii;
+use common\models\User;
 
 /**
  * This is the model class for table "conference".
@@ -30,7 +31,7 @@ class Conference extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['conf_name', 'conf_abbr', 'conf_date', 'conf_venue', 'conf_url'], 'required'],
+            [['conf_name', 'conf_abbr', 'conf_date', 'conf_venue', 'conf_url', 'user_id'], 'required'],
             [['conf_date'], 'safe'],
             [['conf_name', 'conf_venue'], 'string', 'max' => 200],
             [['conf_abbr'], 'string', 'max' => 50],
@@ -45,11 +46,17 @@ class Conference extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'conf_name' => 'Conf Name',
-            'conf_abbr' => 'Conf Abbr',
-            'conf_date' => 'Conf Date',
-            'conf_venue' => 'Conf Venue',
-            'conf_url' => 'Conf Url',
+            'conf_name' => 'Conference Name',
+            'conf_abbr' => 'Conference Abbr',
+            'conf_date' => 'Conference Date',
+            'conf_venue' => 'Conference Venue',
+            'conf_url' => 'Conference Url',
+			'user_id' => 'Manager',
         ];
     }
+	
+	public function getUser(){
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
 }

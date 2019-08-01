@@ -12,27 +12,56 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="conference-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Create Conference', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <div class="card shadow mb-4">
+
+            <div class="card-body"><?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'conf_name',
-            'conf_abbr',
-            'conf_date',
+            
+            'conf_date:date',
             'conf_venue',
             //'conf_url:url',
+			
+			[
+				'attribute' => 'user_id',
+				'value' => function($model){
+					return $model->user->fullname;
+				}
+				
+			],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+                 'contentOptions' => ['style' => 'width: 13%'],
+                'template' => '{update} {delete}',
+                //'visible' => false,
+                'buttons'=>[
+                    'update'=>function ($url, $model) {
+                        return Html::a('<span class="fas fa-edit"></span>',['conference/update/', 'id' => $model->id],['class'=>'btn btn-warning btn-sm']);
+                    },
+                    'delete'=>function ($url, $model) {
+                        return Html::a('<span class="fas fa-trash"></span>', ['delete', 'id' => $model->id], [
+            'class' => 'btn btn-danger btn-sm',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this conference?',
+                'method' => 'post',
+            ],
+        ]) 
+;
+                    }
+                ],
+            
+            ],
+
         ],
-    ]); ?>
+    ]); ?></div>
+</div>
 </div>
