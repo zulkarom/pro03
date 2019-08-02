@@ -37,11 +37,12 @@ phpunit.phar
 # config
 /frontend/config
 /backend/config
-/commoon/
+/common/config
 
 # web
 /backend/web
 /ijeob/web
+/confmanager/web
 
 #uploaded
 
