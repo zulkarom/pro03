@@ -5,18 +5,33 @@ class MainAsset extends \yii\web\AssetBundle
 {
     public $sourcePath = '@confmanager/views/myasset';
     public $css = [
-		'styles/bootstrap4/bootstrap.min.css',
-		'plugins/font-awesome-4.7.0/css/font-awesome.min.css',
-		'styles/main_styles.css',
-		'styles/responsive.css'
+		'css/font-face.css',
+		'vendor/font-awesome-4.7/css/font-awesome.min.css',
+		'vendor/font-awesome-5/css/fontawesome-all.min.css',
+		'vendor/mdi-font/css/material-design-iconic-font.min.css',
+		'vendor/bootstrap-4.1/bootstrap.min.css',
+		'vendor/animsition/animsition.min.css',
+		'vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css',
+		'vendor/wow/animate.css',
+		'vendor/css-hamburgers/hamburgers.min.css',
+		'css/theme.css',
+
     ];
 	public $js = [
 		//'js/jquery-3.2.1.min.js',
-		'js/popper.min.js',
-		'styles/bootstrap4/bootstrap.min.js',
-		'plugins/easing/easing.js',
-		'js/custom.js',
-		'js/gauge.min.js',
+		'vendor/jquery-3.2.1.min.js',
+		'vendor/jquery-3.2.1.min.js',
+		'vendor/bootstrap-4.1/popper.min.js',
+		'vendor/bootstrap-4.1/bootstrap.min.js',
+		'vendor/slick/slick.min.js',
+		'vendor/wow/wow.min.js',
+		'vendor/animsition/animsition.min.js',
+		'vendor/bootstrap-progressbar/bootstrap-progressbar.min.js',
+		'vendor/counter-up/jquery.waypoints.min.js',
+		'vendor/counter-up/jquery.counterup.min.js',
+		'vendor/circle-progress/circle-progress.min.js',
+		'vendor/perfect-scrollbar/perfect-scrollbar.js',
+		'js/main.js'
 		
 	];
 

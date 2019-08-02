@@ -1,55 +1,52 @@
 <?php
 
-use yii\helpers\Html;
-use dmstr\widgets\Alert;
-
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-confmanager\models\LoginAsset::register($this);
+use yii\helpers\Html;
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
+use yii\widgets\Breadcrumbs;
+use common\widgets\Alert;
+use yii\helpers\Url;
 
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
+confmanager\assets\MainAsset::register($this);
+$dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="en">
+
 <head>
-    <meta charset="<?= Yii::$app->charset ?>"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
-	
-	<style>
-	body.external-page #main {
-	background : url("<?=$directoryAsset?>/img/jeli.jpg") center center no-repeat fixed;
-	background-size:cover;
-	}
-	.bg-light {
-	background-color:#fff;
-	}
-	.admin-form .panel-footer {
-	background-color:#fff;
-	border:none;
-	}
-	
-
-	</style>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<?= Html::csrfMetaTags() ?>
+    <meta name="description" content="conference">
+    <meta name="author" content="skyhint design">
+    <meta name="keywords" content="conference manager">
+     <title><?= Html::encode($this->title) ?></title>
+	<?php $this->head() ?>
 </head>
-<body class="external-page sb-l-c sb-r-c">
-    <!-- Start: Main -->
-	<div id="main" class="animated fadeIn login">
 
-		<!-- Start: Content-Wrapper -->
-		<section id="content_wrapper">
-
+<body class="animsition">
 <?php $this->beginBody() ?>
-	<?= Alert::widget() ?>
-    <?= $content ?>
+    <div class="page-wrapper">
+        <div class="page-content--bge5">
+            <div class="container">
+					
+<?=$content?>
+
+</div>
+</div>
+</div>
+
+	
+
+
 
 <?php $this->endBody() ?>
-</section>
-</div>
 </body>
+
 </html>
 <?php $this->endPage() ?>

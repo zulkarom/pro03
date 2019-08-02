@@ -12,12 +12,8 @@ use yii\helpers\Url;
 
 confmanager\assets\MainAsset::register($this);
 $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
-
-
-
 ?>
 <?php $this->beginPage() ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,35 +21,16 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset
     <!-- Required meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<?= Html::csrfMetaTags() ?>
     <meta name="description" content="conference">
     <meta name="author" content="skyhint design">
     <meta name="keywords" content="conference manager">
-
-    <!-- Title Page-->
-    <title>Dashboard</title>
-
-    <!-- Fontfaces CSS-->
-    <link href="<?=$dirAsset?>/css/font-face.css" rel="stylesheet" media="all">
-    <link href="<?=$dirAsset?>/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <link href="<?=$dirAsset?>/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
-    <link href="<?=$dirAsset?>/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-
-    <!-- Bootstrap CSS-->
-    <link href="<?=$dirAsset?>/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
-
-    <!-- Vendor CSS-->
-    <link href="<?=$dirAsset?>/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
-    <link href="<?=$dirAsset?>/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
-    <link href="<?=$dirAsset?>/vendor/wow/animate.css" rel="stylesheet" media="all">
-    <link href="<?=$dirAsset?>/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
-
-
-    <!-- Main CSS-->
-    <link href="<?=$dirAsset?>/css/theme.css" rel="stylesheet" media="all">
-
+     <title><?= Html::encode($this->title) ?></title>
+	<?php $this->head() ?>
 </head>
 
 <body class="animsition">
+<?php $this->beginBody() ?>
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
@@ -181,8 +158,10 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset
                                                 
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#">
-                                                    <i class="zmdi zmdi-power"></i>Logout</a>
+
+                                                    
+													
+													<?=Html::a('<i class="zmdi zmdi-power"></i>Logout</a>', ['site/logout'], ['data-method' => 'POST']);?>
                                             </div>
                                         </div>
                                     </div>
@@ -198,16 +177,26 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
+					
+						<div class="row">
+	<div class="col-md-2"></div>
+<div class="col-md-8">	<?= Alert::widget() ?></div>
+</div>
+
+</div>
+
+	
+	
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="overview-wrap">
-                                    <h2 class="title-1">overview</h2>
+                                    <h2 class="title-1"><?=$this->title?></h2>
           
                                 </div>
                             </div>
                         </div>
                         
-                        
+                        <?=$content?>
                         
                         
                         <div class="row">
@@ -226,30 +215,9 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset
 
     </div>
 
-    <!-- Jquery JS-->
-    <script src="<?=$dirAsset?>/vendor/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap JS-->
-    <script src="<?=$dirAsset?>/vendor/bootstrap-4.1/popper.min.js"></script>
-    <script src="<?=$dirAsset?>/vendor/bootstrap-4.1/bootstrap.min.js"></script>
-    <!-- Vendor JS       -->
-    <script src="<?=$dirAsset?>/vendor/slick/slick.min.js">
-    </script>
-    <script src="<?=$dirAsset?>/vendor/wow/wow.min.js"></script>
-    <script src="<?=$dirAsset?>/vendor/animsition/animsition.min.js"></script>
-    <script src="<?=$dirAsset?>/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-    </script>
-    <script src="<?=$dirAsset?>/vendor/counter-up/jquery.waypoints.min.js"></script>
-    <script src="<?=$dirAsset?>/vendor/counter-up/jquery.counterup.min.js">
-    </script>
-    <script src="<?=$dirAsset?>/vendor/circle-progress/circle-progress.min.js"></script>
-    <script src="<?=$dirAsset?>/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-    </script>
-
-    <!-- Main JS-->
-    <script src="<?=$dirAsset?>/js/main.js"></script>
-
+<?php $this->endBody() ?>
 </body>
 
 </html>
-<!-- end document-->
+<?php $this->endPage() ?>

@@ -34,114 +34,69 @@ $fieldOptions2 = [
     'inputTemplate' => "{input}<span class='glyphicon glyphicon-lock form-control-feedback'></span>"
 ];
 
-
-?>
-
-<?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
-
-
-                			
-
-			
-				<div class="block-content">
-
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<h2 class="section_title text-center">LOGIN PAGE </h2>
-				</div>
-
-			</div>
-			<br /><div style="padding-top:0px">
-					<div class="row">
-					<div class="col-sm-3"></div>
-						<div class="col-sm-6">
-														<div class="section">
-										
-														
-														
-														
-							<?php $form = ActiveForm::begin([
-                    'id' => 'login-form',
-                    'enableAjaxValidation' => true,
-                    'enableClientValidation' => false,
-                    'validateOnBlur' => false,
-                    'validateOnType' => false,
-                    'validateOnChange' => false,
-                ]) ?>							
-
-                <?php if ($module->debug): ?>
-                    <?= $form->field($model, 'login', [
-                        'inputOptions' => [
-                            'autofocus' => 'autofocus',
-                            'class' => 'form-control',
-                            'tabindex' => '1']])->dropDownList(LoginForm::loginList());
-                    ?>
-
-                <?php else: ?>
-				
-
-<?php 
 $fieldOptions1 = [
     'options' => ['class' => 'form-group has-feedback'],
     'inputTemplate' => "{input}<span class='fa fa-envelope form-control-feedback'></span>"
 ];
 ?>
 
-               <?=$form->field($model, 'login')
-						->label('EMAIL')
-            ->textInput()
-                    ;
-                    ?>
-					
-					</div>
-							<div class="section">
+<?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
 
-                <?php endif ?>
 
-                <?php if ($module->debug): ?>
-                    <div class="alert alert-warning">
-                        <?= Yii::t('user', 'Password is not necessary because the module is in DEBUG mode.'); ?>
-                    </div>
-                <?php else: ?>
+
+
+<div class="login-wrap">
+                    <div class="login-content">
+                        <div class="login-logo">
+                            <a href="#">
+                                CONFVALLEY MANAGER
+                            </a>
+                        </div>
+                        <div class="login-form">
+                           	<?php $form = ActiveForm::begin([
+                    'id' => 'login-form',
+                    'enableAjaxValidation' => true,
+                    'enableClientValidation' => false,
+                    'validateOnBlur' => false,
+                    'validateOnType' => false,
+                    'validateOnChange' => false,
+                ]) ?>	
 				
-                    <?= $form->field(
+				<?=$form->field($model, 'login')
+											->label('Email Address')
+								->textInput()
+										;
+										?>
+										
+				
+								
+								<?= $form->field(
                         $model,
                         'password')
                         ->passwordInput()
-                         ->label('PASSWORD')
+                         ->label('Password')
                            
                          ?>
-                <?php endif ?>
-
-                <?php /// $form->field($model, 'rememberMe')->checkbox(['tabindex' => '3']) ?>
-				
-				
-				 <?= Html::submitButton(
+						 
+						 
+                                <div class="login-checkbox">
+								<?=$form->field($model, 'rememberMe')->checkbox(['tabindex' => '3'])->label('Remember Me') ?>
+                                    
+                          
+                                </div>
+                      
+								
+								<?= Html::submitButton(
                     Yii::t('user', 'LOG IN'),
-                    ['class' => 'btn btn-primary']
+                    ['class' => 'au-btn au-btn--block au-btn--green m-b-20']
                 ) ?>
-				
-				</div>
-				</div>
-				</div>
-							<!-- end section -->
-							
-	
+                                
+                            <?php ActiveForm::end(); ?>
+                           
+                        </div>
+                    </div>
+					
 
-                
-
-<?php ActiveForm::end(); ?>
-
-
-				<br />
-         <div class="panel-footer clearfix p10 ph15">
-        
-        <?php if ($module->enableRegistration): ?>
-            <p class="text-center">
-                <?= Html::a('SIGN UP / REGISTRATION', ['/page/register']) ?>
-            </p>
-        <?php endif ?>
 		
 		<?php if ($module->enablePasswordRecovery): ?>
             <p class="text-center">
@@ -149,26 +104,10 @@ $fieldOptions1 = [
             </p>
         <?php endif ?>
 		
-		<?php if ($module->enableConfirmation): ?>
-            <p class="text-center">
-                <?= Html::a('RESEND EMAIL CONFIRMATION', ['/user/registration/resend']) ?>
-            </p>
-        <?php endif ?>
-		
-		
-		
-		
-		
-        <?= Connect::widget([
-            'baseAuthUrl' => ['/user/security/auth'],
-        ]) ?>
-		
-		</div>
-		
-				</div>			</div>
-</div>
+
+					
+					
+                </div>
 				
 				
-
-
-
+				<br />	<br />	<br />
