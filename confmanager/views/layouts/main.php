@@ -12,6 +12,14 @@ use yii\helpers\Url;
 
 confmanager\assets\MainAsset::register($this);
 $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
+$menu = [
+	['List of Conference', ['site/index'], 'home'],
+	['Dashboard', ['site/index'], 'tachometer-alt'],
+	['Paper Submission', ['site/index'], 'chart-bar'],
+	['Important Date', ['site/index'], 'table'],
+	['Conference Fees', ['site/index'], 'check-square'],
+]
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -51,23 +59,19 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset
             <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
-                       
-						<li>
-                            <a href="chart.html">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="chart.html">
-                                <i class="fas fa-chart-bar"></i>Submission</a>
-                        </li>
-                        <li>
-                            <a href="table.html">
-                                <i class="fas fa-table"></i>Important Dates</a>
-                        </li>
-                        <li>
-                            <a href="form.html">
-                                <i class="far fa-check-square"></i>Fees</a>
-                        </li>
+					
+					<?php 
+					
+					foreach($menu as $m){
+						echo '<li>
+                            <a href="'.Url::to($m[1]).'">
+                                <i class="fas fa-'.$m[2].'"></i>'.$m[0].'</a>
+                        </li>';
+					}
+					
+					
+					?>
+                      
                             </ul>
                         </li>
                     </ul>
@@ -86,23 +90,22 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
+					
+					
+					
+					<?php 
+					
+					foreach($menu as $m){
+						echo '<li>
+                            <a href="'.Url::to($m[1]).'">
+                                <i class="fas fa-'.$m[2].'"></i>'.$m[0].'</a>
+                        </li>';
+					}
+					
+					
+					?>
                         
-						<li>
-                            <a href="chart.html">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="chart.html">
-                                <i class="fas fa-chart-bar"></i>Submission</a>
-                        </li>
-                        <li>
-                            <a href="table.html">
-                                <i class="fas fa-table"></i>Important Dates</a>
-                        </li>
-                        <li>
-                            <a href="form.html">
-                                <i class="far fa-check-square"></i>Fees</a>
-                        </li>
+						
                       
                        
                     </ul>
