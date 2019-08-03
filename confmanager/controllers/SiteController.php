@@ -10,6 +10,8 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
 use yii\db\Expression;
+use backend\modules\conference\models\Conference;
+use confmanager\models\ConferenceSearch;
 
 /**
  * Site controller
@@ -67,8 +69,15 @@ class SiteController extends Controller
 		if(Yii::$app->user->isGuest){
 			$this->redirect('login');
 		}else{
-			return $this->render('member', [
-			]);
+			
+		$searchModel = new ConferenceSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('member', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+			
 		}
         
     }

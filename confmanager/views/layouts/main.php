@@ -46,7 +46,7 @@ $menu = [
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
                         <a class="logo" href="index.html">
-                           CONFVALLEY
+                           <img src="<?=$dirAsset?>/images/icon/logo.png" alt="CONFVALLEY" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -83,8 +83,8 @@ $menu = [
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
-                <a href="#">
-                    CONFVALLEY
+                <a href="<?=Url::to('site/index')?>">
+                   <img src="<?=$dirAsset?>/images/icon/logo.png" alt="CONFVALLEY" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
@@ -122,7 +122,7 @@ $menu = [
                     <div class="container-fluid">
                         <div class="header-wrap">
                             <form class="form-header" action="" method="POST">
-                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
+                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for papers..." />
                                 <button class="au-btn--submit" type="submit">
                                     <i class="zmdi zmdi-search"></i>
                                 </button>
@@ -137,7 +137,7 @@ $menu = [
                                             <img src="<?=$dirAsset?>/images/icon/avatar.jpg" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">Manager</a>
+                                            <a class="js-acc-btn" href="#"><?=Yii::$app->user->identity->fullname?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -148,9 +148,9 @@ $menu = [
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">Manager</a>
+                                                        <a href="#"><?=Yii::$app->user->identity->fullname?></a>
                                                     </h5>
-                                                    <span class="email">manager@confvalley.com</span>
+                                                    <span class="email"><?=Yii::$app->user->identity->email?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -198,7 +198,7 @@ $menu = [
                                 </div>
                             </div>
                         </div>
-                        
+                        <br />
                         <?=$content?>
                         
                         
