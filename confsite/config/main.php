@@ -48,6 +48,16 @@ return [
 				],
 			],
 		],
+		 'urlManager' => [
+            'enablePrettyUrl' => true,
+             'showScriptName' => false,
+            'rules' => [
+			'<confurl>' => 'site/index',
+			'<controller>/<action>' => '<controller>/<action>', 
+			
+			
+            ],
+        ],
         /* 'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
