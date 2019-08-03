@@ -11,7 +11,7 @@ use common\models\User;
  * @property int $id
  * @property string $conf_name
  * @property string $conf_abbr
- * @property string $conf_date
+ * @property string $date_start
  * @property string $conf_venue
  * @property string $conf_url
  */
@@ -31,8 +31,8 @@ class Conference extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['conf_name', 'conf_abbr', 'conf_date', 'conf_venue', 'conf_url', 'user_id'], 'required'],
-            [['conf_date'], 'safe'],
+            [['conf_name', 'conf_abbr', 'date_start', 'conf_venue', 'conf_url', 'user_id'], 'required'],
+            [['date_start'], 'safe'],
             [['conf_name', 'conf_venue'], 'string', 'max' => 200],
             [['conf_abbr'], 'string', 'max' => 50],
             [['conf_url'], 'string', 'max' => 100],
@@ -49,7 +49,7 @@ class Conference extends \yii\db\ActiveRecord
             'id' => 'ID',
             'conf_name' => 'Conference Name',
             'conf_abbr' => 'Conference Abbr',
-            'conf_date' => 'Conference Date',
+            'date_start' => 'Conference Date',
             'conf_venue' => 'Conference Venue',
             'conf_url' => 'Conference Url',
 			'user_id' => 'Manager',

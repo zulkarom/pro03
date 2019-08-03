@@ -9,7 +9,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myas
 
 
 
-<div class="card shadow mb-4">
+<div class="card">
 
             <div class="card-body">
 			
@@ -23,7 +23,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myas
 
             'conf_name',
             
-            'conf_date:date',
+            'date_start:date',
   
 
             ['class' => 'yii\grid\ActionColumn',

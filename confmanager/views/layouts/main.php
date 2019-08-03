@@ -12,10 +12,11 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset
 $menu = [
 	['List of Conference', ['site/index'], 'home'],
 	['Dashboard', ['site/index'], 'tachometer-alt'],
-	['Paper Submission', ['site/index'], 'chart-bar'],
+	['Paper Submission', ['site/index'], 'files-o'],
 	['Important Date', ['site/index'], 'table'],
-	['Conference Fees', ['site/index'], 'check-square'],
-	['Organized By', ['site/index'], 'check-square'],
+	['Conference Fees', ['site/index'], 'dollar-sign'],
+	['Organized By', ['site/index'], 'bank'],
+	['Secretariat', ['site/index'], 'phone'],
 ]
 ?>
 <?php $this->beginPage() ?>

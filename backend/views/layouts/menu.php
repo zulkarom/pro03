@@ -115,6 +115,8 @@ use backend\modules\journal\models\Journal;
 			<a class="collapse-item" href="<?=Url::to(['/conference/conference/create'])?>">New Conference <span class="badge badge-danger badge-counter"></span></a>
 			
 			<a class="collapse-item" href="<?=Url::to(['/conference/conference/index'])?>">List of Conference <span class="badge badge-info badge-counter"></span></a>
+			
+			<a class="collapse-item" href="<?=Url::to(['/conference/conference/faq'])?>">F.A.Q </a>
 
 			 
 			 

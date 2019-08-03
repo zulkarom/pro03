@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'conf_name',
             
-            'conf_date:date',
+            'date_start:date',
             'conf_venue',
             //'conf_url:url',
 			

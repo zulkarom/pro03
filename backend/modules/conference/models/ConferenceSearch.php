@@ -18,7 +18,7 @@ class ConferenceSearch extends Conference
     {
         return [
             [['id'], 'integer'],
-            [['conf_name', 'conf_abbr', 'conf_date', 'conf_venue', 'conf_url'], 'safe'],
+            [['conf_name', 'conf_abbr', 'date_start', 'conf_venue', 'conf_url'], 'safe'],
         ];
     }
 
@@ -59,7 +59,6 @@ class ConferenceSearch extends Conference
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'conf_date' => $this->conf_date,
         ]);
 
         $query->andFilterWhere(['like', 'conf_name', $this->conf_name])

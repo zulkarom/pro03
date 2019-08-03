@@ -40,6 +40,7 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
   <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
       <a class="navbar-brand" href="#">confsite</a>
+	  <a href="#">Sign In</a>
       <a class="btn btn-primary" href="#">Sign In</a>
     </div>
   </nav>
