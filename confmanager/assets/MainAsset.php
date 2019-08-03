@@ -1,6 +1,5 @@
 <?php
 namespace confmanager\assets;
-
 class MainAsset extends \yii\web\AssetBundle
 {
     public $sourcePath = '@confmanager/views/myasset';
@@ -15,7 +14,6 @@ class MainAsset extends \yii\web\AssetBundle
 		'vendor/wow/animate.css',
 		'vendor/css-hamburgers/hamburgers.min.css',
 		'css/theme.css',
-
     ];
 	public $js = [
 		//'js/jquery-3.2.1.min.js',
@@ -34,7 +32,6 @@ class MainAsset extends \yii\web\AssetBundle
 		'js/main.js'
 		
 	];
-
     public $depends = [
         //'rmrevin\yii\fontawesome\AssetBundle',
         'yii\web\YiiAsset',
@@ -42,5 +39,4 @@ class MainAsset extends \yii\web\AssetBundle
         //'yii\bootstrap\BootstrapAsset',
         //'yii\bootstrap\BootstrapPluginAsset',
     ];
-
 }

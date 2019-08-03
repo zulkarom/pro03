@@ -1,7 +1,7 @@
 <?php 
 
 $this->title = 'ETHICAL GUIDELINE';
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 ?>
 
 

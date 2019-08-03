@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \confmanager\models\SignupForm */
+/* @var $model \confsite\models\SignupForm */
 
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -16,7 +16,7 @@ use richardfan\widget\JSRegister;
 $this->title = 'JOURNAL REGISTRATION';
 $this->params['breadcrumbs'][] = $this->title;
 
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 
 
  $form = ActiveForm::begin([

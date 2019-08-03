@@ -1,11 +1,11 @@
 <?php
 
-namespace confmanager\assets;
+namespace confsite\assets;
 
 use yii\web\AssetBundle;
 
 /**
- * Main confmanager application asset bundle.
+ * Main confsite application asset bundle.
  */
 class AppAsset extends AssetBundle
 {

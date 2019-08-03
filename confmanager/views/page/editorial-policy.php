@@ -1,7 +1,7 @@
 <?php 
 $this->title = 'EDITORIAL POLICY';
 
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 ?>
 
 <img src="<?=$directoryAsset?>/img/background-simple.jpg" width="100%" />

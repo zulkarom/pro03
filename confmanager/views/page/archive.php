@@ -5,7 +5,7 @@ use yii\grid\GridView;
  
 $this->title = 'ARCHIVE';
 
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 ?>
 
 

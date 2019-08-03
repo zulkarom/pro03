@@ -3,7 +3,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model confmanager\models\ChangePasswordForm */
+/* @var $model confsite\models\ChangePasswordForm */
 /* @var $form ActiveForm */
  
 $this->title = 'Profile';

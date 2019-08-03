@@ -16,7 +16,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 
 /**
  * @var yii\web\View $this
@@ -49,7 +49,7 @@ $fieldOptions1 = [
                     <div class="login-content">
                         <div class="login-logo">
                             <a href="#">
-                                CONFVALLEY MANAGER
+                                confsite MANAGER
                             </a>
                         </div>
                         <div class="login-form">

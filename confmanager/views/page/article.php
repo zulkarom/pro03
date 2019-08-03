@@ -4,7 +4,7 @@ use yii\helpers\Url;
 
 
 $this->title= 'Article';
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 ?>
 
 

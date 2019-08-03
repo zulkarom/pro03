@@ -4,12 +4,12 @@ use yii\helpers\Url;
 use yii\grid\GridView;
 
 $this->title= 'CONFERENCES';
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 ?>
 
 
 
-<div class="card">
+<div class="card shadow mb-4">
 
             <div class="card-body">
 			

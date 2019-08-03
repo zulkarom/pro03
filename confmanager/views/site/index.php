@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 
 $this->title= 'yoo';
 
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 ?>
 	<!-- Home -->
 

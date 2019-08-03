@@ -1,15 +1,12 @@
 <?php
-
 /* @var $this \yii\web\View */
 /* @var $content string */
-
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 use yii\helpers\Url;
-
 confmanager\assets\MainAsset::register($this);
 $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
 $menu = [
@@ -18,8 +15,8 @@ $menu = [
 	['Paper Submission', ['site/index'], 'chart-bar'],
 	['Important Date', ['site/index'], 'table'],
 	['Conference Fees', ['site/index'], 'check-square'],
+	['Organized By', ['site/index'], 'check-square'],
 ]
-
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
