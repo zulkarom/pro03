@@ -59,7 +59,7 @@ class ConferenceSearch extends Conference
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            'id' => $this->id,f
         ]);
 
         return $dataProvider;
