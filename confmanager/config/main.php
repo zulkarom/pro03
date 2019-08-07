@@ -40,6 +40,15 @@ return [
         'request' => [
             'csrfParam' => '_csrf-confmanager',
         ],
+		 'urlManager' => [
+            'enablePrettyUrl' => true,
+             'showScriptName' => false,
+            'rules' => [
+			'<controller>/<action>' => '<controller>/<action>', 
+			
+			
+            ],
+        ],
 		
 		'view' => [
 			'theme' => [

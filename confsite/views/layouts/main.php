@@ -22,7 +22,7 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	 <?= Html::csrfMetaTags() ?>
-	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+	<link rel="icon" type="image/png" href="<?=$dirAsset?>/images/icons/favicon.png"/>
 	
 	<?php $this->head() ?>
 	
@@ -31,7 +31,7 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 	
 </head>
 <body class="animsition">
-
+<?php $this->beginBody() ?>
 	<!-- Header -->
 	<header class="header1" style="height:80px">
 		<!-- Header desktop -->
