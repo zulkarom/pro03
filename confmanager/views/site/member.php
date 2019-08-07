@@ -32,7 +32,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myas
                 //'visible' => false,
                 'buttons'=>[
                     'update'=>function ($url, $model) {
-                        return Html::a('<span class="fas fa-pencil-alt"></span> Update',['conference/update/', 'id' => $model->id],['class'=>'btn btn-warning btn-sm']);
+                        return Html::a('<span class="fas fa-pencil-alt"></span> Update',['conference/update/', 'conf' => $model->id],['class'=>'btn btn-warning btn-sm']);
                     },
                    
                 ],
