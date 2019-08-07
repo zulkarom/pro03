@@ -19,81 +19,141 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confvalley/views/myasset'
 <html lang="en">
 
 <head>
-
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <title>CONFVALLY.COM - CONFERENCE MANAGEMENT SYSTEM</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
 
-  <title>Landing Page - Start Bootstrap Theme</title>
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet">
 
-  <!-- Custom fonts for this template -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Custom styles for this template -->
-  <link href="css/landing-page.min.css" rel="stylesheet">
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/venobox/venobox.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
 
 </head>
 
 <body>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-light bg-light static-top">
+  <header id="header">
     <div class="container">
-      <a class="navbar-brand" href="#">CONFVALLEY</a>
-      <a class="btn btn-primary" href="#">Sign In</a>
+
+      <div id="logo" class="pull-left">
+        <!-- Uncomment below if you prefer to use a text logo -->
+        <h1><a href="#main">CONFVALLEY</a></h1>
+       <!--  <a href="#intro" class="scrollto"><img src="img/logo.png" alt="" title=""></a> -->
+      </div>
+
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li class="menu-active"><a href="#intro">Home</a></li>
+          <li><a href="#about">About</a></li>
+		  <li><a href="#schedule">Upcoming Conferences</a></li>
+          <li><a href="#">Login</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li class="buy-tickets"><a href="#buy-tickets">Register</a></li>
+        </ul>
+      </nav><!-- #nav-menu-container -->
     </div>
-  </nav>
-  <section class="showcase">
-    <div class="container-fluid p-0">
- <div class="row no-gutters">
-        <div class="col-lg-6 text-white showcase-img" style="background-image: url('img/bg-masthead.jpg');"></div>
-        <div class="col-lg-6 my-auto showcase-text">
-          <h2>CONVALLEY</h2>
-          <p class="lead mb-0">A Conference Management System that is easy to use in managing paper submission, registration, payment and paper review. It helps the conference organizers to work systematically in monitoring and making decision because the main process of organizing a conference using this conference management system is automatic.</p>
+  </header><!-- #header -->
+
+  <section id="intro">
+    <div class="intro-container wow fadeIn">
+      <h1 class="mb-4 pb-0">The <span>Conference</span><br>Management System</h1>
+      <p class="mb-4 pb-0">Effective Conference Management Event</p>
+  
+      <a href="#about" class="about-btn scrollto">About The System</a>
+    </div>
+  </section>
+
+  <main id="main">
+
+    <!--==========================
+      About Section
+    ============================-->
+
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h2>About The System</h2>
+            <p>A Conference Management System that is easy to use in managing paper submission, registration, payment and paper review. It helps the conference organizers to work systematically in monitoring and making decision because the main process of organizing a conference using this conference management system is automatic.</p>
+          </div>
+         
         </div>
       </div>
-	   </div>
-      </div>
-  <!-- Masthead -->
-  
-  
-  
-  
-
-  <!-- Icons Grid -->
-  <section class="features-icons bg-light text-center">
+    </section>
+	
+	
+	<section id="supporters" class="section-with-bg wow fadeInUp">
     <div class="container">
+	
+	<div class="section-header">
+          <h2>Advantages</h2>
+        </div>
+		<style>
+		.advantage{
+			text-align:center;
+		}
+		.advantage-icon{
+			font-size: 4.5rem;
+		}
+		.advantage-con{
+			margin-bottom:20px;
+		}
+		</style>
+		
       <div class="row">
-        <div class="col-lg-4">
-          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-              <i class="icon-screen-desktop m-auto text-primary"></i>
+        <div class="col-lg-3">
+          <div  class="advantage">
+            <div class="advantage-con">
+			<i class="fa fa-desktop" style="font-size: 4.5rem;"></i>
+
             </div>
             <h3>Event Registration</h3>
             <p class="lead mb-0">Set up dynamic, online registration with our event planning system. Easy to use, easy to monitor.</p>
           </div>
         </div>
-        <div class="col-lg-4">
-          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-              <i class="icon-layers m-auto text-primary"></i>
+		<div class="col-lg-3">
+          <div  class="advantage">
+            <div class="advantage-con">
+			<i class="fa fa-files-o" style="font-size: 4.5rem;"></i>
+
+            </div>
+            <h3>Online Submission</h3>
+            <p class="lead mb-0">Set up dynamic, online registration with our event planning system. Easy to use, easy to monitor.</p>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div  class="advantage">
+            <div class="advantage-con">
+			<i class="fa fa-envelope" style="font-size: 4.5rem;"></i>
+
             </div>
             <h3>Email Marketing</h3>
             <p class="lead mb-0">Personalise, send and track email invitations, reminders and other attendee communications.</p>
           </div>
         </div>
-        <div class="col-lg-4">
-          <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-              <i class="icon-check m-auto text-primary"></i>
+        <div class="col-lg-3">
+          <div  class="advantage">
+            <div class="advantage-con">
+			<i class="fa fa-dollar" style="font-size: 4.5rem;"></i>
+
             </div>
-            <h3>Payment Processing</h3>
+            <h3>Payment Process</h3>
             <p class="lead mb-0">njoy fast and secure event payment processed online and delivered directly into your bank account.</p>
           </div>
         </div>
@@ -101,130 +161,287 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confvalley/views/myasset'
     </div>
   </section>
 
-  <!-- Image Showcases -->
-  <section class="showcase">
-    <div class="container-fluid p-0">
-      <div class="row no-gutters">
 
-        <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-1.jpg');"></div>
-        <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-          <h2>Fully Responsive Design</h2>
-          <p class="lead mb-0">When you use a theme created by Start Bootstrap, you know that the theme will look great on any device, whether it's a phone, tablet, or desktop the page will behave responsively!</p>
-        </div>
-      </div>
-     
-      
-      </div>
-    </div>
-  </section>
 
-  <!-- Testimonials -->
-  <section class="testimonials text-center bg-light">
-    <div class="container">
-      <h2 class="mb-5">What people are saying...</h2>
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-            <img class="img-fluid rounded-circle mb-3" src="img/testimonials-1.jpg" alt="">
-            <h5>Margaret E.</h5>
-            <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
-          </div>
+    <!--==========================
+      Schedule Section
+    ============================-->
+    <section id="schedule" class="section-with-bg">
+      <div class="container wow fadeInUp">
+        <div class="section-header">
+          <h2>UPCOMING CONFERENCES</h2>
+          <p>Here is the upcoming conferences hosted by us</p>
         </div>
-        <div class="col-lg-4">
-          <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-            <img class="img-fluid rounded-circle mb-3" src="img/testimonials-2.jpg" alt="">
-            <h5>Fred S.</h5>
-            <p class="font-weight-light mb-0">"Bootstrap is amazing. I've been using it to create lots of super nice landing pages."</p>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-            <img class="img-fluid rounded-circle mb-3" src="img/testimonials-3.jpg" alt="">
-            <h5>Sarah W.</h5>
-            <p class="font-weight-light mb-0">"Thanks so much for making these free resources available to us!"</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Call to Action -->
-  <section class="call-to-action text-white text-center">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-9 mx-auto">
-          <h2 class="mb-4">Ready to get started? Sign up now!</h2>
-        </div>
-        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-          <form>
-            <div class="form-row">
-              <div class="col-12 col-md-9 mb-2 mb-md-0">
-                <input type="email" class="form-control form-control-lg" placeholder="Enter your email...">
-              </div>
-              <div class="col-12 col-md-3">
-                <button type="submit" class="btn btn-block btn-lg btn-primary">Sign up!</button>
+
+        <h3 class="sub-heading">Voluptatem nulla veniam soluta et corrupti consequatur neque eveniet officia. Eius
+          necessitatibus voluptatem quis labore perspiciatis quia.</h3>
+
+        <div class="tab-content row justify-content-center">
+
+          <!-- Schdule Day 1 -->
+          <div role="tabpanel" class="col-lg-9 tab-pane fade show active" id="day-1">
+
+            <div class="row schedule-item">
+              <div class="col-md-3"><time>12th November 2019</time></div>
+              <div class="col-md-9">
+                <h4>International Seminar on Entrepreneurship and Business 2019</h4>
+                <p>Hotel Perdana, Kota Bharu Kelantan Malaysia</p>
               </div>
             </div>
+			
+			<div class="row schedule-item">
+              <div class="col-md-3"><time>12th November 2019</time></div>
+              <div class="col-md-9">
+                <h4>International Seminar on Entrepreneurship and Business 2019</h4>
+                <p>Hotel Perdana, Kota Bharu Kelantan Malaysia</p>
+              </div>
+            </div>
+			
+			<div class="row schedule-item">
+              <div class="col-md-3"><time>12th November 2019</time></div>
+              <div class="col-md-9">
+                <h4>International Seminar on Entrepreneurship and Business 2019</h4>
+                <p>Hotel Perdana, Kota Bharu Kelantan Malaysia</p>
+              </div>
+            </div>
+			
+			<div class="row schedule-item">
+              <div class="col-md-3"><time>12th November 2019</time></div>
+              <div class="col-md-9">
+                <h4>International Seminar on Entrepreneurship and Business 2019</h4>
+                <p>Hotel Perdana, Kota Bharu Kelantan Malaysia</p>
+              </div>
+            </div>
+			
+			<div class="row schedule-item">
+              <div class="col-md-3"><time>12th November 2019</time></div>
+              <div class="col-md-9">
+                <h4>International Seminar on Entrepreneurship and Business 2019</h4>
+                <p>Hotel Perdana, Kota Bharu Kelantan Malaysia</p>
+              </div>
+            </div>
+			
+			<div class="row schedule-item">
+              <div class="col-md-3"><time>12th November 2019</time></div>
+              <div class="col-md-9">
+                <h4>International Seminar on Entrepreneurship and Business 2019</h4>
+                <p>Hotel Perdana, Kota Bharu Kelantan Malaysia</p>
+              </div>
+            </div>
+
+
+          </div>
+		  
+		  
+
+        </div>
+		
+		<div align="center" style="margin-top:20px;"><a href="#about" class="btn btn-danger">More Conferences</a></div>
+		
+		
+		
+
+      </div>
+
+    </section>
+
+ 
+   
+    <section id="subscribe">
+      <div class="container wow fadeInUp">
+        <div class="section-header">
+          <h2>Newsletter</h2>
+          <p>Rerum numquam illum recusandae quia mollitia consequatur.</p>
+        </div>
+
+        <form method="POST" action="#">
+          <div class="form-row justify-content-center">
+            <div class="col-auto">
+              <input type="text" class="form-control" placeholder="Enter your Email">
+            </div>
+            <div class="col-auto">
+              <button type="submit">Subscribe</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </section>
+
+    <!--==========================
+      Buy Ticket Section
+    ============================-->
+    
+
+    <!--==========================
+      Contact Section
+    ============================-->
+    <section id="contact" class="section-bg wow fadeInUp">
+
+      <div class="container">
+
+        <div class="section-header">
+          <h2>Contact Us</h2>
+          <p>Nihil officia ut sint molestiae tenetur.</p>
+        </div>
+
+        <div class="row contact-info">
+
+          <div class="col-md-4">
+            <div class="contact-address">
+              <i class="ion-ios-location-outline"></i>
+              <h3>Address</h3>
+              <address>A108 Adam Street, NY 535022, USA</address>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="contact-phone">
+              <i class="ion-ios-telephone-outline"></i>
+              <h3>Phone Number</h3>
+              <p><a href="tel:+155895548855">+1 5589 55488 55</a></p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="contact-email">
+              <i class="ion-ios-email-outline"></i>
+              <h3>Email</h3>
+              <p><a href="mailto:info@example.com">info@example.com</a></p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="form">
+          <div id="sendmessage">Your message has been sent. Thank you!</div>
+          <div id="errormessage"></div>
+          <form action="" method="post" role="form" class="contactForm">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                <div class="validation"></div>
+              </div>
+              <div class="form-group col-md-6">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                <div class="validation"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+              <div class="validation"></div>
+            </div>
+            <div class="form-group">
+              <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+              <div class="validation"></div>
+            </div>
+            <div class="text-center"><button type="submit">Send Message</button></div>
           </form>
         </div>
+
+      </div>
+    </section><!-- #contact -->
+
+  </main>
+
+
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-info">
+            <img src="img/logo.png" alt="TheEvenet">
+            <p>In alias aperiam. Placeat tempore facere. Officiis voluptate ipsam vel eveniet est dolor et totam porro. Perspiciatis ad omnis fugit molestiae recusandae possimus. Aut consectetur id quis. In inventore consequatur ad voluptate cupiditate debitis accusamus repellat cumque.</p>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="fa fa-angle-right"></i> <a href="#">Home</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="#">About us</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="#">Services</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="#">Terms of service</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="fa fa-angle-right"></i> <a href="#">Home</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="#">About us</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="#">Services</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="#">Terms of service</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Contact Us</h4>
+            <p>
+              A108 Adam Street <br>
+              New York, NY 535022<br>
+              United States <br>
+              <strong>Phone:</strong> +1 5589 55488 55<br>
+              <strong>Email:</strong> info@example.com<br>
+            </p>
+
+            <div class="social-links">
+              <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+              <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+              <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+              <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+              <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+            </div>
+
+          </div>
+
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="footer bg-light">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
-          <ul class="list-inline mb-2">
-            <li class="list-inline-item">
-              <a href="#">About</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Contact</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Terms of Use</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Privacy Policy</a>
-            </li>
-          </ul>
-          <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2019. All Rights Reserved.</p>
-        </div>
-        <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
-          <ul class="list-inline mb-0">
-            <li class="list-inline-item mr-3">
-              <a href="#">
-                <i class="fab fa-facebook fa-2x fa-fw"></i>
-              </a>
-            </li>
-            <li class="list-inline-item mr-3">
-              <a href="#">
-                <i class="fab fa-twitter-square fa-2x fa-fw"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#">
-                <i class="fab fa-instagram fa-2x fa-fw"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
+      <div class="copyright">
+        &copy; Copyright <strong>Confvalley.com</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!--
+          All the links in the footer should remain intact.
+          You can delete the links only if you purchased the pro version.
+          Licensing information: https://bootstrapmade.com/license/
+          Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=TheEvent
+        -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
       </div>
     </div>
-  </footer>
+  </footer><!-- #footer -->
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
 
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/jquery/jquery-migrate.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/superfish/hoverIntent.js"></script>
+  <script src="lib/superfish/superfish.min.js"></script>
+  <script src="lib/wow/wow.min.js"></script>
+  <script src="lib/venobox/venobox.min.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+  <!-- Contact Form JavaScript File -->
+  <script src="contactform/contactform.js"></script>
+
+  <!-- Template Main Javascript File -->
+  <script src="js/main.js"></script>
 </body>
 
 </html>
+
 
 <?php $this->endPage() ?>
