@@ -38,11 +38,16 @@ phpunit.phar
 /frontend/config
 /backend/config
 /common/config
+/confmanager/config
+/confsite/config
+/confvalley/config
 
 # web
 /backend/web
 /ijeob/web
 /confmanager/web
+/confsite/web
+/confvalley/web
 
 #uploaded
 
