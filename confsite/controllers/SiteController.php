@@ -53,8 +53,12 @@ class SiteController extends Controller
     public function actionIndex()
     {
 		$this->layout = 'main-list';
-		return $this->render('index', [
-		
+		$searchModel = new ConferenceSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
 		
     }

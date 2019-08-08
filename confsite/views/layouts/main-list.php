@@ -46,18 +46,8 @@ $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
 			<div class="col-md-1 col-lg-1 p-b-75">
 					
 				</div>
-				<div class="col-md-10 col-lg-6 p-b-75">
-					<div class="p-r-50 p-r-0-lg">
-						<!-- item blog -->
-						<div class="item-blog p-b-80">
-						
-<?= Alert::widget() ?>
-							<?=$content?>
-						</div>
-
-		
-						
-					</div>
+				<div class="col-md-10 col-lg-10 p-b-75">
+					<?=$content?>
 
 				</div>
 				

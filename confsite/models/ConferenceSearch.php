@@ -41,7 +41,7 @@ class ConferenceSearch extends Conference
      */
     public function search($params)
     {
-        $query = Conference::find()->where(['user_id' => Yii::$app->user->identity->id]);
+        $query = Conference::find();
 
         // add conditions that should always apply here
 
@@ -60,7 +60,6 @@ class ConferenceSearch extends Conference
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'conf_date' => $this->conf_date,
         ]);
 
         return $dataProvider;
