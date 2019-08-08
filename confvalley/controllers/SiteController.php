@@ -18,30 +18,6 @@ use confvalley\models\ConferenceSearch;
  */
 class SiteController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['signup', 'index', 'login', 'staff-login', 'download', 'public-submit', 'subscriber'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout', 'index', 'staff-login', 'public-submit'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-          
-        ];
-    }
 
     /**
      * @inheritdoc
