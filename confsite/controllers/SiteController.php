@@ -52,6 +52,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+		$this->layout = 'main-list';
 		return $this->render('index', [
 		
         ]);
@@ -70,19 +71,31 @@ class SiteController extends Controller
 		
     }
 	
+	public function actionMember($confurl=null)
+    {
+		$this->layout = 'main-member';
+		$model = $this->findConferenceByUrl($confurl);
+		
+		if($confurl){
+			return $this->render('member', [
+			'model' => $model
+        ]);
+		}
+		
+    }
+	
 	public function actionLogin($confurl=null)
     {
 		if (!Yii::$app->user->isGuest) {
-            //return $this->goHome();
+            return $this->redirect(['site/member', 'confurl' => $confurl]);
         }
 		
-		$conf = $this->findConferenceByUrl($confurl);
+		//$conf = $this->findConferenceByUrl($confurl);
 		
 		if($confurl){
 			$model = new LoginForm();
 			if ($model->load(Yii::$app->request->post()) && $model->login()) {
-				//return $this->goBack();
-				return $this->goHome();
+				return $this->redirect(['site/member', 'confurl' => $confurl]);
 			} else {
 				return $this->render('login', [
 					'model' => $model,
@@ -91,6 +104,13 @@ class SiteController extends Controller
 		}
 
     }
+	
+	public function actionLogout($confurl=null){
+		if($confurl){
+			Yii::$app->user->logout();
+			return $this->redirect(['site/login', 'confurl' => $confurl]);
+		}
+	}
 	
 	
 	protected function findConferenceByUrl($url)
@@ -103,18 +123,7 @@ class SiteController extends Controller
     }
 	
 	
-	
-    /**
-     * Logs out the current user.
-     *
-     * @return mixed
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
 
-        return $this->redirect(['/user/login']);
-    }
 
    
 	

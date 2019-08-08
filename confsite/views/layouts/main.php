@@ -35,140 +35,11 @@ $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
 <body class="animsition">
 <?php $this->beginBody() ?>
 	<!-- Header -->
-	<header class="header1" style="height:80px">
-		<!-- Header desktop -->
-		<div class="container-menu-header">
-
-
-			<div class="wrap_header">
-
-				<!-- Menu -->
-				<div class="wrap_menu">
-					<nav class="menu">
-						<ul class="main_menu">
-							<li>
-								<a href="<?=Url::to(['site/home', 'confurl' => $confurl])?>">Home</a>
-				
-							</li>
-
-							<li>
-								<a href="product.html">Submit Paper</a>
-							</li>
-
-							<li class="sale-noti">
-								<a href="<?=Url::to(['site/login', 'confurl' => $confurl])?>">Login</a>
-							</li>
-
-							<li>
-								<a href="cart.html">Register</a>
-							</li>
-
-					
-
-							<li>
-								<a href="contact.html">Contact Us</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
-
-				<!-- Header Icon -->
-				<div class="header-icons">
-					
-					
-					
-					<div class="header-wrapicon2">
-						<a href="#" class="header-icon1 js-show-header-dropdown">
-						<img src="images/icons/icon-header-01.png"  alt="ICON">
-						 Zulkarom </a>
-
-						<!-- Header cart noti -->
-						<div class="header-cart header-dropdown" style="width:240px">
-							
-
-							<div class="header-cart-total" style="text-align:left">
-								Profile
-							</div>
-
-							<div class="header-cart-buttons">
-						
-
-								<div class="header-cart-wrapbtn">
-									<!-- Button -->
-									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										Log Out
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				
-				</div>
-			</div>
-		</div>
-
-		<!-- Header Mobile -->
-		<div class="wrap_header_mobile">
-			<!-- Logo moblie -->
-			<a href="index.html" class="logo-mobile">
-				
-			</a>
-
-			<!-- Button show menu -->
-			<div class="btn-show-menu">
-				<!-- Header Icon mobile -->
-				<div class="header-icons-mobile">
-					<a href="#" class="header-wrapicon1 dis-block">
-						<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-					</a>
-
-					
-				</div>
-
-				<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
-					<span class="hamburger-box">
-						<span class="hamburger-inner"></span>
-					</span>
-				</div>
-			</div>
-		</div>
-
-		<!-- Menu Mobile -->
-		<div class="wrap-side-menu" >
-			<nav class="side-menu">
-				<ul class="main-menu">
-
-
-					<li class="item-menu-mobile">
-						<a href="index.html">Home</a>
-					</li>
-
-					<li class="item-menu-mobile">
-						<a href="product.html">Submit Paper</a>
-					</li>
-
-					<li class="item-menu-mobile">
-						<a href="product.html">Login</a>
-					</li>
-
-					<li class="item-menu-mobile">
-						<a href="cart.html">Register</a>
-					</li>
-
-					<li class="item-menu-mobile">
-						<a href="blog.html">Contact Us</a>
-					</li>
-
-					
-				</ul>
-			</nav>
-		</div>
-	</header>
+	<?=$this->render('header')?>
 
 	<!-- Title Page -->
 	<section class="bg-title-page flex-col-c-m">
-		<img src="images/banner.jpg" width="100%" />
+		<img src="<?=$dirAsset?>/images/banner.jpg" width="100%" />
 	</section>
 
 	<!-- content page -->
@@ -264,7 +135,7 @@ $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
 						<!-- item blog -->
 						<div class="item-blog p-b-80">
 						
-
+<?= Alert::widget() ?>
 							<?=$content?>
 						</div>
 

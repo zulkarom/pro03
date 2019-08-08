@@ -23,11 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="login-form">
                            	<?php $form = ActiveForm::begin([
                     'id' => 'login-form',
-                    'enableAjaxValidation' => true,
-                    'enableClientValidation' => false,
-                    'validateOnBlur' => false,
-                    'validateOnType' => false,
-                    'validateOnChange' => false,
                 ]) ?>	
 				
 				<?=$form->field($model, 'username')
