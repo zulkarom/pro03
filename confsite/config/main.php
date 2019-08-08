@@ -52,8 +52,9 @@ return [
             'enablePrettyUrl' => true,
              'showScriptName' => false,
             'rules' => [
-			'<confurl>' => 'site/index',
-			'<controller>/<action>' => '<controller>/<action>', 
+			'' => 'site/index',
+			'<confurl>' => 'site/home',
+			'<confurl>/<controller>/<action>' => '<controller>/<action>',
 			
 			
             ],

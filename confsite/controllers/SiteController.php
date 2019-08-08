@@ -12,6 +12,7 @@ use yii\web\ForbiddenHttpException;
 use yii\db\Expression;
 use backend\modules\conference\models\Conference;
 use confsite\models\ConferenceSearch;
+use common\models\LoginForm;
 
 /**
  * Site controller
@@ -24,11 +25,11 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
+            /* 'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index', ],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -38,7 +39,7 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                 ],
-            ],
+            ], */
           
         ];
     }
@@ -49,16 +50,46 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex($confurl=null)
+    public function actionIndex()
+    {
+		return $this->render('index', [
+		
+        ]);
+		
+    }
+	
+	public function actionHome($confurl=null)
     {
 		$model = $this->findConferenceByUrl($confurl);
 		
 		if($confurl){
-			return $this->render('index', [
+			return $this->render('home', [
 			'model' => $model
         ]);
 		}
 		
+    }
+	
+	public function actionLogin($confurl=null)
+    {
+		if (!Yii::$app->user->isGuest) {
+            //return $this->goHome();
+        }
+		
+		$conf = $this->findConferenceByUrl($confurl);
+		
+		if($confurl){
+			$model = new LoginForm();
+			if ($model->load(Yii::$app->request->post()) && $model->login()) {
+				//return $this->goBack();
+				return $this->goHome();
+			} else {
+				return $this->render('login', [
+					'model' => $model,
+				]);
+			}
+		}
+
     }
 	
 	

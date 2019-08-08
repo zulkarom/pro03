@@ -13,6 +13,8 @@ use yii\helpers\Url;
 confsite\assets\MainAsset::register($this);
 $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 
+$confurl = Yii::$app->getRequest()->getQueryParam('confurl');
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -45,7 +47,7 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 					<nav class="menu">
 						<ul class="main_menu">
 							<li>
-								<a href="index.html">Home</a>
+								<a href="<?=Url::to(['site/home', 'confurl' => $confurl])?>">Home</a>
 				
 							</li>
 
@@ -54,7 +56,7 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 							</li>
 
 							<li class="sale-noti">
-								<a href="product.html">Login</a>
+								<a href="<?=Url::to(['site/login', 'confurl' => $confurl])?>">Login</a>
 							</li>
 
 							<li>
