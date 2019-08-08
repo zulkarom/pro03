@@ -26,10 +26,13 @@ use backend\modules\conference\models\Conference;
 		  if($conferences){
 			  foreach($conferences as $conf){
 				  echo '<div class="row schedule-item">
-              <div class="col-md-3"><time>'.date('d M Y', strtotime($conf->date_start)) .'</time></div>
-              <div class="col-md-9">
+              <div class="col-md-2"><time>'.date('d M Y', strtotime($conf->date_start)) .'</time></div>
+              <div class="col-md-7">
                 <h4>'.$conf->conf_name .' ('.$conf->conf_abbr .')</p>
               </div>
+			  <div class="col-md-3">
+			  '.$conf->conf_venue.'
+			  </div>
             </div>';
 			  }
 		  }
