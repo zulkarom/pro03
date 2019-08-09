@@ -10,8 +10,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
 use yii\db\Expression;
-use backend\modules\conference\models\Conference;
-use confvalley\models\ConferenceSearch;
+use backend\modules\conference\models\Confvalley;
 
 /**
  * Site controller
@@ -26,7 +25,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+		$confv = Confvalley::findOne(1);
 		return $this->render('index', [
+			'confv' => $confv
         ]);
     }
 	

@@ -16,7 +16,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confvalley/views/my
 
           <div class="col-lg-3 col-md-6 footer-info">
             CONFVALLEY.COM
-            <p>A Conference Management System that is easy to use in managing paper submission, registration, payment and paper review. It helps the conference organizers to work systematically in monitoring and making decision because the main process of organizing a conference using this conference management system is automatic.</p>
+            <p><?=$confv->about?></p>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
