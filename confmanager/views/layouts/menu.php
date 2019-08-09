@@ -14,7 +14,7 @@ if(Yii::$app->getRequest()->getQueryParam('conf')){
 ];
 
 $sub = [
-	['Setting', ['site/index'], 'cog', null],
+	['Website', ['site/index'], 'globe', null],
 	['Users', ['site/index'], 'users', 120],
 	['Papers', ['site/index'], 'files-o', 12],
 	['Important Date', ['site/index'], 'calendar', null],

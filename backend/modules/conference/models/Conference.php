@@ -39,6 +39,8 @@ class Conference extends \yii\db\ActiveRecord
 			
             [['conf_name', 'conf_venue'], 'string', 'max' => 200],
 			
+			[['conf_background', ], 'string'],
+			
             [['conf_abbr'], 'string', 'max' => 50],
             [['conf_url'], 'string', 'max' => 100],
 			[['conf_url'], 'unique'],
