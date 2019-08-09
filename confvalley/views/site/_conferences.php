@@ -12,9 +12,6 @@ use backend\modules\conference\models\Conference;
         </div>
 
 
-        <h3 class="sub-heading">Voluptatem nulla veniam soluta et corrupti consequatur neque eveniet officia. Eius
-          necessitatibus voluptatem quis labore perspiciatis quia.</h3>
-
         <div class="tab-content row justify-content-center">
 
           <!-- Schdule Day 1 -->
@@ -49,7 +46,9 @@ use backend\modules\conference\models\Conference;
 
         </div>
 		
-		<div align="center" style="margin-top:20px;"><a href="#about" class="btn btn-danger">More Conferences</a></div>
+		<div align="center" style="margin-top:30px;"><a href="#about" class="red-button">More Conferences</a> </div>
+		
+		
 		
 		
 		

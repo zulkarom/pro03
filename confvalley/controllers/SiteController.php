@@ -20,22 +20,6 @@ class SiteController extends Controller
 {
 
     /**
-     * @inheritdoc
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-        ];
-    }
-
-    /**
      * Displays homepage.
      *
      * @return mixed
@@ -45,14 +29,6 @@ class SiteController extends Controller
 		return $this->render('index', [
         ]);
     }
-	
-	public function actionPublicSubmit(){
-		if(Yii::$app->user->isGuest){
-			return $this->redirect(['page/submission-guideline']);
-		}else{
-			return $this->redirect(['submission/create']);
-		}
-	}
 	
 	public function actionSubscriber(){
 		$model = new Subscriber;
@@ -64,110 +40,6 @@ class SiteController extends Controller
 		}
 	}
 	
-	/* public function actionDownload($article){
-		
-        $model = $this->findArticle($article);
-		
-		Upload::download($model, 'cameraready', 'article');
-	}*/
-	
-	public function actionDownload($volume, $issue, $publish_number){
-		
-		$all = $volume.$issue;
-		
-		$len = strlen((string)$all);
-		
-		if($len == 4){
-			$first = $all[0];
-			$second = $all[1];
-			$third = $all[2];
-			$forth = $all[3];
-			
-			if($first == '0'){
-				$volume = $second;
-			}else{
-				$volume = $first.$second;
-			}
-			
-			if($third == '0'){
-				$issue = $forth;
-			}else{
-				$issue = $third.$forth;
-			}
-		}else if($len == 5){
-			$first = $all[0];
-			$second = $all[1];
-			$third = $all[2];
-			$forth = $all[3];
-			$fifth = $all[4];
-			
-			$volume = $first.$second.$third;
-			
-			if($forth == '0'){
-				$issue = $fifth;
-			}else{
-				$issue = $forth.$fifth;
-			}
-		}
-		
-        $model = $this->searchArticle($volume, $issue, $publish_number);
-		
-		
-		
-		Upload::download($model, 'cameraready', 'article');
-	} 
-	
-	/**
-     * Finds the Article model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Article the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findArticle($id)
-    {
-        if (($model = Article::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-	
-	/**
-     * Finds the Article model based on its attributes.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @return Article the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-	 
-    protected function searchArticle($volume, $issue, $publish_number)
-    {
-        if (($model = Article::find()
-        ->innerJoin('jeb_journal_issue', 'jeb_journal_issue.id = jeb_article.journal_issue_id')
-         ->where(['jeb_journal_issue.volume' => $volume, 'jeb_journal_issue.issue' => $issue, 'jeb_article.publish_number' => $publish_number])
-        ->one()) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-	
-	protected function findPageIdentity()
-    {
-		$id = Yii::$app->user->identity->id;
-		$customer = Customer::findOne(['user_id' => $id]);
-        if (($model = Page::findOne(['customer_id' => $customer->id ])) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-
-    /**
-     * Logs in a user.
-     *
-     * @return mixed
-     */
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -222,15 +94,6 @@ class SiteController extends Controller
         }
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return mixed
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
 
     /**
      * Signs user up.
@@ -301,37 +164,6 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
-    }
-	
-	public function actionStaffLogin($id, $token, $redirect = '', $action = '', $article = 0)
-    {
-		if (!Yii::$app->user->isGuest) {
-            Yii::$app->user->logout();
-        }
-		
-		$last5 = time() - (60);
-		
-		$db = UserToken::find()
-		->where(['user_id' => $id, 'token' => $token])
-		->andWhere('created_at > ' . $last5)
-		->one();
-		
-		if($db){
-		   $user = User::findIdentity($id);
-			if(Yii::$app->user->login($user)){
-				if($redirect){
-					return $this->redirect([$redirect . '/' . $action, 'id' => $article]);
-				}else{
-					return $this->goHome();
-				}
-			}
-		}else{
-			//echo 'failed';
-			throw new ForbiddenHttpException;
-		}
-		
-       
-		
     }
 	
 	
