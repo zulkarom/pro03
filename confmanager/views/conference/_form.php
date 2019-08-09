@@ -7,6 +7,9 @@ use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 use common\models\User;
+use common\models\UploadFile;
+
+$model->file_controller = 'conference';
 
 /* @var $this yii\web\View */
 /* @var $model backend\modules\conference\models\Conference */
@@ -46,12 +49,13 @@ use common\models\User;
 	
 <?= $form->field($model, 'conf_background')->textarea(['rows' => 5])->label('Background') ?>
 
-
-
-
+<!-- for image -->
+<?=UploadFile::fileInput($model, 'banner', true)?>
+Dimensions (px) : 1349 x 316
+<br /><br />
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save Setting', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

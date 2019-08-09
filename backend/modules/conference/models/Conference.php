@@ -17,6 +17,9 @@ use common\models\User;
  */
 class Conference extends \yii\db\ActiveRecord
 {
+	public $banner_instance;
+	public $file_controller;
+
     /**
      * {@inheritdoc}
      */
@@ -32,11 +35,19 @@ class Conference extends \yii\db\ActiveRecord
     {
         return [
             [['conf_name', 'conf_abbr', 'date_start', 'conf_venue', 'conf_url', 'user_id'], 'required'],
-            [['date_start'], 'safe'],
+            [['date_start', 'updated_at', 'created_at'], 'safe'],
+			
             [['conf_name', 'conf_venue'], 'string', 'max' => 200],
+			
             [['conf_abbr'], 'string', 'max' => 50],
             [['conf_url'], 'string', 'max' => 100],
 			[['conf_url'], 'unique'],
+			
+			[['user_id', 'created_by'], 'integer'],
+			
+			[['banner_file'], 'required', 'on' => 'banner_upload'],
+            [['banner_instance'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png', 'maxSize' => 2000000],
+            [['updated_at'], 'required', 'on' => 'banner_delete'],
         ];
     }
 

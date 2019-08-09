@@ -9,11 +9,14 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 use yii\helpers\Url;
+use backend\modules\conference\models\Conference;
 
 confsite\assets\MainAsset::register($this);
 $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 
 $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
+//$conf = Conference::findOne(['conf_url' => $confurl]);
+
 
 ?>
 <?php $this->beginPage() ?>
@@ -39,7 +42,7 @@ $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
 
 	<!-- Title Page -->
 	<section class="bg-title-page flex-col-c-m">
-		<img src="<?=$dirAsset?>/images/banner.jpg" width="100%" />
+		<img src="<?=Url::to(['site/download-file', 'attr' => 'banner', 'url'=> $confurl])?>" width="100%" />
 	</section>
 
 	<!-- content page -->

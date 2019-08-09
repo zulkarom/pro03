@@ -13,6 +13,7 @@ use yii\db\Expression;
 use backend\modules\conference\models\Conference;
 use confsite\models\ConferenceSearch;
 use common\models\LoginForm;
+use common\models\UploadFile;
 
 /**
  * Site controller
@@ -126,10 +127,24 @@ class SiteController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 	
+	public function actionDownloadFile($attr, $url, $identity = true){
+        $attr = $this->clean($attr);
+        $model = $this->findConferenceByUrl($url);
+        $filename = strtoupper($attr);
+        UploadFile::download($model, $attr, $filename);
+    }
 	
+	protected function clean($string){
+        $allowed = ['banner'];
+        
+        foreach($allowed as $a){
+            if($string == $a){
+                return $a;
+            }
+        }
+        
+        throw new NotFoundHttpException('Invalid Attribute');
 
-
-   
-	
+    }
 	
 }
