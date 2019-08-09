@@ -30,7 +30,7 @@
             <div class="contact-email">
               <i class="ion-ios-email-outline"></i>
               <h3>Email</h3>
-              <p><a href="mailto:info@example.com">info@example.com</a></p>
+              <p><a href="mailto:info@example.com"><?=$confv->email_to?></a></p>
             </div>
           </div>
 

@@ -44,14 +44,15 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confvalley/views/my
           <div class="col-lg-3 col-md-6 footer-contact">
             <h4>Contact Us</h4>
             <p>
-			1830 - C, Pengkalan Nangka<br />
-16100 Kota Bharu, Kelantan<br />
-Malaysia	<br />
+			<?=nl2br($confv->address)?>	<br />
 	
 
-              <strong>Phone:</strong> 09-774 3100 / 
-010 342 3095<br>
-              <strong>Email:</strong> info@example.com<br>
+              <strong>Phone:</strong> 
+			  <a href="tel:<?=$confv->phone1?>"><?=$confv->phone1?></a> / 
+			  <a href="tel:<?=$confv->phone2?>"><?=$confv->phone2?></a>
+			  
+		<br>
+              <strong>Email:</strong> <a href="mailto:info@example.com"><?=$confv->email_to?></a><br>
             </p>
 
             <div class="social-links">
