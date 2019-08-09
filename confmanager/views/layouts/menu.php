@@ -2,17 +2,32 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 use yii\helpers\Url;
+use backend\modules\conference\models\Conference;
+$conf = null;
 
 $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
-$menu = [
-	['List of Conference', ['site/index'], 'home'],
-	['Dashboard', ['site/index'], 'tachometer-alt'],
-	['Paper Submission', ['site/index'], 'files-o'],
-	['Important Date', ['site/index'], 'table'],
-	['Conference Fees', ['site/index'], 'dollar-sign'],
-	['Organized By', ['site/index'], 'bank'],
-	['Secretariat', ['site/index'], 'phone'],
-]
+if(Yii::$app->getRequest()->getQueryParam('conf')){
+	$conf = Conference::findOne(Yii::$app->getRequest()->getQueryParam('conf'));
+	$menu = [
+	['List of Conference', ['site/index'], 'home', null],
+	
+];
+
+$sub = [
+	['Setting', ['site/index'], 'cog', null],
+	['Users', ['site/index'], 'users', 120],
+	['Papers', ['site/index'], 'files-o', 12],
+	['Important Date', ['site/index'], 'calendar', null],
+	['Fees', ['site/index'], 'dollar-sign', null],
+	['Organized By', ['site/index'], 'bank', null],
+	['Secretariat', ['site/index'], 'phone', null]
+];
+}else{
+	$menu = [
+	['List of Conference', ['site/index'], 'home', null],
+];
+}
+
 ?>
         <header class="header-mobile d-block d-lg-none">
             <div class="header-mobile__bar">
@@ -71,12 +86,47 @@ $menu = [
 					foreach($menu as $m){
 						echo '<li>
                             <a href="'.Url::to($m[1]).'">
-                                <i class="fas fa-'.$m[2].'"></i>'.$m[0].'</a>
-                        </li>';
+                                <i class="fas fa-'.$m[2].'"></i>'.$m[0].'</a> ';
+						
+						
+                        echo '</li>';
 					}
 					
 					
 					?>
+					
+					
+					<?php if(Yii::$app->getRequest()->getQueryParam('conf')){?>
+					
+					<li class="has-sub">
+                            <a class="js-arrow open" href="#">
+                                <i class="fas fa-trophy"></i> <?=$conf->conf_abbr?>
+                                <span class="arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </span>
+                            </a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list" style="display:block">
+								<?php 
+						
+								foreach($sub as $s){
+									echo '<li>
+										<a href="'.Url::to($s[1]).'">
+											<i class="fas fa-'.$s[2].'"></i>'.$s[0].' <span class="badge badge-primary">'.$s[3].'</span></a>';
+											
+								
+									echo '</li>';
+								}
+
+
+								
+								?>
+                                
+                            </ul>
+                        </li>
+					
+					<?php } ?>
+					
+					
                         
 						
                       

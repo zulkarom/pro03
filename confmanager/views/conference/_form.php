@@ -23,7 +23,7 @@ use common\models\User;
     <?= $form->field($model, 'conf_name')->textInput(['maxlength' => true]) ?>
 	
 	<div class="row">
-<div class="col-md-4"><?= $form->field($model, 'conf_abbr')->textInput(['maxlength' => true]) ?></div>
+<div class="col-md-4"><?= $form->field($model, 'conf_abbr')->textInput(['maxlength' => true])->label('Abbreviation') ?></div>
 
 <div class="col-md-4"> <?=$form->field($model, 'date_start')->widget(DatePicker::classname(), [
     'removeButton' => false,
@@ -42,15 +42,13 @@ use common\models\User;
 </div>
 
     
-
-	
-
-
-
-
     <?= $form->field($model, 'conf_venue')->textInput(['maxlength' => true]) ?>
+	
+<?= $form->field($model, 'conf_background')->textarea(['rows' => 5])->label('Background') ?>
 
-    <?= $form->field($model, 'conf_url')->textInput(['maxlength' => true]) ?>
+
+
+
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
