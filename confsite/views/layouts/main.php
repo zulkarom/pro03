@@ -59,10 +59,10 @@ $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
 							MENU
 						</h4>
 
-						<ul>
+						<ul class="style-menu">
 							<li class="p-t-6 p-b-8 bo6">
 								<a href="#" class="s-text13 p-t-5 p-b-5">
-									CALL FOR PAPERS
+									REGISTRATION & SUBMISSION
 								</a>
 							</li>
 							
@@ -77,6 +77,24 @@ $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
 									IMPORTANT DATES
 								</a>
 							</li>
+							
+							<li class="p-t-6 p-b-8 bo7">
+								<a href="#" class="s-text13 p-t-5 p-b-5">
+									FEES AND PAYMENT
+								</a>
+							</li>
+							
+							<li class="p-t-6 p-b-8 bo7">
+								<a href="#" class="s-text13 p-t-5 p-b-5">
+								PUBLICATION
+								</a>
+							</li>
+							
+							<li class="p-t-6 p-b-8 bo7">
+								<a href="#" class="s-text13 p-t-5 p-b-5">
+								AWARD
+								</a>
+							</li>
 
 							<li class="p-t-6 p-b-8 bo7">
 								<a href="#" class="s-text13 p-t-5 p-b-5">
@@ -84,11 +102,7 @@ $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
 								</a>
 							</li>
 
-							<li class="p-t-6 p-b-8 bo7">
-								<a href="#" class="s-text13 p-t-5 p-b-5">
-									FEES AND PAYMENT
-								</a>
-							</li>
+							
 
 							<li class="p-t-6 p-b-8 bo7">
 								<a href="#" class="s-text13 p-t-5 p-b-5">
@@ -103,7 +117,7 @@ $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
 							RESOURCES
 						</h4>
 
-						<ul>
+						<ul class="style-menu">
 							<li class="p-t-6 p-b-8 bo6">
 								<a href="#" class="s-text13 p-t-5 p-b-5">
 									BROCHURES
@@ -158,7 +172,7 @@ $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
 							ANNOUNCEMENTS
 						</h4>
 
-						<ul>
+						<ul class="style-menu">
 							<li class="p-t-6 p-b-8 bo6">
 								<a href="#" class="s-text13 p-t-5 p-b-5">
 									All of u invited to the conference, thank you
@@ -174,7 +188,7 @@ $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
 							IMPORTANT DATES
 						</h4>
 
-						<ul>
+						<ul class="style-menu">
 							<li class="p-t-6 p-b-8 bo6">
 								<a href="#" class="s-text13 p-t-5 p-b-5">
 									Early Bird Deadline: 23 August 2019

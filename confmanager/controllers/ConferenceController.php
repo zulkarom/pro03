@@ -68,6 +68,19 @@ class ConferenceController extends Controller
             'model' => $model,
         ]);
     }
+	
+    public function actionDates($conf)
+    {
+        $model = $this->findModel($conf);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['site/index']);
+        }
+
+        return $this->render('dates', [
+            'model' => $model,
+        ]);
+    }
 
 
     /**

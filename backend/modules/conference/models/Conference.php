@@ -39,7 +39,7 @@ class Conference extends \yii\db\ActiveRecord
 			
             [['conf_name', 'conf_venue'], 'string', 'max' => 200],
 			
-			[['conf_background', ], 'string'],
+			 [['conf_background', 'conf_scope', 'conf_lang', 'conf_publication', 'conf_contact', 'conf_submission', 'payment_info'], 'string'],
 			
             [['conf_abbr'], 'string', 'max' => 50],
             [['conf_url'], 'string', 'max' => 100],
@@ -72,5 +72,11 @@ class Conference extends \yii\db\ActiveRecord
 	public function getUser(){
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+	
+	public function getConfDates()
+    {
+        return $this->hasMany(ConfDate::className(), ['conf_id' => 'id']);
+    }
+
 
 }

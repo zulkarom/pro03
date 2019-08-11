@@ -7,21 +7,21 @@ $conf = null;
 
 $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
 if(Yii::$app->getRequest()->getQueryParam('conf')){
-	$conf = Conference::findOne(Yii::$app->getRequest()->getQueryParam('conf'));
-	$menu = [
+$confurl = Yii::$app->getRequest()->getQueryParam('conf');
+$conf = Conference::findOne(Yii::$app->getRequest()->getQueryParam('conf'));
+$menu = [
 	['List of Conference', ['site/index'], 'home', null],
-	
 ];
-
 $sub = [
-	['Website', ['site/index'], 'globe', null],
+	['Website', ['conference/update', 'conf' => $confurl], 'globe', null],
 	['Users', ['site/index'], 'users', 120],
 	['Papers', ['site/index'], 'files-o', 12],
-	['Important Date', ['site/index'], 'calendar', null],
+	['Important Date', ['conference/dates', 'conf' => $confurl], 'calendar', null],
 	['Fees', ['site/index'], 'dollar-sign', null],
 	['Organized By', ['site/index'], 'bank', null],
 	['Secretariat', ['site/index'], 'phone', null]
 ];
+
 }else{
 	$menu = [
 	['List of Conference', ['site/index'], 'home', null],

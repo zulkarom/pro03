@@ -131,11 +131,22 @@ p {
 	margin: 0px;
 }
 
-ul, li {
+
+
+ul.style-menu, ul.style-menu li {
 	margin: 0px;
 	list-style-type: none;
 }
 
+ul.main_menu, ul.main_menu li {
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul, li {
+	margin: 15px;
+ 	/*list-style-type: none; */
+}
 
 /* ------------------------------------ */
 input {

@@ -21,7 +21,8 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myas
 								
 
 								<p class="p-b-12">
-									<?=nl2br($model->conf_background)?></p>
+									<?=nl2br($model->conf_background)?>
+								</p>
 
 
 						
@@ -38,27 +39,70 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myas
 								
 
 								<p class="p-b-12">
-									The following is by no means an exhaustive list but it gives an idea of the topics that could possibly be discussed by participants at the event.</p>
+									<?=$model->conf_scope?></p>
 									
-									<ul>
-					<li class="p-b-9">
-						<a href="#" >
-							Men
-						</a>
-					</li>
+								
+							</div>
+							
+							<?php if($model->conf_lang){ ?>
+							<div class="item-blog-txt p-t-33">
+								<h4 class="p-b-11">
+									<a href="blog-detail.html" class="m-text24">
+										Language
+									</a>
+								</h4>
 
-					<li class="p-b-9">
-						<a href="#" >
-							Women
-						</a>
-					</li>
+								
 
-			
-				</ul>
-
+								<p class="p-b-12">
+									<?=$model->conf_lang?></p>
 									
+								
+							</div>
+							<?php } ?>
+							
+							<?php if($model->conf_publication){ ?>
+							
+							<div class="item-blog-txt p-t-33">
+								<h4 class="p-b-11">
+									<a href="blog-detail.html" class="m-text24">
+										Publication
+									</a>
+								</h4>
+
+									<?=$model->conf_publication?>
 									
+								
+							</div>
+							<?php } ?>
+							
+							
+							<div class="item-blog-txt p-t-33">
+								<h4 class="p-b-11">
+									<a href="blog-detail.html" class="m-text24">
+										Registration and Submission
+									</a>
+								</h4>
 
+								
 
+								<p class="p-b-12">
+									<?=$model->conf_submission?></p>
+									
+								
+							</div>
+							
+							<div class="item-blog-txt p-t-33">
+								<h4 class="p-b-11">
+									<a href="blog-detail.html" class="m-text24">
+										Contact Person
+									</a>
+								</h4>
+
+								
+
+								<p class="p-b-12">
+									<?=$model->conf_contact?></p>
+									
 								
 							</div>
