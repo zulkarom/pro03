@@ -4,13 +4,16 @@ namespace confmanager\controllers;
 
 use Yii;
 use backend\modules\conference\models\Conference;
+use backend\modules\conference\models\ConfDate;
 use backend\modules\conference\models\ConferenceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\UploadFile;
+use common\models\Model;
 use yii\helpers\Json;
+use yii\helpers\ArrayHelper;
 use yii\db\Expression;
 
 /**
@@ -69,19 +72,7 @@ class ConferenceController extends Controller
         ]);
     }
 	
-    public function actionDates($conf)
-    {
-        $model = $this->findModel($conf);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['site/index']);
-        }
-
-        return $this->render('dates', [
-            'model' => $model,
-        ]);
-    }
-
+    
 
     /**
      * Finds the Conference model based on its primary key value.
@@ -162,6 +153,168 @@ class ConferenceController extends Controller
         
         UploadFile::download($model, $attr, $filename);
     }
+
+
+	public function actionDates($conf)
+    {
+		$model = $this->findModel($conf);
+		$dates = $model->confDates;
+       
+        if ($model->load(Yii::$app->request->post())) {
+            
+            $model->updated_at = new Expression('NOW()');    
+            
+            $oldIDs = ArrayHelper::map($dates, 'id', 'id');
+			
+            
+            $dates = Model::createMultiple(ConfDate::classname(), $dates);
+            
+            Model::loadMultiple($dates, Yii::$app->request->post());
+			
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($dates, 'id', 'id')));
+	
+			foreach ($dates as $i => $date) {
+                $date->date_order = $i;
+            }
+			
+			print_r(ArrayHelper::map($dates, 'id', 'date_name'));
+			//die();
+			
+			
+            $valid = $model->validate();
+            
+            $valid = Model::validateMultiple($dates) && $valid;
+            
+            if ($valid) {
+
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if (! empty($deletedIDs)) {
+                            ConfDate::deleteAll(['id' => $deletedIDs]);
+                        }
+                        foreach ($dates as $i => $date) {
+                            if ($flag === false) {
+                                break;
+                            }
+                            //do not validate this in model
+                            $date->conf_id = $model->id;
+
+                            if (!($flag = $date->save(false))) {
+                                break;
+                            }
+                        }
+
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+                            Yii::$app->session->addFlash('success', "Dates updated");
+							return $this->redirect(['dates','conf' => $conf]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    
+                }
+            }
+
+        
+        
+       
+
+    }
+	
+	 return $this->render('dates', [
+            'model' => $model,
+            'dates' => (empty($dates)) ? [new ConfDate] : $dates
+        ]);
+	
+	
+	
+	}
+	
+	public function actionDownloads($conf)
+    {
+		$model = $this->findModel($conf);
+		$dates = $model->confDates;
+       
+        if ($model->load(Yii::$app->request->post())) {
+            
+            $model->updated_at = new Expression('NOW()');    
+            
+            $oldIDs = ArrayHelper::map($dates, 'id', 'id');
+			
+            
+            $dates = Model::createMultiple(ConfDate::classname(), $dates);
+            
+            Model::loadMultiple($dates, Yii::$app->request->post());
+			
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($dates, 'id', 'id')));
+	
+			foreach ($dates as $i => $date) {
+                $date->date_order = $i;
+            }
+			
+			print_r(ArrayHelper::map($dates, 'id', 'date_name'));
+			//die();
+			
+			
+            $valid = $model->validate();
+            
+            $valid = Model::validateMultiple($dates) && $valid;
+            
+            if ($valid) {
+
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if (! empty($deletedIDs)) {
+                            ConfDate::deleteAll(['id' => $deletedIDs]);
+                        }
+                        foreach ($dates as $i => $date) {
+                            if ($flag === false) {
+                                break;
+                            }
+                            //do not validate this in model
+                            $date->conf_id = $model->id;
+
+                            if (!($flag = $date->save(false))) {
+                                break;
+                            }
+                        }
+
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+                            Yii::$app->session->addFlash('success', "Dates updated");
+							return $this->redirect(['dates','conf' => $conf]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    
+                }
+            }
+
+        
+        
+       
+
+    }
+	
+	 return $this->render('downloads', [
+            'model' => $model,
+            'dates' => (empty($dates)) ? [new ConfDate] : $dates
+        ]);
+	
+	
+	
+	}
+
 
 
 }

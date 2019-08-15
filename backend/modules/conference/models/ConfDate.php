@@ -32,9 +32,16 @@ class ConfDate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['conf_id', 'date_name', 'date_start', 'date_end', 'published'], 'required'],
-            [['conf_id', 'date_name', 'published'], 'integer'],
+            [['date_name', 'date_start'], 'required'],
+			
+            [['conf_id', 'published', 'date_order'], 'integer'],
+			
+			[['date_name'], 'string'],
+			
+			
             [['date_start', 'date_end'], 'safe'],
+			
+			
             [['conf_id'], 'exist', 'skipOnError' => true, 'targetClass' => Conference::className(), 'targetAttribute' => ['conf_id' => 'id']],
         ];
     }

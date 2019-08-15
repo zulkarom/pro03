@@ -75,7 +75,7 @@ class Conference extends \yii\db\ActiveRecord
 	
 	public function getConfDates()
     {
-        return $this->hasMany(ConfDate::className(), ['conf_id' => 'id']);
+        return $this->hasMany(ConfDate::className(), ['conf_id' => 'id'])->orderBy('date_order ASC');
     }
 
 

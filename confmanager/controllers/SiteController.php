@@ -28,12 +28,12 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['signup', 'index', 'login', 'staff-login', 'download', 'public-submit', 'subscriber'],
+                        'actions' => ['signup', 'index', 'login', 'staff-login', 'download', 'public-submit', 'subscriber', 'error'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index', 'staff-login', 'public-submit'],
+                        'actions' => ['logout', 'index', 'staff-login', 'public-submit', 'error'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -153,51 +153,7 @@ class SiteController extends Controller
 		Upload::download($model, 'cameraready', 'article');
 	} 
 	
-	/**
-     * Finds the Article model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Article the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findArticle($id)
-    {
-        if (($model = Article::findOne($id)) !== null) {
-            return $model;
-        }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-	
-	/**
-     * Finds the Article model based on its attributes.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @return Article the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-	 
-    protected function searchArticle($volume, $issue, $publish_number)
-    {
-        if (($model = Article::find()
-        ->innerJoin('jeb_journal_issue', 'jeb_journal_issue.id = jeb_article.journal_issue_id')
-         ->where(['jeb_journal_issue.volume' => $volume, 'jeb_journal_issue.issue' => $issue, 'jeb_article.publish_number' => $publish_number])
-        ->one()) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-	
-	protected function findPageIdentity()
-    {
-		$id = Yii::$app->user->identity->id;
-		$customer = Customer::findOne(['user_id' => $id]);
-        if (($model = Page::findOne(['customer_id' => $customer->id ])) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
 
     /**
      * Logs in a user.
@@ -339,36 +295,6 @@ class SiteController extends Controller
         ]);
     }
 	
-	public function actionStaffLogin($id, $token, $redirect = '', $action = '', $article = 0)
-    {
-		if (!Yii::$app->user->isGuest) {
-            Yii::$app->user->logout();
-        }
-		
-		$last5 = time() - (60);
-		
-		$db = UserToken::find()
-		->where(['user_id' => $id, 'token' => $token])
-		->andWhere('created_at > ' . $last5)
-		->one();
-		
-		if($db){
-		   $user = User::findIdentity($id);
-			if(Yii::$app->user->login($user)){
-				if($redirect){
-					return $this->redirect([$redirect . '/' . $action, 'id' => $article]);
-				}else{
-					return $this->goHome();
-				}
-			}
-		}else{
-			//echo 'failed';
-			throw new ForbiddenHttpException;
-		}
-		
-       
-		
-    }
 	
 	
 }
