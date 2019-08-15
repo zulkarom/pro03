@@ -16,7 +16,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confvalley/views/my
 
       <div id="logo" class="pull-left">
         <!-- Uncomment below if you prefer to use a text logo -->
-        <h1><a href="#main">CONFVALLEY</a></h1>
+        <h1><a href="#main"><span style="color:#f82249">CONF</span>VALLEY</a></h1>
        <!--  <a href="#intro" class="scrollto"><img src="img/logo.png" alt="" title=""></a> -->
       </div>
 
