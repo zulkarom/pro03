@@ -2,13 +2,16 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 use common\models\User;
+use common\models\Country;
 use common\models\UploadFile;
 use dosamigos\tinymce\TinyMce;
+
 
 $model->file_controller = 'conference';
 
@@ -52,93 +55,102 @@ $model->file_controller = 'conference';
 
 <!-- for image -->
 <?=UploadFile::fileInput($model, 'banner', true)?>
-Dimensions (px) : 1349 x 316
+<i>Dimensions (px) : 1349 x 316 </i>
+<br /><br />
+<div class="row">
+<div class="col-md-3">
+<?php 
+if(empty($model->currency_int)){
+	$model->currency_int = 'USD';
+}
+$arr_curr = ArrayHelper::map(Country::find()->all(), 'currency_code', 'currency_code');
+echo $form->field($model, 'currency_int')->widget(Select2::classname(), [
+    'data' => $arr_curr,
+    'language' => 'en',
+    'options' => ['multiple' =>false,'placeholder' => 'Select...'],
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+]);
+
+?>
+
+</div>
+<div class="col-md-3"><?php echo $form->field($model, 'currency_local')->widget(Select2::classname(), [
+    'data' => $arr_curr,
+    'language' => 'en',
+    'options' => ['multiple' =>false,'placeholder' => 'Select...'],
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+]);
+
+?></div>
+
+
+
+</div>
+
+
 <br /><br />
 
+<?php 
+$plugin = [
+            "advlist autolink lists link charmap",
+            "searchreplace visualblocks code fullscreen",
+            "paste"
+        ];
+$toolbar = "undo redo | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent link code | fontselect fontsizeselect styleselect ";
+
+$options = [
+        'plugins' => $plugin,
+		'menubar' => false,
+        'toolbar' => $toolbar
+    ];
+
+?>
+
+<?= $form->field($model, 'announcement')->widget(TinyMce::className(), [
+    'options' => ['rows' => 2],
+    'language' => 'en',
+    'clientOptions' => $options
+])->label('Announcement');?>
 
 
 <?= $form->field($model, 'conf_background')->widget(TinyMce::className(), [
     'options' => ['rows' => 14],
     'language' => 'en',
-    'clientOptions' => [
-        'plugins' => [
-            "advlist autolink lists link charmap",
-            "searchreplace visualblocks code fullscreen",
-            "paste"
-        ],
-		'menubar' => false,
-        'toolbar' => "undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
-    ]
+    'clientOptions' => $options
 ])->label('Background');?>
 
 <?= $form->field($model, 'conf_scope')->widget(TinyMce::className(), [
     'options' => ['rows' => 14],
     'language' => 'en',
-    'clientOptions' => [
-        'plugins' => [
-            "advlist autolink lists link charmap",
-            "searchreplace visualblocks code fullscreen",
-            "paste"
-        ],
-		'menubar' => false,
-        'toolbar' => "undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
-    ]
+    'clientOptions' => $options
 ])->label('Scope');?>
 
 <?= $form->field($model, 'conf_lang')->widget(TinyMce::className(), [
     'options' => ['rows' => 5],
     'language' => 'en',
-    'clientOptions' => [
-        'plugins' => [
-            "advlist autolink lists link charmap",
-            "searchreplace visualblocks code fullscreen",
-            "paste"
-        ],
-		'menubar' => false,
-        'toolbar' => "undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
-    ]
+    'clientOptions' => $options
 ])->label('Language');?>
 
 <?= $form->field($model, 'conf_publication')->widget(TinyMce::className(), [
-    'options' => ['rows' => 14],
+    'options' => ['rows' => 18],
     'language' => 'en',
-    'clientOptions' => [
-        'plugins' => [
-            "advlist autolink lists link charmap",
-            "searchreplace visualblocks code fullscreen",
-            "paste"
-        ],
-		'menubar' => false,
-        'toolbar' => "undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
-    ]
+    'clientOptions' => $options
 ])->label('Publication');?>
 
 <?= $form->field($model, 'conf_submission')->widget(TinyMce::className(), [
-    'options' => ['rows' => 10],
+    'options' => ['rows' => 14],
     'language' => 'en',
-    'clientOptions' => [
-        'plugins' => [
-            "advlist autolink lists link charmap",
-            "searchreplace visualblocks code fullscreen",
-            "paste"
-        ],
-		'menubar' => false,
-        'toolbar' => "undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
-    ]
+    'clientOptions' => $options
 ])->label('Registration Submission');?>
 
 <?= $form->field($model, 'conf_contact')->widget(TinyMce::className(), [
     'options' => ['rows' => 5],
     'language' => 'en',
-    'clientOptions' => [
-        'plugins' => [
-            "advlist autolink lists link charmap",
-            "searchreplace visualblocks code fullscreen",
-            "paste"
-        ],
-		'menubar' => false,
-        'toolbar' => "undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
-    ]
+    'clientOptions' => $options
 ])->label('Contact');?>
 
 

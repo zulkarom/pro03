@@ -141,7 +141,7 @@ $conf = Conference::findOne(['conf_url' => $confurl]);
 
 					</div>
 				</div>
-				<div class="col-md-6 col-lg-6 p-b-75">
+				<div class="col-md-9 col-lg-9 p-b-75">
 					<div class="p-r-50 p-r-0-lg">
 						<!-- item blog -->
 						<div class="item-blog p-b-80">
@@ -156,55 +156,7 @@ $conf = Conference::findOne(['conf_url' => $confurl]);
 
 				</div>
 				
-				<div class="col-md-3 col-lg-3 p-b-75">
-					<div class="rightbar">
-						<!-- Search -->
-
-
-						<!-- Categories -->
-						<h4 class="m-text23 p-t-56 p-b-34">
-							ANNOUNCEMENTS
-						</h4>
-
-						<ul class="style-menu">
-							<li class="p-t-6 p-b-8 bo6">
-								<span class="s-text13 p-t-5 p-b-5">
-									<?=$conf->announcement?>
-								</span>
-							</li>
-							
-						
-							
-						</ul>
-						
-						<!-- Categories -->
-						<h4 class="m-text23 p-t-56 p-b-34">
-							IMPORTANT DATES
-						</h4>
-
-						<ul class="style-menu">
-						<?php 
-						
-						$dates = $conf->confDates;
-						if($dates){
-							foreach($dates as $date){
-								echo '<li class="p-t-6 p-b-8 bo7">
-								<a href="#" class="s-text13 p-t-5 p-b-5">
-									'.$date->date_name .': <br /><strong style="margin-left:20px"><i class="fa fa-calendar"></i> '.date('d F Y', strtotime($date->date_start)) .'</strong>
-								</a>
-							</li>';
-							}
-						}
-						
-						?>
-						
-						
-
-							
-						</ul>
-
-					</div>
-				</div>
+				
 
 				
 			</div>

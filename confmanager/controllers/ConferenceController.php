@@ -68,7 +68,8 @@ class ConferenceController extends Controller
         $model = $this->findModel($conf);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['site/index']);
+			Yii::$app->session->addFlash('success', "Data Updated");
+            return $this->redirect(['update', 'conf' => $conf]);
         }
 
         return $this->render('update', [

@@ -35,11 +35,14 @@ class Conference extends \yii\db\ActiveRecord
     {
         return [
             [['conf_name', 'conf_abbr', 'date_start', 'conf_venue', 'conf_url', 'user_id'], 'required'],
+			
             [['date_start', 'updated_at', 'created_at'], 'safe'],
 			
             [['conf_name', 'conf_venue'], 'string', 'max' => 200],
 			
-			 [['conf_background', 'conf_scope', 'conf_lang', 'conf_publication', 'conf_contact', 'conf_submission', 'payment_info'], 'string'],
+			 [['conf_background', 'conf_scope', 'conf_lang', 'conf_publication', 'conf_contact', 'conf_submission', 'payment_info', 'announcement'], 'string'],
+			 
+			 [['currency_local', 'currency_int'], 'string', 'max' => 10],
 			
             [['conf_abbr'], 'string', 'max' => 50],
             [['conf_url'], 'string', 'max' => 100],
@@ -66,6 +69,8 @@ class Conference extends \yii\db\ActiveRecord
             'conf_venue' => 'Conference Venue',
             'conf_url' => 'Conference Url',
 			'user_id' => 'Manager',
+			'currency_int' => 'International Currency',
+			'currency_local' => 'Local Currency'
         ];
     }
 	

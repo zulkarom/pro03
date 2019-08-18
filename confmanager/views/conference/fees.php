@@ -12,6 +12,11 @@ use yii\jui\JuiAsset;
 $this->title = 'FEES: ' . $model->conf_abbr;
 $this->params['breadcrumbs'][] = ['label' => 'Conferences', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Fees';
+
+$local = $model->currency_local;
+$int = $model->currency_int;
+
+$curr = [$local => $local, $int=>$int];
 ?>
 <div class="conference-update">
 
@@ -46,8 +51,9 @@ $this->params['breadcrumbs'][] = 'Fees';
             <tr>
                 <th width="5%"></th>
                 <th>Category</th>
-                <th width="18%">Early Bird</th>
-				<th width="18%">Normal</th>
+				<th width="15%">Currency</th>
+                <th width="15%">Early Bird</th>
+				<th width="15%">Normal</th>
                 <th class="text-center" width="5%">
                     
                 </th>
@@ -69,13 +75,18 @@ $this->params['breadcrumbs'][] = 'Fees';
                     ?>
                     <?= $form->field($fee, "[{$i}]fee_name")->label(false) ?>
                 </td>
+				
+				<td class="vcenter">
+          
+                    <?= $form->field($fee, "[{$i}]fee_currency")->dropDownList($curr)->label(false); ?>
+
+                    
+
+                </td>
                 
                 <td class="vcenter">
           
-                    <?= $form->field($fee, "[{$i}]fee_amount", [
-    'addon' => ['prepend' => ['content'=> Yii::$app->formatter->currencyCode]]
-
-])->label(false); ?>
+                    <?= $form->field($fee, "[{$i}]fee_early")->label(false); ?>
 
                     
 
@@ -83,10 +94,7 @@ $this->params['breadcrumbs'][] = 'Fees';
 				
 				<td class="vcenter">
           
-                   <?= $form->field($fee, "[{$i}]fee_early", [
-    'addon' => ['prepend' => ['content'=> Yii::$app->formatter->currencyCode]]
-
-])->label(false); ?>
+                   <?= $form->field($fee, "[{$i}]fee_amount")->label(false); ?>
  
                     
 
@@ -102,7 +110,7 @@ $this->params['breadcrumbs'][] = 'Fees';
         <tfoot>
             <tr>
             <td></td>
-                <td colspan="3">
+                <td colspan="4">
                 <button type="button" class="add-date btn btn-default btn-sm"><span class="fa fa-plus"></span> New Fee</button>
                 
                 </td>

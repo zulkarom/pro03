@@ -32,7 +32,7 @@ class ConfFee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fee_name', 'fee_amount', 'fee_early'], 'required'],
+            [['fee_name', 'fee_amount', 'fee_early', 'fee_currency'], 'required'],
 			
 			
             [['conf_id', 'minimum_paper', 'fee_order'], 'integer'],
@@ -42,6 +42,7 @@ class ConfFee extends \yii\db\ActiveRecord
             [['valid_until'], 'safe'],
 			
             [['fee_name'], 'string', 'max' => 200],
+			[['fee_currency'], 'string', 'max' => 10],
         ];
     }
 
