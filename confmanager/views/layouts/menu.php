@@ -17,8 +17,8 @@ $sub = [
 	['Users', ['site/index'], 'users', 120],
 	['Papers', ['site/index'], 'files-o', 12],
 	['Important Date', ['conference/dates', 'conf' => $confurl], 'calendar', null],
-	['Downloads', ['conference/downloads'], 'download', null],
-	['Fees', ['site/index'], 'dollar-sign', null],
+	['Downloads', ['download/index','conf' => $confurl], 'download', null],
+	['Fees', ['conference/fees', 'conf' => $confurl], 'dollar-sign', null],
 	['Organized By', ['site/index'], 'bank', null],
 	['Secretariat', ['site/index'], 'phone', null]
 ];

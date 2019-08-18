@@ -37,9 +37,9 @@ $unique = $attr_name . '_' . $model->id;
 <div class="fileupload-buttonbar" id="btn_<?=$unique ?>" <?=$style_btn?>>
     <div>
         <!-- The fileinput-button span is used to style the file input field as button -->
-        <span class="btn btn-success fileinput-button">
+        <span class="btn btn-success btn-sm fileinput-button">
             <i class="glyphicon glyphicon-plus"></i>
-            <span><?= Yii::t('jqueryfileupload', 'Muat Naik') ?>...</span>
+            <span><?= Yii::t('jqueryfileupload', 'Upload File') ?></span>
 
             <?php
 			
@@ -80,10 +80,10 @@ if($model->{$db_file}){
 	if($ext == 'pdf'){
 		$link = Url::to('@web/images/') . 'pdf.png';
 	}else{
-		$link = Url::to([$model->file_controller . '/download', 'attr' => $attr_name, 'id' => $model->id]);
+		$link = Url::to([$model->file_controller . '/download-file', 'attr' => $attr_name, 'id' => $model->id]);
 	}
 	?>
-	<a href="<?=Url::to([$model->file_controller . '/download', 'attr' => $attr_name, 'id' => $model->id])?>" target="_blank">
+	<a href="<?=Url::to([$model->file_controller . '/download-file', 'attr' => $attr_name, 'id' => $model->id])?>" target="_blank">
 			<img src="<?=$link?>" width="60" /></a>
 	<?php
 	
@@ -106,14 +106,14 @@ if($model->{$db_file}){
 <div class="col-md-4">
 <div class="form-group" id="action_<?=$unique?>" <?=$style_file?>>
 
-<a href="<?=Url::to([$model->file_controller . '/download', 'attr' => $attr_name, 'id' => $model->id])?>" id="download_<?=$attr?>" target="_blank" class="btn btn-success"><span class="fa fa-download"></span></a> 
+<a href="<?=Url::to([$model->file_controller . '/download-file', 'attr' => $attr_name, 'id' => $model->id])?>" id="download_<?=$attr?>" target="_blank" class="btn btn-success btn-sm"><span class="fa fa-download"></span></a> 
 
-<a href="#" id="remove_<?=$unique?>" class="btn btn-danger" data-type="DELETE" data-url="<?=Url::to([$model->file_controller . '/delete', 'attr' => $attr_name, 'id' => $model->id])?>" title="Delete"><span class="fa fa-remove"></span></a>
+<a href="#" id="remove_<?=$unique?>" class="btn btn-danger btn-sm" data-type="DELETE" data-url="<?=Url::to([$model->file_controller . '/delete-file', 'attr' => $attr_name, 'id' => $model->id])?>" title="Delete"><span class="fa fa-remove"></span></a>
 
 
 
 </div>
-<div id="action_del_<?=$unique?>" <?=$style_btn?>> <a href="<?=Url::to([$model->file_controller . '/delete-row', 'id' => $model->id])?>" id="remove_db_<?=$unique?>" class="btn btn-danger" title="Delete"><span class="fa fa-remove"></span></a>
+<div id="action_del_<?=$unique?>" <?=$style_btn?>> <a href="<?=Url::to([$model->file_controller . '/delete-row', 'id' => $model->id, 'conf' => $model->conf_id])?>" id="remove_db_<?=$unique?>" class="btn btn-danger btn-sm" title="Delete"><span class="fa fa-remove"></span></a>
 </div>
 
 
@@ -146,7 +146,7 @@ $('#remove_$unique ').click(function(e, data){
 			$('#action_$unique ').hide();
 			$('#btn_$unique ').show();
 			$('#img_$unique ').html('');
-			link.html('<span class=\"glyphicon glyphicon-remove\"></span>');
+			link.html('<span class=\"fa fa-remove\"></span>');
 			link.attr('disabled', false);
 		}else if(result.good == 2){
 			$('#fileupload-container-$unique ').remove();

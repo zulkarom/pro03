@@ -4,8 +4,7 @@ namespace confmanager\controllers;
 
 use Yii;
 use backend\modules\conference\models\Conference;
-use backend\modules\conference\models\ConfDate;
-use backend\modules\conference\models\ConferenceSearch;
+use backend\modules\conference\models\ConfDownload;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -19,7 +18,7 @@ use yii\db\Expression;
 /**
  * ConferenceController implements the CRUD actions for Conference model.
  */
-class ConferenceController extends Controller
+class DownloadController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -46,9 +45,33 @@ class ConferenceController extends Controller
      * Lists all Conference models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($conf)
     {
+		$model = $this->findConference($conf);
+		$downloads = $model->confDownloads;
+		
+		if(Yii::$app->request->post()){
+            if(Yii::$app->request->validateCsrfToken()){
+                $post = Yii::$app->request->post('ConfDownload');
+				if($post){
+					foreach(array_filter($post) as $pdata){
+						$id = $pdata["id"];
+						$d = $this->findModel($id);
+						$d->download_name = $pdata['download_name'];
+						$d->save();
+					}
+					return $this->redirect(['index', 'conf' => $conf]);
+				}
+				
+            }
+            
+        }
 
+	
+		return $this->render('download', [
+            'model' => $model,
+            'downloads' => $downloads
+        ]);
     }
 
 
@@ -72,6 +95,15 @@ class ConferenceController extends Controller
         ]);
     }
 	
+	public function actionCreate($conf){
+		$model = new ConfDownload;
+		$model->scenario = 'create';
+		$model->conf_id = $conf;
+		if($model->save()){
+			return $this->redirect(['index', 'conf' => $conf]);
+		}
+	}
+	
     
 
     /**
@@ -83,27 +115,34 @@ class ConferenceController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Conference::findOne($id)) !== null) {
+        if (($model = ConfDownload::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 	
-	
+	protected function findConference($id)
+    {
+        if (($model = Conference::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
 
 
 	public function actionUploadFile($attr, $id){
         $attr = $this->clean($attr);
         $model = $this->findModel($id);
-        $model->file_controller = 'conference';
+        $model->file_controller = 'download';
 
         return UploadFile::upload($model, $attr, 'updated_at');
 
     }
 
 	protected function clean($string){
-        $allowed = ['banner'];
+        $allowed = ['download'];
         
         foreach($allowed as $a){
             if($string == $a){
@@ -114,6 +153,13 @@ class ConferenceController extends Controller
         throw new NotFoundHttpException('Invalid Attribute');
 
     }
+	
+	public function actionDeleteRow($id, $conf){
+		$model = $this->findModel($id);
+		if($model->delete()){
+			$this->redirect(['index', 'conf' => $conf]);
+		}
+	}
 
 	public function actionDeleteFile($attr, $id)
     {
@@ -154,89 +200,5 @@ class ConferenceController extends Controller
         
         UploadFile::download($model, $attr, $filename);
     }
-
-
-	public function actionDates($conf)
-    {
-		$model = $this->findModel($conf);
-		$dates = $model->confDates;
-       
-        if ($model->load(Yii::$app->request->post())) {
-            
-            $model->updated_at = new Expression('NOW()');    
-            
-            $oldIDs = ArrayHelper::map($dates, 'id', 'id');
-			
-            
-            $dates = Model::createMultiple(ConfDate::classname(), $dates);
-            
-            Model::loadMultiple($dates, Yii::$app->request->post());
-			
-            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($dates, 'id', 'id')));
-	
-			foreach ($dates as $i => $date) {
-                $date->date_order = $i;
-            }
-			
-			print_r(ArrayHelper::map($dates, 'id', 'date_name'));
-			//die();
-			
-			
-            $valid = $model->validate();
-            
-            $valid = Model::validateMultiple($dates) && $valid;
-            
-            if ($valid) {
-
-                $transaction = Yii::$app->db->beginTransaction();
-                try {
-                    if ($flag = $model->save(false)) {
-                        if (! empty($deletedIDs)) {
-                            ConfDate::deleteAll(['id' => $deletedIDs]);
-                        }
-                        foreach ($dates as $i => $date) {
-                            if ($flag === false) {
-                                break;
-                            }
-                            //do not validate this in model
-                            $date->conf_id = $model->id;
-
-                            if (!($flag = $date->save(false))) {
-                                break;
-                            }
-                        }
-
-                    }
-
-                    if ($flag) {
-                        $transaction->commit();
-                            Yii::$app->session->addFlash('success', "Dates updated");
-							return $this->redirect(['dates','conf' => $conf]);
-                    } else {
-                        $transaction->rollBack();
-                    }
-                } catch (Exception $e) {
-                    $transaction->rollBack();
-                    
-                }
-            }
-
-        
-        
-       
-
-    }
-	
-	 return $this->render('dates', [
-            'model' => $model,
-            'dates' => (empty($dates)) ? [new ConfDate] : $dates
-        ]);
-	
-	
-	
-	}
-	
-
-
 
 }
