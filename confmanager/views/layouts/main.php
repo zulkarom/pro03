@@ -102,8 +102,7 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset
                     <div class="container-fluid">
 					
 						<div class="row">
-	<div class="col-md-2"></div>
-<div class="col-md-8">	<?= Alert::widget() ?></div>
+<div class="col-md-12">	<?= Alert::widget() ?></div>
 </div>
 
 </div>

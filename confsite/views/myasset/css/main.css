@@ -131,22 +131,22 @@ p {
 	margin: 0px;
 }
 
-
+ul, li {
+	margin: 15px;
+ 	/*list-style-type: none; */
+}
 
 ul.style-menu, ul.style-menu li {
 	margin: 0px;
 	list-style-type: none;
 }
 
-ul.main_menu, ul.main_menu li {
+ul.main_menu, ul.main_menu li  {
 	margin: 0px;
 	list-style-type: none;
 }
 
-ul, li {
-	margin: 15px;
- 	/*list-style-type: none; */
-}
+
 
 /* ------------------------------------ */
 input {
@@ -1068,6 +1068,7 @@ li.sale-noti > a {
 
 .item-menu-mobile {
   background-color: #e65540;
+  margin: 0px;
 }
 
 .side-menu .main-menu > li > a {

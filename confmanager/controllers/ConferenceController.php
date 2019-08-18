@@ -3,18 +3,22 @@
 namespace confmanager\controllers;
 
 use Yii;
-use backend\modules\conference\models\Conference;
-use backend\modules\conference\models\ConfDate;
-use backend\modules\conference\models\ConferenceSearch;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\UploadFile;
-use common\models\Model;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 use yii\db\Expression;
+use common\models\UploadFile;
+use common\models\Model;
+use backend\modules\conference\models\Conference;
+use backend\modules\conference\models\ConfDate;
+use backend\modules\conference\models\ConferenceSearch;
+use backend\modules\conference\models\ConfFee;
+use backend\modules\conference\models\ConfFeeInfo;
+
 
 /**
  * ConferenceController implements the CRUD actions for Conference model.
@@ -178,9 +182,6 @@ class ConferenceController extends Controller
                 $date->date_order = $i;
             }
 			
-			print_r(ArrayHelper::map($dates, 'id', 'date_name'));
-			//die();
-			
 			
             $valid = $model->validate();
             
@@ -230,6 +231,79 @@ class ConferenceController extends Controller
 	 return $this->render('dates', [
             'model' => $model,
             'dates' => (empty($dates)) ? [new ConfDate] : $dates
+        ]);
+	}
+	
+	public function actionFees($conf)
+    {
+		$model = $this->findModel($conf);
+		$fees = $model->confFees;
+       
+        if ($model->load(Yii::$app->request->post())) {
+           // print_r(Yii::$app->request->post());die();
+            $model->updated_at = new Expression('NOW()');    
+            
+            $oldIDs = ArrayHelper::map($fees, 'id', 'id');
+			
+            $fees = Model::createMultiple(ConfFee::classname(), $fees);
+			//echo count($fees);die();
+			//$dates = Model::createMultiple(ConfDate::classname(), $dates);
+            
+            Model::loadMultiple($fees, Yii::$app->request->post());
+			//echo count($fees);die();
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($fees, 'id', 'id')));
+			
+		
+	
+			foreach ($fees as $i => $fee) {
+                $fee->fee_order = $i;
+            }
+			
+				//print_r(ArrayHelper::map($fees, 'id', 'id'));die();
+            $valid = $model->validate();
+            
+            $valid = Model::validateMultiple($fees) && $valid;
+            
+            if ($valid) {
+
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if (! empty($deletedIDs)) {
+                            ConfFee::deleteAll(['id' => $deletedIDs]);
+                        }
+                        foreach ($fees as $i => $fee) {
+                            if ($flag === false) {
+                                break;
+                            }
+                            //do not validate this in model
+                            $fee->conf_id = $model->id;
+
+                            if (!($flag = $fee->save(false))) {
+                                break;
+                            }
+                        }
+
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+                            Yii::$app->session->addFlash('success', "Fees updated");
+							return $this->redirect(['fees','conf' => $conf]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    
+                }
+            }
+
+
+    }
+	 return $this->render('fees', [
+            'model' => $model,
+            'fees' => (empty($fees)) ? [new ConfFee] : $fees
         ]);
 	
 	

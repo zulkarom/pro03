@@ -82,6 +82,12 @@ class Conference extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ConfDownload::className(), ['conf_id' => 'id'])->orderBy('download_order ASC');
     }
+	
+	public function getConfFees()
+    {
+        return $this->hasMany(ConfFee::className(), ['conf_id' => 'id'])->orderBy('fee_order ASC');
+    }
+	
 
 
 }
