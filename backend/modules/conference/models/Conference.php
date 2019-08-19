@@ -40,7 +40,7 @@ class Conference extends \yii\db\ActiveRecord
 			
             [['conf_name', 'conf_venue'], 'string', 'max' => 200],
 			
-			 [['conf_background', 'conf_scope', 'conf_lang', 'conf_publication', 'conf_contact', 'conf_submission', 'payment_info', 'announcement'], 'string'],
+			 [['conf_background', 'conf_scope', 'conf_lang', 'conf_publication', 'conf_contact', 'conf_submission', 'payment_info', 'announcement', 'conf_accommodation', 'conf_award', 'conf_committee'], 'string'],
 			 
 			 [['currency_local', 'currency_int'], 'string', 'max' => 10],
 			

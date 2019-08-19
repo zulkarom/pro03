@@ -147,6 +147,24 @@ $options = [
     'clientOptions' => $options
 ])->label('Registration Submission');?>
 
+<?= $form->field($model, 'conf_accommodation')->widget(TinyMce::className(), [
+    'options' => ['rows' => 14],
+    'language' => 'en',
+    'clientOptions' => $options
+])->label('Accommodation');?>
+
+<?= $form->field($model, 'conf_award')->widget(TinyMce::className(), [
+    'options' => ['rows' => 14],
+    'language' => 'en',
+    'clientOptions' => $options
+])->label('Award');?>
+
+<?= $form->field($model, 'conf_committee')->widget(TinyMce::className(), [
+    'options' => ['rows' => 14],
+    'language' => 'en',
+    'clientOptions' => $options
+])->label('Committee');?>
+
 <?= $form->field($model, 'conf_contact')->widget(TinyMce::className(), [
     'options' => ['rows' => 5],
     'language' => 'en',

@@ -42,9 +42,30 @@ class PageController extends Controller
 		]);
     }
 	
+	public function actionAccommodation($confurl){
+        $model = $this->findModel($confurl);
+        return $this->render('accommodation', [
+			'model' => $model,
+		]);
+    }
+	
 	public function actionDates($confurl){
         $model = $this->findModel($confurl);
         return $this->render('dates', [
+			'model' => $model,
+		]);
+    }
+	
+	public function actionAward($confurl){
+        $model = $this->findModel($confurl);
+        return $this->render('award', [
+			'model' => $model,
+		]);
+    }
+	
+	public function actionCommittee($confurl){
+        $model = $this->findModel($confurl);
+        return $this->render('committee', [
 			'model' => $model,
 		]);
     }
