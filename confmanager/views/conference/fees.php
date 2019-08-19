@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\jui\JuiAsset;
+use dosamigos\tinymce\TinyMce;
 
 
 /* @var $this yii\web\View */
@@ -125,8 +126,34 @@ $curr = [$local => $local, $int=>$int];
     <?php DynamicFormWidget::end(); ?>
 	
     <br />
+	
+	
+	<?php 
+$plugin = [
+            "advlist autolink lists link charmap",
+            "searchreplace visualblocks code fullscreen",
+            "paste"
+        ];
+$toolbar = "undo redo | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent link code | fontselect fontsizeselect styleselect ";
+
+$options = [
+        'plugins' => $plugin,
+		'menubar' => false,
+        'toolbar' => $toolbar
+    ];
+
+?>
+
+<?= $form->field($model, 'payment_info')->widget(TinyMce::className(), [
+    'options' => ['rows' => 10],
+    'language' => 'en',
+    'clientOptions' => $options
+])->label('Payment Information');?>
+	
+	
+	
     <div class="form-group">
-        <?= Html::submitButton('Save Fees', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Save Fees & Payment', ['class' => 'btn btn-primary']) ?>
     </div>
 
 

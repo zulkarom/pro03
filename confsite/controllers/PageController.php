@@ -21,6 +21,34 @@ class PageController extends Controller
 		]);
     }
 	
+	public function actionSubmission($confurl){
+        $model = $this->findModel($confurl);
+        return $this->render('submission', [
+			'model' => $model,
+		]);
+    }
+	
+	public function actionPublication($confurl){
+        $model = $this->findModel($confurl);
+        return $this->render('publication', [
+			'model' => $model,
+		]);
+    }
+	
+	public function actionScope($confurl){
+        $model = $this->findModel($confurl);
+        return $this->render('scope', [
+			'model' => $model,
+		]);
+    }
+	
+	public function actionDates($confurl){
+        $model = $this->findModel($confurl);
+        return $this->render('dates', [
+			'model' => $model,
+		]);
+    }
+	
 	/**
      * Finds the Conference model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

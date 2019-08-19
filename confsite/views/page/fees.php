@@ -43,3 +43,22 @@ $this->params['breadcrumbs'][] = $this->title;
     </tbody>
   </table>
 </div>
+
+
+
+<div class="item-blog-txt p-t-33">
+								<h4 class="p-b-11">
+									<a href="blog-detail.html" class="m-text24">
+										PAYMENT INFOMATION
+									</a>
+								</h4>
+
+								
+
+								<p class="p-b-12">
+									</p>
+									
+									<?=$model->payment_info?>
+									
+								
+							</div>
