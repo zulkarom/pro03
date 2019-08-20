@@ -93,6 +93,21 @@ class Conference extends \yii\db\ActiveRecord
         return $this->hasMany(ConfFee::className(), ['conf_id' => 'id'])->orderBy('fee_order ASC');
     }
 	
+	public function getPages(){
+		return [
+			'conf_background' => ['Background', 'background'], 
+			'conf_scope' => ['Scope'], 
+			'conf_submission' => ['Registration and Submission'], 
+			'dates' => ['Important Dates'], 
+			'fees' => ['Fees and Payment'],
+			'conf_publication' =>['Publication'], 
+			'conf_award' => ['Award'],
+			'conf_accommodation' => ['Venue and Accommodation'], 
+			'conf_committee' => ['Committee'], 
+			'conf_lang' => ['Language'], 
+			'conf_contact' => ['Contact Person']
+		];
+	}
 
 
 }

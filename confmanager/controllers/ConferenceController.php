@@ -67,9 +67,14 @@ class ConferenceController extends Controller
     {
         $model = $this->findModel($conf);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			Yii::$app->session->addFlash('success', "Data Updated");
-            return $this->redirect(['update', 'conf' => $conf]);
+        if ($model->load(Yii::$app->request->post())) {
+			$model->page_menu = json_encode(Yii::$app->request->post('page-menu'));
+			$model->page_featured = json_encode(Yii::$app->request->post('page-featured'));
+			if($model->save()){
+				Yii::$app->session->addFlash('success', "Data Updated");
+				return $this->redirect(['update', 'conf' => $conf]);
+			}
+			
         }
 
         return $this->render('update', [

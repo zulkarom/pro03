@@ -118,4 +118,6 @@ class Page extends \yii\db\ActiveRecord
 	public function getCustomer(){
 		return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
 	}
+	
+	
 }

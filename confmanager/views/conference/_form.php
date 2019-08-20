@@ -91,6 +91,42 @@ echo $form->field($model, 'currency_int')->widget(Select2::classname(), [
 
 </div>
 
+<br />
+<div class="row">
+<div class="col-md-6">
+<div class="form-group">
+<label>MENUS</label><br />
+<?php 
+$old_page_menu = json_decode($model->page_menu);
+foreach($model->pages as $key=>$val){
+	$chk = in_array($key,$old_page_menu) ? 'checked' : '';
+	echo '<label><input type="checkbox" name="page-menu[]" value="'.$key.'" '.$chk.' /> '.$val[0].'</label><br />';
+}
+
+?>
+
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="form-group">
+
+<label>SHOWING AT FRONT</label><br />
+<?php 
+$old_page_featured = json_decode($model->page_featured);
+foreach($model->pages as $key=>$val){
+	$chk = in_array($key,$old_page_featured) ? 'checked' : '';
+	echo '<label><input type="checkbox" name="page-featured[]" value="'.$key.'" '.$chk.' /> '.$val[0].'</label><br />';
+}
+
+?>
+
+</div>
+</div>
+
+</div>
+
+
 
 <br /><br />
 

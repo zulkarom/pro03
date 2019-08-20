@@ -19,8 +19,8 @@ $sub = [
 	['Important Date', ['conference/dates', 'conf' => $confurl], 'calendar', null],
 	['Downloads', ['download/index','conf' => $confurl], 'download', null],
 	['Fees', ['conference/fees', 'conf' => $confurl], 'dollar-sign', null],
-	['Organized By', ['site/index'], 'bank', null],
-	['Secretariat', ['site/index'], 'phone', null]
+	//['Organized By', ['site/index'], 'bank', null],
+	//['Secretariat', ['site/index'], 'phone', null]
 ];
 
 }else{
