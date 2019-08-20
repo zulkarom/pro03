@@ -1389,12 +1389,17 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .red-button{
 	background: #f82249;
-  border: 0;
   padding: 10px 40px;
   color: #fff;
   transition: 0.4s;
   border-radius: 50px;
+	border: 2px solid #f82249;
   cursor: pointer;
+}
+
+.red-button:hover{
+	background: none;
+	
 }
 
 .red-button-outline-black{
