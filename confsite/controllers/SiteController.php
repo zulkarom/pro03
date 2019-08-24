@@ -12,7 +12,7 @@ use yii\web\ForbiddenHttpException;
 use yii\db\Expression;
 use backend\modules\conference\models\Conference;
 use confsite\models\ConferenceSearch;
-use common\models\LoginForm;
+use confsite\models\LoginForm;
 use common\models\UploadFile;
 
 /**
@@ -91,10 +91,11 @@ class SiteController extends Controller
 	
 	public function actionLogin($confurl=null)
     {
+		
 		if (!Yii::$app->user->isGuest) {
             return $this->redirect(['site/member', 'confurl' => $confurl]);
         }
-		
+		$this->layout = 'main-page';
 		//$conf = $this->findConferenceByUrl($confurl);
 		
 		if($confurl){

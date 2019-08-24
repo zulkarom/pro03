@@ -149,14 +149,7 @@ ul.main_menu, ul.main_menu li  {
 
 
 /* ------------------------------------ */
-input {
-	outline: none;
-	border: none !important;
-}
 
-textarea {
-  outline: none;
-}
 
 /* textarea:focus, input:focus {
   border-color: transparent !important;
@@ -1067,7 +1060,7 @@ li.sale-noti > a {
 .side-menu .main-menu {margin-bottom: 0;}
 
 .item-menu-mobile {
-  background-color: #e65540;
+  background-color: #5a4cab;
   margin: 0px;
 }
 
@@ -1343,6 +1336,8 @@ li.sale-noti > a {
     display: flex !important;
   }
   .wrap_header {display: none;}
+  
+  .myleftbar {display: none;}
 
   .container-menu-header-v3,
   .container-menu-header-v2,
@@ -2353,6 +2348,10 @@ input.num-product::-webkit-outer-spin-button,
 input.num-product::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0; 
+}
+
+.form-group.has-error .help-block {
+    color: #dd4b39;
 }
 
 

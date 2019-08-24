@@ -49,6 +49,27 @@ class PageController extends Controller
 		]);
     }
 	
+	public function actionLanguage($confurl){
+        $model = $this->findModel($confurl);
+        return $this->render('language', [
+			'model' => $model,
+		]);
+    }
+	
+	public function actionBackground($confurl){
+        $model = $this->findModel($confurl);
+        return $this->render('background',[
+			'model' => $model,
+		]);
+    }
+	
+	public function actionContact($confurl){
+        $model = $this->findModel($confurl);
+        return $this->render('contact', [
+			'model' => $model,
+		]);
+    }
+	
 	public function actionDates($confurl){
         $model = $this->findModel($confurl);
         return $this->render('dates', [

@@ -96,16 +96,16 @@ class Conference extends \yii\db\ActiveRecord
 	public function getPages(){
 		return [
 			'conf_background' => ['Background', 'background'], 
-			'conf_scope' => ['Scope'], 
-			'conf_submission' => ['Registration and Submission'], 
-			'dates' => ['Important Dates'], 
-			'fees' => ['Fees and Payment'],
-			'conf_publication' =>['Publication'], 
-			'conf_award' => ['Award'],
-			'conf_accommodation' => ['Venue and Accommodation'], 
-			'conf_committee' => ['Committee'], 
-			'conf_lang' => ['Language'], 
-			'conf_contact' => ['Contact Person']
+			'conf_scope' => ['Conference Scope', 'scope'], 
+			'conf_submission' => ['Registration & Submission', 'submission'], 
+			'dates' => ['Important Dates', 'dates'], 
+			'fees' => ['Fees & Payment', 'fees'],
+			'conf_publication' =>['Publication', 'publication'], 
+			'conf_award' => ['Award', 'award'],
+			'conf_accommodation' => ['Venue & Accommodation', 'accommodation'], 
+			'conf_committee' => ['Committee', 'committee'], 
+			'conf_lang' => ['Language', 'language'], 
+			'conf_contact' => ['Contact Person', 'contact']
 		];
 	}
 

@@ -9,11 +9,13 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 use yii\helpers\Url;
+use backend\modules\conference\models\Conference;
 
 confsite\assets\MainAsset::register($this);
 $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 
 $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
+$conf = Conference::findOne(['conf_url' => $confurl]);
 
 ?>
 <?php $this->beginPage() ?>
@@ -35,7 +37,7 @@ $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
 <body class="animsition">
 <?php $this->beginBody() ?>
 	<!-- Header -->
-	<?=$this->render('header')?>
+	<?=$this->render('header', ['conf' => $conf])?>
 
 
 

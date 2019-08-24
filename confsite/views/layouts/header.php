@@ -7,13 +7,15 @@ use yii\helpers\Url;
 $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
 
+
+
 if (Yii::$app->user->isGuest) {
     $menu = [
 	['Home', ['site/home', 'confurl' => $confurl], 'home'],
-	['Submit Paper', ['site/index'], 'tachometer-alt'],
+	['Submit Paper', ['page/submission', 'confurl' => $confurl], 'tachometer-alt'],
 	['Login', ['site/login', 'confurl' => $confurl], 'files-o'],
 	['Register', ['site/index'], 'table'],
-	['Contact Us', ['site/index'], 'dollar-sign'],
+	['Contact Us', ['page/contact', 'confurl' => $confurl], 'dollar-sign'],
 ];
 }else{
 	$menu = [
@@ -111,8 +113,33 @@ if (Yii::$app->user->isGuest) {
 					foreach($menu as $m){
 						echo '<li class="item-menu-mobile">
                             <a href="'.Url::to($m[1]).'">
-                                '.$m[0].'</a>
+                                '.strtoupper($m[0]).'</a>
                         </li>';
+					}
+					if (Yii::$app->user->isGuest) {
+						
+					}
+					$list = json_decode($conf->page_menu);
+					if($list){
+						foreach($list as $item){
+							$page = $conf->pages[$item];
+							echo '<li class="item-menu-mobile">
+							<a href="'. Url::to(['page/' . $page[1],'confurl' => $conf->conf_url]) . '">
+								'.strtoupper($page[0]).'
+								</a>
+							</li>';
+						}
+					}
+					
+					$downloads = $conf->confDownloads;
+					if($downloads){
+						foreach($downloads as $d){
+							echo '<li class="item-menu-mobile">
+							<a href="'.Url::to(['download/download-file', 'id' => $d->id]).'" target="_blank">
+								'.strtoupper($d->download_name) .'
+							</a>
+						</li>';
+						}
 					}
 					
 					

@@ -38,7 +38,7 @@ $conf = Conference::findOne(['conf_url' => $confurl]);
 <body class="animsition">
 <?php $this->beginBody() ?>
 	<!-- Header -->
-	<?=$this->render('header')?>
+	<?=$this->render('header',  ['conf' => $conf])?>
 
 	<!-- Title Page -->
 	<section class="bg-title-page flex-col-c-m">
@@ -49,7 +49,7 @@ $conf = Conference::findOne(['conf_url' => $confurl]);
 	<section class="bgwhite">
 		<div class="container">
 			<div class="row">
-			<div class="col-md-3 col-lg-3 p-b-75">
+			<div class="col-md-3 col-lg-3 p-b-75 myleftbar">
 					<div class="rightbar">
 					
 <?= $this->render('left', [

@@ -10,8 +10,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-
-
+<div class="row">
+<div class="col-md-8">
 
 <div class="login-wrap">
                     <div class="login-content">
@@ -71,6 +71,14 @@ $this->params['breadcrumbs'][] = $this->title;
 					
 					
                 </div>
+
+
+</div>
+
+</div>
+
+
+
 				
 				
 				<br />	<br />	<br />
