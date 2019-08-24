@@ -54,7 +54,9 @@ return [
             'rules' => [
 			'' => 'site/index',
 			'<confurl>' => 'site/home',
+			'<confurl>/user/login' => 'user/login',
 			'<confurl>/<controller>/<action>' => '<controller>/<action>',
+			
 			
 			
             ],

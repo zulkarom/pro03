@@ -13,6 +13,7 @@ use yii\db\Expression;
 use backend\modules\conference\models\Conference;
 use confsite\models\ConferenceSearch;
 use confsite\models\LoginForm;
+use confsite\models\SignupForm;
 use common\models\UploadFile;
 
 /**
@@ -95,7 +96,7 @@ class SiteController extends Controller
 		if (!Yii::$app->user->isGuest) {
             return $this->redirect(['site/member', 'confurl' => $confurl]);
         }
-		$this->layout = 'main-page';
+		$this->layout = 'main-login';
 		//$conf = $this->findConferenceByUrl($confurl);
 		
 		if($confurl){
@@ -108,6 +109,34 @@ class SiteController extends Controller
 				]);
 			}
 		}
+
+    }
+	
+	public function actionRegister($confurl=null, $email='')
+    {
+		
+		$this->layout = "main-login";
+
+        $model = \Yii::createObject(SignupForm::className());
+
+        if ($model->load(\Yii::$app->request->post())) {
+			$model->username = $model->email;
+			if($model->register()){
+				$this->trigger(self::EVENT_AFTER_REGISTER, $event);
+
+				return $this->render('/message', [
+					'title'  => \Yii::t('user', 'Congratulation, your account has been created'),
+					'module' => $this->module,
+				]);
+			}else{
+				//print_r($model->getErrors());
+			}
+        }
+
+        return $this->render('register', [
+            'model'  => $model,
+			'email' => $email
+        ]);
 
     }
 	

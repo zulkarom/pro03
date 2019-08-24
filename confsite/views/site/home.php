@@ -33,7 +33,7 @@ if($list){
 		
 		echo '<div class="item-blog-txt p-t-33">
 				<h4 class="p-b-11">
-					<a href="blog-detail.html" class="m-text24">
+					<a href="'.Url::to(['page/' . $page[1], 'confurl' => $model->conf_url]).'" class="m-text24">
 						'.$title.'
 					</a>
 				</h4>

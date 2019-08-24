@@ -1,6 +1,6 @@
 <?php
 
-namespace confsite\controllers\user;
+namespace confsite\controllers;
 
 
 use dektrium\user\controllers\SecurityController as BaseSecurityController;
@@ -29,7 +29,7 @@ class SecurityController extends BaseSecurityController
             return $this->goHome();
         }
 
-        return $this->render('login', [
+        return $this->render('../user/security/login', [
             'model'  => $model,
             'module' => $this->module,
         ]);

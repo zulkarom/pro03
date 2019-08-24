@@ -40,7 +40,7 @@ $fieldOptions1 = [
 ];
 ?>
 
-<?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
+<?= $this->render('../_alert', ['module' => Yii::$app->getModule('user')]) ?>
 
 
 

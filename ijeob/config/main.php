@@ -41,6 +41,16 @@ return [
             'csrfParam' => '_csrf-ijeob',
         ],
 		
+		'urlManager' => [
+            'enablePrettyUrl' => true,
+             'showScriptName' => false,
+            'rules' => [
+			'<controller>/<action>' => '<controller>/<action>',
+			
+			
+            ],
+        ],
+		
 		'view' => [
 			'theme' => [
 				'pathMap' => [
