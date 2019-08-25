@@ -13,7 +13,7 @@ use kartik\select2\Select2;
 use richardfan\widget\JSRegister;
 
 
-$this->title = 'JOURNAL REGISTRATION';
+$this->title = 'REGISTRATION';
 $this->params['breadcrumbs'][] = $this->title;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
@@ -35,14 +35,14 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myas
 
 		<div class="container">
 			
-			<br />			
+			
 					<div class="row">
 					<div class="col-sm-2"></div>
-						<div class="col-sm-9">
+						<div class="col-sm-12">
 						
 						<div class="row">
 				<div class="col">
-					<h2 class="section_title">JOURNAL REGISTRATION </h2>
+					<h2 class="section_title">REGISTRATION </h2>
 					<br />
 				</div>
 

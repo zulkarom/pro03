@@ -15,8 +15,9 @@ use yii\web\NotFoundHttpException;
 confsite\assets\MainAsset::register($this);
 $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 
-$confurl = Yii::$app->getRequest()->getQueryParam('confurl');
+$confurl = Yii::$app->getRequest()->getQueryParam('url');
 $conf = Conference::findOne(['conf_url' => $confurl]);
+Yii::$app->session->set('confurl', $confurl);
 
 if (($conf = Conference::findOne(['conf_url' => $confurl])) == null) {
 	throw new NotFoundHttpException('The requested page does not exist.');
@@ -47,26 +48,20 @@ if (($conf = Conference::findOne(['conf_url' => $confurl])) == null) {
 <body class="animsition">
 <?php $this->beginBody() ?>
 	<!-- Header -->
-	<?=$this->render('header',  ['conf' => $conf])?>
+	<?=$this->render('header-register',  ['conf' => $conf])?>
 
 
 	<!-- content page -->
 	<section class="bgwhite">
 		<div class="container">
 			<div class="row">
-			<div class="col-md-3 col-lg-3 p-b-75 myleftbar">
-					<div class="rightbar">
+			<div class="col-md-1 col-lg-1">
 					
-<?= $this->render('left', [
-        'conf' => $conf,
-    ]) ?>
-
-
-					</div>
 				</div>
 				<div class="col-md-9 col-lg-9 p-b-75">
 					<div class="p-r-50 p-r-0-lg">
 						<!-- item blog -->
+						<br />
 						<div class="item-blog p-b-80">
 						
 <?= Alert::widget() ?>

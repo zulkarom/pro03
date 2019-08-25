@@ -79,6 +79,9 @@ class SiteController extends Controller
 	
 	public function actionMember($confurl=null)
     {
+		if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login', 'confurl' => $confurl]);
+        }
 		$this->layout = 'main-member';
 		$model = $this->findConferenceByUrl($confurl);
 		
@@ -97,7 +100,7 @@ class SiteController extends Controller
             return $this->redirect(['site/member', 'confurl' => $confurl]);
         }
 		$this->layout = 'main-login';
-		//$conf = $this->findConferenceByUrl($confurl);
+		$conf = $this->findConferenceByUrl($confurl);
 		
 		if($confurl){
 			$model = new LoginForm();
@@ -106,6 +109,7 @@ class SiteController extends Controller
 			} else {
 				return $this->render('login', [
 					'model' => $model,
+					'conf' => $conf
 				]);
 			}
 		}
@@ -176,5 +180,7 @@ class SiteController extends Controller
         throw new NotFoundHttpException('Invalid Attribute');
 
     }
+	
+
 	
 }

@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		
 
             <p class="text-center">
-                <?= Html::a('FORGOT PASSWORD',['/user/recovery/request']) ?>
+                <?= Html::a('FORGOT PASSWORD',['/user/recovery/request', 'url' => $conf->conf_url]) ?>
             </p>
 
 		

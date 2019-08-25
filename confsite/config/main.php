@@ -8,7 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-confsite',
-	'name'=>'CONFERENCE MANAGER',
+	'name'=>'ConfValley.com',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'confsite\controllers',
@@ -54,7 +54,6 @@ return [
             'rules' => [
 			'' => 'site/index',
 			'<confurl>' => 'site/home',
-			'<confurl>/user/login' => 'user/login',
 			'<confurl>/<controller>/<action>' => '<controller>/<action>',
 			
 			
@@ -107,3 +106,5 @@ return [
 	
     'params' => $params,
 ];
+
+

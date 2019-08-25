@@ -11,18 +11,18 @@ $confurl = Yii::$app->getRequest()->getQueryParam('confurl');
 
 if (Yii::$app->user->isGuest) {
     $menu = [
-	['Home', ['site/home', 'confurl' => $confurl], 'home'],
-	['Submit Paper', ['page/submission', 'confurl' => $confurl], 'tachometer-alt'],
-	['Login', ['site/login', 'confurl' => $confurl], 'files-o'],
-	['Register', ['site/index'], 'table'],
-	['Contact Us', ['page/contact', 'confurl' => $confurl], 'dollar-sign'],
+	['Home', ['/site/home', 'confurl' => $confurl], 'home'],
+	['Submit Paper', ['/page/submission', 'confurl' => $confurl], 'tachometer-alt'],
+	['Login', ['/site/login', 'confurl' => $confurl], 'files-o'],
+	['Register', ['/user/register', 'url' => $confurl], 'table'],
+	['Contact Us', ['/page/contact', 'confurl' => $confurl], 'dollar-sign'],
 ];
 }else{
 	$menu = [
-	['Public Web', ['site/home', 'confurl' => $confurl], 'home'],
-	['My Submission List', ['site/login', 'confurl' => $confurl], 'files-o'],
-	['My Profile', ['site/logout', 'confurl' => $confurl], 'table'],
-	['Log Out', ['site/logout', 'confurl' => $confurl], 'table'],
+	['Public Web', ['/site/home', 'confurl' => $confurl], 'home'],
+	['My Submission List', ['/site/login', 'confurl' => $confurl], 'files-o'],
+	['My Profile', ['/site/logout', 'confurl' => $confurl], 'table'],
+	['Log Out', ['/site/logout', 'confurl' => $confurl], 'table'],
 ];
 }
 

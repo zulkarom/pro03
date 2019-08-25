@@ -6,15 +6,15 @@ use dektrium\user\controllers\RecoveryController as BaseRecoveryController;
 class RecoveryController extends BaseRecoveryController
 {
     
-    public function actionRequest()
+    public function actionRequest($url='')
     {
-		//$this->layout = "//main-login";
+		$this->layout = "//main-register";
         return parent::actionRequest();
     }
 
     public function actionReset($id, $code)
     {
-		//$this->layout = "//main-login";
+		$this->layout = "//main-recover";
         return parent::actionReset($id, $code);
     }
 }

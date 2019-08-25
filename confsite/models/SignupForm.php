@@ -59,11 +59,11 @@ class SignupForm extends Model
 	public function attributeLabels()
     {
         return [
-			'fullname' => 'NAMA PENUH',
-            'password' => 'KATA LALUAN',
-			'password_repeat' => 'ULANG KATA LALUAN',
-            'user_email' => 'EMAIL',
-			'username' => 'NO KAD PENGENALAN',
+			'fullname' => 'Name',
+            'password' => 'Password',
+			'password_repeat' => 'Password Repeat',
+            'email' => 'EMail',
+			'username' => 'Email',
         ];
     }
 

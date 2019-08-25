@@ -15,9 +15,9 @@ class RegistrationController extends BaseRegistrationController
      * @return string
      * @throws \yii\web\HttpException
      */
-    public function actionRegister($email='')
+    public function actionRegister($url='', $email='')
     {
-		//$this->layout = "//main-login";
+		$this->layout = "//main-register";
 		//\Yii::$app->session->addFlash('success', "Data Successful");
 		
 		
@@ -56,15 +56,15 @@ class RegistrationController extends BaseRegistrationController
         ]);
 	}
 	
-	/* public function actionResend(){
-		$this->layout = "//main-login";
+	public function actionResend(){
+		$this->layout = "//main-register";
 		return parent::actionResend();
 	}
-	
+
 	public function actionConfirm($id, $code){
-		$this->layout = "//main-login";
+		$this->layout = "//main-confirm";
 		return parent::actionConfirm($id, $code);
-	} */
+	} 
 
     
 }

@@ -41,6 +41,7 @@ phpunit.phar
 /confmanager/config
 /confsite/config
 /confvalley/config
+/confregister/config
 
 # web
 /backend/web
@@ -48,6 +49,7 @@ phpunit.phar
 /confmanager/web
 /confsite/web
 /confvalley/web
+/confregister/web
 
 #uploaded
 /frontend/uploaded
