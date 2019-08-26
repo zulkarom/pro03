@@ -100,7 +100,7 @@ class SiteController extends Controller
     {
 		
 		if (!Yii::$app->user->isGuest) {
-            return $this->redirect(['site/member', 'confurl' => $confurl]);
+            return $this->redirect(['member/index', 'confurl' => $confurl]);
         }
 		$this->layout = 'main-login';
 		$conf = $this->findConferenceByUrl($confurl);
@@ -118,7 +118,7 @@ class SiteController extends Controller
 					$reg->save();
 				}
 				//check registration
-				return $this->redirect(['site/member', 'confurl' => $confurl]);
+				return $this->redirect(['member/index', 'confurl' => $confurl]);
 			} else {
 				return $this->render('login', [
 					'model' => $model,

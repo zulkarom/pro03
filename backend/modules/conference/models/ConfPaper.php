@@ -3,6 +3,7 @@
 namespace backend\modules\conference\models;
 
 use Yii;
+use common\models\User;
 
 /**
  * This is the model class for table "conf_paper".
