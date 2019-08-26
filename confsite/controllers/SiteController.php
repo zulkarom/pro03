@@ -11,10 +11,13 @@ use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
 use yii\db\Expression;
 use backend\modules\conference\models\Conference;
+use backend\modules\conference\models\ConfRegistration;
 use confsite\models\ConferenceSearch;
 use confsite\models\LoginForm;
 use confsite\models\SignupForm;
 use common\models\UploadFile;
+
+
 
 /**
  * Site controller
@@ -105,6 +108,16 @@ class SiteController extends Controller
 		if($confurl){
 			$model = new LoginForm();
 			if ($model->load(Yii::$app->request->post()) && $model->login()) {
+				$reg = ConfRegistration::findOne(['user_id' => Yii::$app->user->identity->id]);
+				
+				if($reg == null){
+					$reg = new ConfRegistration;
+					$reg->conf_id = $conf->id;
+					$reg->user_id = Yii::$app->user->identity->id;
+					$reg->reg_at = new Expression('NOW()');
+					$reg->save();
+				}
+				//check registration
 				return $this->redirect(['site/member', 'confurl' => $confurl]);
 			} else {
 				return $this->render('login', [
