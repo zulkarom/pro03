@@ -5,6 +5,7 @@ namespace backend\modules\conference\models;
 use Yii;
 use common\models\User;
 
+
 /**
  * This is the model class for table "conf_paper".
  *
@@ -21,6 +22,10 @@ use common\models\User;
  */
 class ConfPaper extends \yii\db\ActiveRecord
 {
+	public $paper_instance;
+	public $file_controller;
+
+
     /**
      * {@inheritdoc}
      */
@@ -35,12 +40,17 @@ class ConfPaper extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['conf_id', 'user_id', 'pap_title', 'pap_abstract', 'paper_file', 'created_at'], 'required'],
+            [['conf_id', 'user_id', 'pap_title', 'pap_abstract', 'created_at'], 'required', 'on' => 'create'],
+			
             [['conf_id', 'user_id'], 'integer'],
             [['pap_title', 'pap_abstract', 'paper_file'], 'string'],
             [['created_at'], 'safe'],
             [['conf_id'], 'exist', 'skipOnError' => true, 'targetClass' => Conference::className(), 'targetAttribute' => ['conf_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+			
+			[['paper_file'], 'required', 'on' => 'paper_upload'],
+            [['paper_instance'], 'file', 'skipOnEmpty' => true, 'extensions' => 'doc, docx', 'maxSize' => 5000000],
+            [['updated_at'], 'required', 'on' => 'paper_delete'],
         ];
     }
 
@@ -53,9 +63,9 @@ class ConfPaper extends \yii\db\ActiveRecord
             'id' => 'ID',
             'conf_id' => 'Conf ID',
             'user_id' => 'User ID',
-            'pap_title' => 'Pap Title',
-            'pap_abstract' => 'Pap Abstract',
-            'paper_file' => 'Paper File',
+            'pap_title' => 'Title',
+            'pap_abstract' => 'Abstract',
+            'paper_file' => 'Upload File',
             'created_at' => 'Created At',
         ];
     }
@@ -63,7 +73,7 @@ class ConfPaper extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getConf()
+    public function getConference()
     {
         return $this->hasOne(Conference::className(), ['id' => 'conf_id']);
     }

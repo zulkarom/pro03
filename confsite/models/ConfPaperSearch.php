@@ -2,6 +2,7 @@
 
 namespace confsite\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\modules\conference\models\ConfPaper;
@@ -40,7 +41,7 @@ class ConfPaperSearch extends ConfPaper
      */
     public function search($params)
     {
-        $query = ConfPaper::find();
+        $query = ConfPaper::find()->where(['user_id' => Yii::$app->user->identity->id, 'conf_id' => $this->conf_id]);
 
         // add conditions that should always apply here
 
@@ -64,9 +65,6 @@ class ConfPaperSearch extends ConfPaper
             'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'pap_title', $this->pap_title])
-            ->andFilterWhere(['like', 'pap_abstract', $this->pap_abstract])
-            ->andFilterWhere(['like', 'paper_file', $this->paper_file]);
 
         return $dataProvider;
     }

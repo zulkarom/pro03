@@ -7,33 +7,42 @@ use yii\grid\GridView;
 /* @var $searchModel confsite\models\ConfPaperSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Conf Papers';
+$this->title = 'My Submission List';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="conf-paper-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
-        <?= Html::a('Create Conf Paper', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Submit New Paper', ['create', 'confurl' => $conf->conf_url], ['class' => 'btn btn-success']) ?>
     </p>
+	<br />
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+		'options' => [ 'style' => 'table-layout:fixed;' ],
+        //'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\SerialColumn',
+			'contentOptions' => ['style' => 'width: 7%'],
+			],
 
-            'id',
-            'conf_id',
-            'user_id',
+   
+           
             'pap_title:ntext',
-            'pap_abstract:ntext',
-            //'paper_file:ntext',
-            //'created_at',
+      
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+                 'contentOptions' => ['style' => 'width: 8.7%'],
+                'template' => '{update}',
+                //'visible' => false,
+                'buttons'=>[
+                    'update'=>function ($url, $model) {
+                        return Html::a('<span class="fa fa-edit"></span> UPDATE',['member/update/', 'confurl' => $model->conference->conf_url ,'id' => $model->id],['class'=>'btn btn-warning btn-sm']);
+                    }
+                ],
+            
+            ],
+
         ],
     ]); ?>
 </div>

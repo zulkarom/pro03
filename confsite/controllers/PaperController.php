@@ -62,17 +62,26 @@ class PaperController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($confurl=null)
     {
-        $model = new ConfPaper();
+		if($confurl){
+			$model = new ConfPaper();
+			
+			$model->scenario = 'create';
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+			if ($model->load(Yii::$app->request->post())) {
+				$model->conf_id = 
+				if($model->save()){
+					return $this->redirect(['index', 'confurl' => $confurl]);
+				}
+				
+			}
+			
+			return $this->render('create', [
+				'model' => $model,
+			]);
+		}
+        
     }
 
     /**

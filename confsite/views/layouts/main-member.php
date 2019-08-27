@@ -44,11 +44,22 @@ $conf = Conference::findOne(['conf_url' => $confurl]);
 	<!-- content page -->
 	<section class="bgwhite">
 		<div class="container">
+		
 			<div class="row">
-			<div class="col-md-1 col-lg-1 p-b-75">
-					
+			<div class="col-md-3 col-lg-3 p-b-75 myleftbar">
+					<div class="rightbar">
+						<?= $this->render('left', [
+        'conf' => $conf,
+    ]) ?>
+
+					</div>
 				</div>
-				<div class="col-md-10 col-lg-10 p-b-75">
+				<div class="col-md-9 col-lg-9 p-t-20 p-b-75">
+				<h4 class="p-b-11">
+					<a href="<?=Url::to(['site/home', 'confurl' => $confurl])?>" class="m-text24">
+						<?=$conf->conf_name . ' ('.$conf->conf_abbr.')'?>
+					</a>
+				</h4>
 					<div class="p-r-50 p-r-0-lg">
 						<!-- item blog -->
 						<div class="item-blog p-b-80">
