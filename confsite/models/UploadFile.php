@@ -155,12 +155,12 @@ class UploadFile
 		
 		$ext = $upFile->extension;
 		
-		
+		$conf = $model->conference;
+		$year_created = date('Y', strtotime($conf->created_at)) + 0 ;
 		
 		$fileName = $attr . '_' . $uid . '.' . $ext;
 		
-		$year = date('Y') + 0 ;
-		$path = $year . '/' . Yii::$app->user->identity->username .  '/' ;
+		$path = 'conference/' . $year_created . '/'.$conf->conf_url . '/papers/' . Yii::$app->user->identity->username .  '/' ;
 		
 	
 		

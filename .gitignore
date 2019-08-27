@@ -34,6 +34,8 @@ phpunit.phar
 # vagrant runtime
 /.vagrant
 
+/upload
+
 # config
 /frontend/config
 /backend/config

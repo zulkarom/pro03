@@ -3,6 +3,7 @@
 namespace backend\modules\conference\models;
 
 use Yii;
+use common\models\User;
 
 /**
  * This is the model class for table "conf_reg".
@@ -16,6 +17,7 @@ use Yii;
  */
 class ConfRegistration extends \yii\db\ActiveRecord
 {
+	
     /**
      * {@inheritdoc}
      */
@@ -46,15 +48,22 @@ class ConfRegistration extends \yii\db\ActiveRecord
             'id' => 'ID',
             'conf_id' => 'Conf ID',
             'user_id' => 'User ID',
-            'reg_at' => 'Reg At',
+            'reg_at' => 'Registration Time',
         ];
     }
+	
+	
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getConf()
+    public function getConference()
     {
         return $this->hasOne(Conference::className(), ['id' => 'conf_id']);
+    }
+	
+	public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use backend\modules\conference\models\Conference;
-use common\models\UploadFile;
+use confsite\models\UploadFile;
 use yii\helpers\Json;
 use yii\db\Expression;
 
@@ -114,7 +114,8 @@ class MemberController extends Controller
 			$model = $this->findModel($id);
 
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->id]);
+				Yii::$app->session->addFlash('success', "Data Updated");
+				return $this->redirect(['update', 'confurl'=> $confurl, 'id' => $model->id]);
 			}
 
 			return $this->render('update', [

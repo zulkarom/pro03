@@ -93,6 +93,16 @@ class Conference extends \yii\db\ActiveRecord
         return $this->hasMany(ConfFee::className(), ['conf_id' => 'id'])->orderBy('fee_order ASC');
     }
 	
+	public function getConfRegistrations()
+    {
+        return $this->hasMany(ConfRegistration::className(), ['conf_id' => 'id']);
+    }
+	
+	public function getConfPapers()
+    {
+        return $this->hasMany(ConfPaper::className(), ['conf_id' => 'id']);
+    }
+	
 	public function getPages(){
 		return [
 			'conf_background' => ['Background', 'background'], 
@@ -107,6 +117,16 @@ class Conference extends \yii\db\ActiveRecord
 			'conf_lang' => ['Language', 'language'], 
 			'conf_contact' => ['Contact Person', 'contact']
 		];
+	}
+	
+	public function getUserCount(){
+		$kira = ConfRegistration::find()->where(['conf_id' => $this->id])->count();
+		return $kira ? $kira : 0;
+	}
+	
+	public function getPaperCount(){
+		$kira = ConfPaper::find()->where(['conf_id' => $this->id])->count();
+		return $kira ? $kira : 0;
 	}
 
 

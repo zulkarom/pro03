@@ -23,6 +23,12 @@ $model->file_controller = 'conference';
 <div class="card">
 
             <div class="card-body"><div class="conference-form">
+			
+			<div class="form-group">
+			<label>Conference Url</label>
+			<h4><?=$model->conf_url?><h4>
+			
+			</div>
 
     <?php $form = ActiveForm::begin(); ?>
 
