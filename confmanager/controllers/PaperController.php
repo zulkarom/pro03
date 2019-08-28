@@ -8,6 +8,7 @@ use confmanager\models\ConfPaperSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use confsite\models\UploadFile;
 
 /**
  * PaperController implements the CRUD actions for ConfPaper model.
@@ -124,5 +125,28 @@ class PaperController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+	
+	public function actionDownloadFile($attr, $id, $identity = true){
+        $attr = $this->clean($attr);
+        $model = $this->findModel($id);
+        $filename = strtoupper($attr) . ' ' . Yii::$app->user->identity->fullname;
+        
+        
+        
+        UploadFile::download($model, $attr, $filename);
+    }
+	
+	protected function clean($string){
+        $allowed = ['paper'];
+        
+        foreach($allowed as $a){
+            if($string == $a){
+                return $a;
+            }
+        }
+        
+        throw new NotFoundHttpException('Invalid Attribute');
+
     }
 }

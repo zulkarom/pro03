@@ -6,38 +6,54 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\modules\conference\models\ConfPaper */
 
-$this->title = $model->id;
+$this->title = $model->pap_title;
 $this->params['breadcrumbs'][] = ['label' => 'Conf Papers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="conf-paper-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
 
-    <?= DetailView::widget([
+<div class="card">
+
+            <div class="card-body">    
+			<style>
+table.detail-view th {
+    width:17%;
+}
+</style>
+
+			
+			<?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'conf_id',
-            'user_id',
+            [
+				'attribute' => 'user_id',
+				'label' => 'Submitted By',
+				'value' => function($model){
+					return $model->user->fullname;
+				}
+			],
+			[
+				'attribute' => 'created_at',
+				'label' => 'Submitted Time',
+				'format' => 'datetime'
+			]
+			,
             'pap_title:ntext',
             'pap_abstract:ntext',
-            'paper_file:ntext',
-            'created_at',
-            'updated_at',
+			[
+				'attribute' => 'paper_file',
+				'label' => 'Uploaded File',
+				'format' => 'raw',
+				'value' => function($model){
+					return Html::a('DOWNLOAD FILE', ['paper/download-file', 'id' => $model->id, 'attr' => 'paper'], ['target' => '_blank']);
+				}
+			]
+  
         ],
-    ]) ?>
+    ]) ?></div>
+</div>
 
 </div>

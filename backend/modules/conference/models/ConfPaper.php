@@ -85,4 +85,10 @@ class ConfPaper extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+	
+	public function getAuthors()
+    {
+        return $this->hasMany(ConfAuthor::className(), ['paper_id' => 'id']);
+    }
+
 }

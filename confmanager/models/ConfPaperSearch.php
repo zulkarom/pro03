@@ -11,6 +11,7 @@ use backend\modules\conference\models\ConfPaper;
  */
 class ConfPaperSearch extends ConfPaper
 {
+	public $fullname;
     /**
      * {@inheritdoc}
      */
@@ -18,6 +19,9 @@ class ConfPaperSearch extends ConfPaper
     {
         return [
             [['id', 'conf_id', 'user_id'], 'integer'],
+			
+			[['fullname'], 'string'],
+			
             [['pap_title', 'pap_abstract', 'paper_file', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -41,11 +45,16 @@ class ConfPaperSearch extends ConfPaper
     public function search($params)
     {
         $query = ConfPaper::find()->where(['conf_id' => $this->conf_id]);
+		
+		$query->joinWith(['user']);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+			'pagination' => [
+                'pageSize' => 100,
+            ],
         ]);
 
         $this->load($params);
@@ -55,19 +64,13 @@ class ConfPaperSearch extends ConfPaper
             // $query->where('0=1');
             return $dataProvider;
         }
+		
+		$dataProvider->sort->attributes['fullname'] = [
+        'asc' => ['user.fullname' => SORT_ASC],
+        'desc' => ['user.fullname' => SORT_DESC],
+        ]; 
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'conf_id' => $this->conf_id,
-            'user_id' => $this->user_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-        ]);
-
-        $query->andFilterWhere(['like', 'pap_title', $this->pap_title])
-            ->andFilterWhere(['like', 'pap_abstract', $this->pap_abstract])
-            ->andFilterWhere(['like', 'paper_file', $this->paper_file]);
+       
 
         return $dataProvider;
     }

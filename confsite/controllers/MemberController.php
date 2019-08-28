@@ -3,15 +3,18 @@
 namespace confsite\controllers;
 
 use Yii;
-use backend\modules\conference\models\ConfPaper;
-use confsite\models\ConfPaperSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
-use backend\modules\conference\models\Conference;
-use confsite\models\UploadFile;
 use yii\helpers\Json;
 use yii\db\Expression;
+use yii\helpers\ArrayHelper;
+use common\models\Model;
+use backend\modules\conference\models\ConfPaper;
+use backend\modules\conference\models\ConfAuthor;
+use backend\modules\conference\models\Conference;
+use confsite\models\UploadFile;
+use confsite\models\ConfPaperSearch;
 
 /**
  * PaperController implements the CRUD actions for ConfPaper model.
@@ -77,29 +80,79 @@ class MemberController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($confurl=null)
+	public function actionCreate($confurl=null)
     {
 		if($confurl){
-			$model = new ConfPaper();
-			$conf = $this->findConferenceByUrl($confurl);
-			$model->scenario = 'create';
+		$model = new ConfPaper();
+		$conf = $this->findConferenceByUrl($confurl);
+		$model->scenario = 'create';
 
-			if ($model->load(Yii::$app->request->post())) {
-				$model->conf_id = $conf->id;
-				$model->user_id = Yii::$app->user->identity->id;
-				$model->created_at = new Expression('NOW()');
-				if($model->save()){
-					return $this->redirect(['index', 'confurl' => $confurl]);
-				}
-				
-			}
-			
-			return $this->render('create', [
-				'model' => $model,
-			]);
-		}
+        $authors = [new ConfAuthor];
+       
+        if ($model->load(Yii::$app->request->post())) {
+			$model->conf_id = $conf->id;
+			$model->user_id = Yii::$app->user->identity->id;
+			$model->created_at = new Expression('NOW()');
+			$model->updated_at = new Expression('NOW()');
+            $authors = Model::createMultiple(ConfAuthor::classname());
+            Model::loadMultiple($authors, Yii::$app->request->post());
+            
+            foreach ($authors as $i => $author) {
+                $author->author_order = $i;
+            }
+            
+            
+            $valid = $model->validate();
+            
+            $valid = Model::validateMultiple($authors) && $valid;
+            
+            if ($valid) {
+
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+
+                        foreach ($authors as $i => $author) {
+                            if ($flag === false) {
+                                break;
+                            }
+                            //do not validate this in model
+                            $author->paper_id = $model->id;
+
+                            if (!($flag = $author->save(false))) {
+                                break;
+                            }
+                        }
+
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+                            Yii::$app->session->addFlash('success', "New Paper is successfully created");
+                            return $this->redirect(['update', 'confurl'=> $confurl, 'id' => $model->id]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    
+                }
+            }
+
         
+        
+       
+
     }
+    
+     return $this->render('create', [
+            'model' => $model,
+            'authors' => (empty($authors)) ? [new ConfAuthor] : $authors
+        ]);
+   
+	} 
+	
+	}
 
     /**
      * Updates an existing ConfPaper model.
@@ -108,22 +161,84 @@ class MemberController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($confurl=null,$id)
+	public function actionUpdate($confurl=null,$id)
     {
 		if($confurl){
-			$model = $this->findModel($id);
+        $model = $this->findModel($id);
+        $authors = $model->authors;
+       
+        if ($model->load(Yii::$app->request->post())) {
+            
+            $model->updated_at = new Expression('NOW()');    
+            
+            $oldIDs = ArrayHelper::map($authors, 'id', 'id');
+            
+            
+            $authors = Model::createMultiple(ConfAuthor::classname(), $authors);
+            
+            Model::loadMultiple($authors, Yii::$app->request->post());
+            
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($authors, 'id', 'id')));
+            
+            foreach ($authors as $i => $author) {
+                $author->author_order = $i;
+            }
+            
+            
+            $valid = $model->validate();
+            
+            $valid = Model::validateMultiple($authors) && $valid;
+            
+            if ($valid) {
 
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				Yii::$app->session->addFlash('success', "Data Updated");
-				return $this->redirect(['update', 'confurl'=> $confurl, 'id' => $model->id]);
-			}
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if (! empty($deletedIDs)) {
+                            ConfAuthor::deleteAll(['id' => $deletedIDs]);
+                        }
+                        foreach ($authors as $i => $author) {
+                            if ($flag === false) {
+                                break;
+                            }
+                            //do not validate this in model
+                            $author->paper_id = $model->id;
 
-			return $this->render('update', [
-				'model' => $model,
-			]);
-		}
+                            if (!($flag = $author->save(false))) {
+                                break;
+                            }
+                        }
+
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+                            Yii::$app->session->addFlash('success', "Paper Information is updated");
+                            return $this->redirect(['update', 'confurl'=> $confurl, 'id' => $model->id]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    
+                }
+            }
+
         
+        
+       
+
     }
+    
+     return $this->render('update', [
+            'model' => $model,
+            'authors' => (empty($authors)) ? [new ConfAuthor] : $authors
+        ]);
+   
+	} 
+	
+	}
+
 
     /**
      * Deletes an existing ConfPaper model.

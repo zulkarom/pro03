@@ -10,7 +10,7 @@ use yii\grid\GridView;
 $this->title = 'Registration';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="card shadow mb-4">
+<div class="card">
 
             <div class="card-body"><div class="conf-registration-index">
 
