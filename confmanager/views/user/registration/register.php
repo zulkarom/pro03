@@ -13,7 +13,7 @@ use kartik\select2\Select2;
 use richardfan\widget\JSRegister;
 
 
-$this->title = 'JOURNAL REGISTRATION';
+$this->title = 'MANAGER REGISTRATION';
 $this->params['breadcrumbs'][] = $this->title;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
@@ -35,19 +35,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myas
 
 		<div class="container">
 			
-			<br />			
+			
 					<div class="row">
-					<div class="col-sm-2"></div>
-						<div class="col-sm-9">
+				
+						<div class="col-sm-12">
 						
-						<div class="row">
-				<div class="col">
-					<h2 class="section_title">JOURNAL REGISTRATION </h2>
-					<br />
-				</div>
-
-			</div>
-
+						<div align="center"><b> MANAGER LOGIN </b></div>
+<br />
 							<div class="section">
 							
 			<div class="row">
@@ -146,10 +140,10 @@ echo $form->field($model, 'country_id')->widget(Select2::classname(), [
 				<div>
 
                 
-                    <?= Html::submitButton('REGISTER', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                    <?= Html::submitButton('REGISTER', ['class' => 'au-btn au-btn--red m-b-20', 'name' => 'signup-button']) ?>
                 </div>
 				
-				<br /><br />
+			
 		 <p>
                 <?= Html::a('GO TO LOGIN PAGE',['/user/login']) ?>
             </p>
@@ -177,7 +171,6 @@ echo $form->field($model, 'country_id')->widget(Select2::classname(), [
 			</div>
 </div>
 
-<br /><br /><br />
 
 
 

@@ -29,15 +29,15 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset
 <body>
 <?php $this->beginBody() ?>
     <div class="page-wrapper">
-        <div class="page-content-login">
+        <div class="page-content--bge5">
             <div class="container">
-				<div class="login-wrap">
+				<div class="register-wrap">
                     <div class="login-content">
                         <div class="login-logo">
-                            <a href="<?=Url::to(['/site/index'])?>">
-							<img src="<?=$dirAsset ?>/images/confvalley-logo.png" width="50%">
+                            <a href="#">
+							<img src="<?=$dirAsset ?>/images/confvalley-logo.png" width="30%">
 							
-							<?=Alert::widget() ?>
+							<?= Alert::widget() ?>
 						
                              
 							  

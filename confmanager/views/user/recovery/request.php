@@ -25,15 +25,14 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="block-content">
 		<div class="container">
 		
-		<div class="row">
-				<div class="col">
-					<h3 class="section_title text-center"><?=$this->title?></h3>
-				</div>
-		</div>
+
+		
+		<div align="center"><b> <?=$this->title?> </b></div>
+<br />
 		
 			<div class="row">
-			<div class="col-lg-3"></div>
-			<div class="col-lg-6" align="center">
+		
+			<div class="col-lg-12" align="center">
 			
 			<?php $form = ActiveForm::begin([
                     'id' => 'password-recovery-form',
@@ -43,16 +42,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
-                <?= Html::submitButton(Yii::t('user', 'Continue'), ['class' => 'btn btn-primary']) ?><br>
+                <?= Html::submitButton(Yii::t('user', 'Continue'), ['class' => 'au-btn au-btn--red m-b-20']) ?><br>
 
                 <?php ActiveForm::end(); ?>
 			
 			
 			</div>
 			</div>
+			
+			
 			<br />
 
-	
+	 <p>
+                <?= Html::a('GO TO LOGIN PAGE',['/user/login']) ?>
+            </p>
 			
 			
 		</div>

@@ -26,7 +26,7 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset
 	<?php $this->head() ?>
 </head>
 
-<body class="animsition">
+<body>
 <?php $this->beginBody() ?>
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->

@@ -130,7 +130,7 @@ class PageController extends Controller
 		
 		if ($user->load(Yii::$app->request->post())) {
 			if($user->isEmailExist()){
-				Yii::$app->session->addFlash('error', "You have already registered, please proceed to login page. You can use forgot password feature in case you forgot your password");
+				Yii::$app->session->addFlash('error', "You have already registered, please proceed to login page. You can use forgot password feature in case you have forgotten your password");
 			}else{
 				$this->redirect(['user/register', 'email' => $user->email]);
 			}

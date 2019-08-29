@@ -31,8 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
 		</div>
 		
 			<div class="row">
-			<div class="col-lg-3"></div>
-			<div class="col-lg-6" align="center">
+
+			<div class="col-lg-12" align="center">
 			
 			<?php $form = ActiveForm::begin([
                     'id' => 'password-recovery-form',
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
-                <?= Html::submitButton(Yii::t('user', 'Finish'), ['class' => 'btn btn-success btn-block']) ?><br>
+                <?= Html::submitButton(Yii::t('user', 'Finish'), ['class' => 'au-btn au-btn--red m-b-20']) ?><br>
 
                 <?php ActiveForm::end(); ?>
 			

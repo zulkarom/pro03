@@ -17,7 +17,7 @@ class RegistrationController extends BaseRegistrationController
      */
     public function actionRegister($email='')
     {
-		//$this->layout = "//main-login";
+		$this->layout = "//main-register";
 		//\Yii::$app->session->addFlash('success', "Data Successful");
 		
 		
@@ -56,7 +56,7 @@ class RegistrationController extends BaseRegistrationController
         ]);
 	}
 	
-	/* public function actionResend(){
+	public function actionResend(){
 		$this->layout = "//main-login";
 		return parent::actionResend();
 	}
@@ -64,7 +64,7 @@ class RegistrationController extends BaseRegistrationController
 	public function actionConfirm($id, $code){
 		$this->layout = "//main-login";
 		return parent::actionConfirm($id, $code);
-	} */
+	} 
 
     
 }

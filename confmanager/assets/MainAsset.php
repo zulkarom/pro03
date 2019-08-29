@@ -9,7 +9,7 @@ class MainAsset extends \yii\web\AssetBundle
 		'vendor/font-awesome-5/css/fontawesome-all.min.css',
 		'vendor/mdi-font/css/material-design-iconic-font.min.css',
 		'vendor/bootstrap-4.1/bootstrap.min.css',
-		//'vendor/animsition/animsition.min.css',
+		'vendor/animsition/animsition.min.css',
 		//'vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css',
 		//'vendor/wow/animate.css',
 		'vendor/css-hamburgers/hamburgers.min.css',
@@ -21,13 +21,13 @@ class MainAsset extends \yii\web\AssetBundle
 		'vendor/bootstrap-4.1/bootstrap.min.js',
 		//vendor/slick/slick.min.js',
 		//'vendor/wow/wow.min.js',
-		//'vendor/animsition/animsition.min.js',
+		'vendor/animsition/animsition.min.js',
 		//'vendor/bootstrap-progressbar/bootstrap-progressbar.min.js',
 		//'vendor/counter-up/jquery.waypoints.min.js',
 		//'vendor/counter-up/jquery.counterup.min.js',
 		//'vendor/circle-progress/circle-progress.min.js',
 		//'vendor/perfect-scrollbar/perfect-scrollbar.js',
-		//'js/main.js'
+		'js/main.js'
 		
 	];
     public $depends = [

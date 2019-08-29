@@ -19,7 +19,6 @@ if (Yii::$app->user->isGuest) {
 ];
 }else{
 	$menu = [
-	['Public Web', ['/site/home', 'confurl' => $confurl], 'home'],
 	['My Paper', ['/site/login', 'confurl' => $confurl], 'files-o'],
 	['My Review', ['/site/login', 'confurl' => $confurl], 'files-o'],
 	['My Payment', ['/site/logout', 'confurl' => $confurl], 'table'],

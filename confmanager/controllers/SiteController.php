@@ -12,6 +12,7 @@ use yii\web\ForbiddenHttpException;
 use yii\db\Expression;
 use backend\modules\conference\models\Conference;
 use confmanager\models\ConferenceSearch;
+use common\models\User;
 
 /**
  * Site controller
@@ -28,7 +29,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['signup', 'index', 'login', 'staff-login', 'download', 'public-submit', 'subscriber', 'error'],
+                        'actions' => ['signup', 'index', 'login', 'staff-login', 'download', 'public-submit', 'subscriber', 'error', 'register'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -58,6 +59,29 @@ class SiteController extends Controller
             ],
         ];
     }
+	
+	public function actionError(){
+		$this->layout = 'main-empty';
+		
+	}
+	
+	public function actionRegister(){
+		$this->layout = 'main-login';
+		$user = new User;
+		$user->scenario = 'checkemail';
+		
+		if ($user->load(Yii::$app->request->post())) {
+			if($user->isEmailExist()){
+				Yii::$app->session->addFlash('error', "You have already registered with Edusage Network, please proceed to login page. You can use forgot password feature in case you have forgotten your password");
+			}else{
+				$this->redirect(['user/register', 'email' => $user->email]);
+			}
+		}
+
+		return $this->render('register',[
+			'user' => $user
+		]);
+	}
 
     /**
      * Displays homepage.
@@ -67,7 +91,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
 		if(Yii::$app->user->isGuest){
-			$this->redirect('login');
+			$this->redirect(['user/login']);
 		}else{
 			
 		$searchModel = new ConferenceSearch();
@@ -153,30 +177,6 @@ class SiteController extends Controller
 		Upload::download($model, 'cameraready', 'article');
 	} 
 	
-
-
-    /**
-     * Logs in a user.
-     *
-     * @return mixed
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            //return $this->goBack();
-			return $this->goHome();
-        } else {
-			$this->layout = "//main-login";
-            return $this->render('login', [
-                'model' => $model,
-            ]);
-        }
-    }
 
 
     /**

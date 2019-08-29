@@ -16,7 +16,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
+$dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
 
 /**
  * @var yii\web\View $this
@@ -45,13 +45,7 @@ $fieldOptions1 = [
 
 
 
-<div class="login-wrap">
-                    <div class="login-content">
-                        <div class="login-logo">
-                            <a href="#">
-                                confsite MANAGER
-                            </a>
-                        </div>
+<div align="center"><b> MANAGER LOGIN </b></div>
                         <div class="login-form">
                            	<?php $form = ActiveForm::begin([
                     'id' => 'login-form',
@@ -88,26 +82,23 @@ $fieldOptions1 = [
 								
 								<?= Html::submitButton(
                     Yii::t('user', 'LOG IN'),
-                    ['class' => 'au-btn au-btn--block au-btn--green m-b-20']
+                    ['class' => 'au-btn au-btn--red m-b-20']
                 ) ?>
                                 
                             <?php ActiveForm::end(); ?>
                            
-                        </div>
-                    </div>
-					
+                      
 
 		
-		<?php if ($module->enablePasswordRecovery): ?>
+
             <p class="text-center">
                 <?= Html::a('FORGOT PASSWORD',['/user/recovery/request']) ?>
             </p>
-        <?php endif ?>
+			
+			<p class="text-center">
+                <?= Html::a('REGISTER',['/site/register']) ?>
+            </p>
 		
-
-					
-					
-                </div>
-				
-				
-				<br />	<br />	<br />
+  </div>
+              
+		
