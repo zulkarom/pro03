@@ -25,7 +25,7 @@ use backend\modules\conference\models\Conference;
 				  echo '<div class="row schedule-item">
               <div class="col-md-2"><time>'.date('d M Y', strtotime($conf->date_start)) .'</time></div>
               <div class="col-md-7">
-                <h4>'.$conf->conf_name .' ('.$conf->conf_abbr .')</p>
+                <a href="https://site.confvalley.com/'.$conf->conf_url .'" target="_blank"><h4>'.$conf->conf_name .' ('.$conf->conf_abbr .')</h4></a>
               </div>
 			  <div class="col-md-3">
 			  '.$conf->conf_venue.'
@@ -46,7 +46,7 @@ use backend\modules\conference\models\Conference;
 
         </div>
 		
-		<div align="center" style="margin-top:30px;"><a href="#about" class="red-button">More Conferences</a> </div>
+		<div align="center" style="margin-top:30px;"><a href="https://site.confvalley.com" class="red-button">More Conferences</a> </div>
 		
 		
 		

@@ -15,7 +15,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confvalley/views/my
         <div class="row">
 
           <div class="col-lg-3 col-md-6 footer-info">
-            CONFVALLEY.COM
+            <a href="#main"><img src="<?=$directoryAsset?>/img/logo-confvalley-white.png" /></a>
             <p><?=$confv->about?></p>
           </div>
 
@@ -80,7 +80,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confvalley/views/my
           Licensing information: https://bootstrapmade.com/license/
           Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=TheEvent
         -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Template by <a href="https://bootstrapmade.com/">BootstrapMade</a>
       </div>
     </div>
   </footer>

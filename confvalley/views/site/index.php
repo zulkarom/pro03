@@ -25,9 +25,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confvalley/views/my
           <li class="menu-active"><a href="#intro">Home</a></li>
           <li><a href="#about">About</a></li>
 		  <li><a href="#schedule">Upcoming Conferences</a></li>
-          <li><a href="#">Login</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li class="buy-tickets"><a href="#buy-tickets">Register</a></li>
+		  <li><a href="#contact">Contact</a></li>
+          <li><a href="https://manager.confvalley.com">Login</a></li>
+          <li class="buy-tickets"><a href="https://manager.confvalley.com/site/register">Register</a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
@@ -91,7 +91,10 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confvalley/views/my
   </main>
 
 
- <?=$this->render('_footer', ['confv' => $confv])?>
+ <?=$this->render('_footer', [
+ 'confv' => $confv,
+ 'directoryAsset' => $directoryAsset
+ ])?>
 
   <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
 
