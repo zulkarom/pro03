@@ -46,7 +46,7 @@ use backend\modules\conference\models\Conference;
 
         </div>
 		
-		<div align="center" style="margin-top:30px;"><a href="https://site.confvalley.com" class="red-button">More Conferences</a> </div>
+		<div align="center" style="margin-top:30px;"><a href="https://site.confvalley.com" class="red-button" target="_blank">More Conferences</a> </div>
 		
 		
 		
