@@ -27,6 +27,10 @@ if($list){
 			$content = $this->render('../page/_fees', [
 				'model' => $model
 				]);
+		}else if($item == 'tentative'){
+			$content = $this->render('../page/_tentative', [
+				'model' => $model
+				]);
 		}else{
 			$content = $model->{$item};
 		}

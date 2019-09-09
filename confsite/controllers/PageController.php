@@ -21,6 +21,13 @@ class PageController extends Controller
 		]);
     }
 	
+	public function actionTentative($confurl){
+        $model = $this->findModel($confurl);
+        return $this->render('tentative', [
+			'model' => $model,
+		]);
+    }
+	
 	public function actionSubmission($confurl){
         $model = $this->findModel($confurl);
         return $this->render('submission', [

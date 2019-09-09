@@ -118,6 +118,7 @@ class Conference extends \yii\db\ActiveRecord
 			'conf_publication' =>['Publication', 'publication'], 
 			'conf_award' => ['Award', 'award'],
 			'conf_accommodation' => ['Venue & Accommodation', 'accommodation'], 
+			'tentative' => ['Tentative', 'tentative'], 
 			'conf_committee' => ['Committee', 'committee'], 
 			'conf_lang' => ['Language', 'language'], 
 			'conf_contact' => ['Contact Person', 'contact']
