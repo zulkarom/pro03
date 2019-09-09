@@ -6,6 +6,7 @@ use Yii;
 use backend\modules\conference\models\Conference;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use common\models\User;
 
 /**
  * ConferenceController implements the CRUD actions for Conference model.
@@ -97,6 +98,26 @@ class PageController extends Controller
 			'model' => $model,
 		]);
     }
+	
+	public function actionRegister($confurl){
+		$this->layout = 'main-login';
+		$model = $this->findModel($confurl);
+		$user = new User;
+		$user->scenario = 'checkemail';
+		
+		if ($user->load(Yii::$app->request->post())) {
+			if($user->isEmailExist()){
+				Yii::$app->session->addFlash('error', "You have already registered with Edusage Network, please proceed to login page. You can use forgot password feature in case you have forgotten your password");
+			}else{
+				$this->redirect(['user/register', 'url' => $confurl,'email' => $user->email]);
+			}
+		}
+
+		return $this->render('register',[
+			'user' => $user,
+			'model' => $model
+		]);
+	}
 	
 	/**
      * Finds the Conference model based on its primary key value.
