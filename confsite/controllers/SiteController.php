@@ -100,7 +100,7 @@ class SiteController extends Controller
 				$reg->save();
 			}
 			
-			return $this->redirect(['index', 'confurl' => $confurl]);
+			return $this->redirect(['member/index', 'confurl' => $confurl]);
 			
 			/* return $this->render('member', [
 			'model' => $model
