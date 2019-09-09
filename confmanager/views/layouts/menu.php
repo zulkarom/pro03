@@ -21,6 +21,7 @@ $sub = [
 	['Important Date', ['conference/dates', 'conf' => $confurl], 'calendar', null],
 	['Downloads', ['download/index','conf' => $confurl], 'download', null],
 	['Fees', ['conference/fees', 'conf' => $confurl], 'dollar-sign', null],
+	['Tentative', ['conference/tentative', 'conf' => $confurl], 'clock', null],
 	//['Organized By', ['site/index'], 'bank', null],
 	//['Secretariat', ['site/index'], 'phone', null]
 ];
@@ -37,7 +38,7 @@ $sub = [
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
                         <a class="logo" href="index.html">
-                           <img src="<?=$dirAsset?>/images/icon/logo.png" alt="CONFVALLEY" />
+                           <img src="<?=$dirAsset?>/images/icon/logo-confvalley.png" alt="CONFVALLEY" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -75,7 +76,7 @@ $sub = [
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="<?=Url::to('site/index')?>">
-                   <img src="<?=$dirAsset?>/images/icon/logo.png" alt="CONFVALLEY" />
+                   <img src="<?=$dirAsset?>/images/icon/logo-confvalley.png" alt="CONFVALLEY" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">

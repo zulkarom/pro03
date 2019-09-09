@@ -18,6 +18,8 @@ use backend\modules\conference\models\ConfDate;
 use backend\modules\conference\models\ConferenceSearch;
 use backend\modules\conference\models\ConfFee;
 use backend\modules\conference\models\ConfFeeInfo;
+use backend\modules\conference\models\TentativeDay;
+use backend\modules\conference\models\TentativeTime;
 
 
 /**
@@ -315,6 +317,126 @@ class ConferenceController extends Controller
 	
 	
 	}
+	
+	
+	public function actionTentative($conf)
+    {
+		$model = $this->findModel($conf);
+	
+        $modelsDay = $model->tentativeDays;
+        $modelsTime = [];
+        $oldTimes = [];
+
+        if (!empty($modelsDay)) {
+            foreach ($modelsDay as $indexDay => $modelDay) {
+                $times = $modelDay->tentativeTimes;
+                $modelsTime[$indexDay] = $times;
+                $oldTimes = ArrayHelper::merge(ArrayHelper::index($times, 'id'), $oldTimes);
+            }
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+			
+			//echo '<pre>';
+			//print_r(Yii::$app->request->post());die();
+
+            // reset
+            $modelsTime = [];
+
+            $oldDayIDs = ArrayHelper::map($modelsDay, 'id', 'id');
+            $modelsDay = Model::createMultiple(TentativeDay::classname(), $modelsDay);
+            Model::loadMultiple($modelsDay, Yii::$app->request->post());
+            $deletedDayIDs = array_diff($oldDayIDs, array_filter(ArrayHelper::map($modelsDay, 'id', 'id')));
+
+            // validate person and days models
+            $valid = $model->validate();
+            $valid = Model::validateMultiple($modelsDay) && $valid;
+
+            $timesIDs = [];
+			//print_r( $_POST['Time']);die();
+            if (isset($_POST['TentativeTime'][0][0])) {
+                foreach ($_POST['TentativeTime'] as $indexDay => $times) {
+					//echo '<pre>';print_r($times);die();
+                    $timesIDs = ArrayHelper::merge($timesIDs, array_filter(ArrayHelper::getColumn($times, 'id')));
+					//print_r(ArrayHelper::getColumn($times, 'id'));die();
+                    foreach ($times as $indexTime => $time) {
+						//echo '<pre>';print_r($time);die();
+                        $data['TentativeTime'] = $time;
+                        $modelTime = (isset($time['id']) && isset($oldTimes[$time['id']])) ? $oldTimes[$time['id']] : new TentativeTime;
+						//echo '<pre>';print_r($modelTime);echo '<br /><br /><br /><br />';
+                        $modelTime->load($data);
+						//echo '<pre>';print_r($modelTime);die();
+                        $modelsTime[$indexDay][$indexTime] = $modelTime;
+                        $valid = $modelTime->validate();
+                    }
+                }
+            }
+
+            $oldTimesIDs = ArrayHelper::getColumn($oldTimes, 'id');
+            $deletedTimesIDs = array_diff($oldTimesIDs, $timesIDs);
+
+            if ($valid) {
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+
+                        if (! empty($deletedTimesIDs)) {
+                            TentativeTime::deleteAll(['id' => $deletedTimesIDs]);
+                        }
+
+                        if (! empty($deletedDayIDs)) {
+                            TentativeDay::deleteAll(['id' => $deletedDayIDs]);
+                        }
+
+                        foreach ($modelsDay as $indexDay => $modelDay) {
+
+                            if ($flag === false) {
+                                break;
+                            }
+
+                            $modelDay->conf_id = $model->id;
+
+                            if (!($flag = $modelDay->save(false))) {
+                                break;
+                            }
+
+                            if (isset($modelsTime[$indexDay]) && is_array($modelsTime[$indexDay])) {
+								
+                                foreach ($modelsTime[$indexDay] as $indexTime => $modelTime) {
+									//echo '<pre>';print_r($modelTime);die();
+                                    $modelTime->day_id = 
+									$modelDay->id;
+                                    if (!($flag = $modelTime->save(false))) {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+						Yii::$app->session->addFlash('success', "Data Updated");
+                        return $this->redirect(['tentative', 'conf' => $conf]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
+        }
+		
+		
+
+        return $this->render('tentative', [
+            'model' => $model,
+            'days' => (empty($modelsDay)) ? [new TentativeDay] : $modelsDay,
+            'times' => (empty($modelsTime)) ? [[new TentativeTime]] : $modelsTime
+        ]);
+		
+
+    }
 	
 
 

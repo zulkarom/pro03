@@ -103,6 +103,11 @@ class Conference extends \yii\db\ActiveRecord
         return $this->hasMany(ConfPaper::className(), ['conf_id' => 'id']);
     }
 	
+	public function getTentativeDays()
+    {
+        return $this->hasMany(TentativeDay::className(), ['conf_id' => 'id']);
+    }
+	
 	public function getPages(){
 		return [
 			'conf_background' => ['Background', 'background'], 
