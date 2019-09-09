@@ -89,9 +89,24 @@ class SiteController extends Controller
 		$model = $this->findConferenceByUrl($confurl);
 		
 		if($confurl){
-			return $this->render('member', [
+			
+			$user = ConfRegistration::findOne(['conf_id' => $model->id, 'user_id' => Yii::$app->user->identity->id]);
+			
+			if(!$user){
+				$reg = new ConfRegistration;
+				$reg->user_id = Yii::$app->user->identity->id;
+				$reg->conf_id = $model->id;
+				$reg->reg_at = new Expression('NOW()');
+				$reg->save();
+			}
+			
+			return $this->redirect('index', ['confurl' => $confurl]);
+			
+			/* return $this->render('member', [
 			'model' => $model
-        ]);
+			]); */
+		
+		
 		}
 		
     }

@@ -22,7 +22,7 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 						
 					if($conf and !Yii::$app->user->isGuest){
 					echo '<li>
-                            <a href="'.Url::to(['/site/index', 'confurl' => $conf->conf_url]).'">
+                            <a href="'.Url::to(['/site/member', 'confurl' => $conf->conf_url]).'">
                                 Go To '.$conf->conf_abbr .' Member Page</a>
                         </li>';
 					
@@ -74,7 +74,7 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
 							
 					if($conf and !Yii::$app->user->isGuest){
 					echo '<li class="item-menu-mobile">
-                            <a href="'.Url::to(['/site/index', 'confurl' => $conf->conf_url]).'">
+                            <a href="'.Url::to(['/site/member', 'confurl' => $conf->conf_url]).'">
                                 Go To '.$conf->conf_abbr .' Member Page</a>
                         </li>';
 					
