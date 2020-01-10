@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "auth_assignment".
@@ -15,6 +16,8 @@ use Yii;
  */
 class AuthAssignment extends \yii\db\ActiveRecord
 {
+	public $text;
+	public $userid;
     /**
      * @inheritdoc
      */
@@ -66,5 +69,16 @@ class AuthAssignment extends \yii\db\ActiveRecord
 		->leftJoin('user', 'user.id = auth_assignment.user_id')
 		->where(['item_name' => $assignment])
 		->all();
+	}
+	
+	public static function getUsersByAssignmentArray($assignment){
+		$result =  self::find()
+		->select(['user.id AS userid', 'concat(fullname, " - ", email) AS text'])
+		->leftJoin('user', 'user.id = auth_assignment.user_id')
+		->where(['item_name' => $assignment])
+		->all();
+		
+		return ArrayHelper::map($result, 'userid', 'text');
+		
 	}
 }

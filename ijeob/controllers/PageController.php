@@ -9,6 +9,7 @@ use ijeob\models\ArchiveSearch;
 use ijeob\models\Citation;
 use common\models\User;
 use backend\modules\journal\models\Journal;
+use backend\modules\journal\models\JournalIssue;
 use backend\modules\journal\models\Article;
 use common\models\Upload;
 
@@ -72,10 +73,10 @@ class PageController extends Controller
 		]);
 	}
 	
-	public function actionJournal($id){
-		$journal = $this->findJournal($id);
+	public function actionJournalIssue($id){
+		$issue = $this->findJournalIssue($id);
 		return $this->render('journal',[
-			'journal' => $journal
+			'issue' => $issue
 		]);
 	}
 	
@@ -89,6 +90,15 @@ class PageController extends Controller
     protected function findJournal($id)
     {
         if (($model = Journal::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+	
+	 protected function findJournalIssue($id)
+    {
+        if (($model = JournalIssue::findOne($id)) !== null) {
             return $model;
         }
 

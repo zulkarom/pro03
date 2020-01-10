@@ -30,7 +30,7 @@ class Associate extends \yii\db\ActiveRecord
         return [
             //[['user_id', 'country_id', 'institution'], 'required'],
 			
-			[['institution', 'country_id', 'title', 'assoc_address'], 'required', 'on' => 'update_external'],
+			[['institution', 'country_id', 'title'], 'required', 'on' => 'update_external'],
 			
             [['user_id', 'country_id'], 'integer'],
 			

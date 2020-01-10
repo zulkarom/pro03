@@ -28,7 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'journal_id',
 				'contentOptions' => ['style' => 'width:15%'],
 				'value' => function($model){
-					return $model->journal->journal_abbr;
+					if($model->journal){
+						return $model->journal->journal_abbr;
+					}
+					
 				}
 			]
 			,

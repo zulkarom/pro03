@@ -133,9 +133,9 @@ class Article extends \yii\db\ActiveRecord
 			
 			[['correction_at', 'correction_file'], 'required', 'on' => WorkflowScenario::enterStatus('ia-post-evaluate')],
 			
-			[['post_evaluate_at', 'post_evaluate_by', 'assistant_editor', 'doi_ref', 'page_from', 'page_to'], 'required', 'on' => WorkflowScenario::enterStatus('oa-camera-ready')],
+			[['post_evaluate_at', 'post_evaluate_by', 'assistant_editor'], 'required', 'on' => WorkflowScenario::enterStatus('oa-camera-ready')],
 			
-			[['cameraready_file', 'camera_ready_at', 'camera_ready_by'], 'required', 'on' => WorkflowScenario::enterStatus('pa-assign-journal')],
+			[['cameraready_file', 'camera_ready_at', 'camera_ready_by', 'page_from', 'page_to'], 'required', 'on' => WorkflowScenario::enterStatus('pa-assign-journal')],
 			
 			[['journal_issue_id'], 'required', 'on' => WorkflowScenario::enterStatus('qa-publish')],
 			

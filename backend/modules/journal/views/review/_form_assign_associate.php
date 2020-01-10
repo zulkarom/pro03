@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use common\models\AuthAssignment;
 use common\models\Upload;
@@ -19,8 +18,7 @@ $form = ActiveForm::begin(); ?>
             <div class="card-body">
 <div class="box-body"> 
 
- <?= $form->field($model, 'associate_editor')->dropDownList(
-        ArrayHelper::map(AuthAssignment::getUsersByAssignment('journal-associate-editor'),'user.id', 'user.fullname')
+ <?= $form->field($model, 'associate_editor')->dropDownList(AuthAssignment::getUsersByAssignmentArray('journal-associate-editor')
     ) ?>
 
 

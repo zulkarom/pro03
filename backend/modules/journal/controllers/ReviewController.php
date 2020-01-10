@@ -491,6 +491,9 @@ class ReviewController extends \yii\web\Controller
 			$model->sendEmail();
 			Yii::$app->session->addFlash('success', "Assistant Editor has been successfully assigned.");
 			return $this->redirect(['editing/index']);
+		}else{
+			$model->flashError();
+			return $this->redirect(['review/post-evaluate', 'id' => $model->id]);
 		}
 	}
 	

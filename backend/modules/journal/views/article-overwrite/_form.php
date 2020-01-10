@@ -12,7 +12,7 @@ use backend\modules\journal\models\Journal;
 use backend\modules\journal\models\JournalIssue;
 use backend\modules\journal\models\Scope;
 use backend\modules\journal\models\ReviewForm;
-use common\models\Upload;
+use backend\models\UploadFile;
 use common\models\AuthAssignment;
 use wbraganca\dynamicform\DynamicFormWidget;
 use richardfan\widget\JSRegister;
@@ -46,7 +46,7 @@ $model->file_controller = 'article-overwrite';
 	<div class="row">
 
 
-<div class="col-md-6">
+<div class="col-md-10">
 
 <?php
 $userDesc = empty($model->user_id) ? '' : User::findOne($model->user_id)->fullname;
@@ -190,13 +190,13 @@ echo $form->field($model, 'user_id')->widget(Select2::classname(), [
 
 <?php 
 if($model->id){
-	echo Upload::fileInput($model, 'submission');
+	echo UploadFile::fileInput($model, 'submission');
 }
 ?>
 
 <?php 
 if($model->id){
-	echo Upload::fileInput($model, 'payment');
+	echo UploadFile::fileInput($model, 'payment');
 }
 ?>  
 
@@ -209,7 +209,7 @@ if($model->id){
 	
 	<?php 
 if($model->id){
-	echo Upload::fileInput($model, 'review');
+	echo UploadFile::fileInput($model, 'review');
 }
 ?>
 
@@ -226,7 +226,7 @@ if($model->id){
 
 	<?php 
 if($model->id){
-	echo Upload::fileInput($model, 'correction');
+	echo UploadFile::fileInput($model, 'correction');
 }
 ?>
 
@@ -239,7 +239,7 @@ if($model->id){
 	
 		<?php 
 if($model->id){
-	echo Upload::fileInput($model, 'cameraready');
+	echo UploadFile::fileInput($model, 'cameraready');
 }
 ?>
 

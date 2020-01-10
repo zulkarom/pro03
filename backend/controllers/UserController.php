@@ -292,9 +292,10 @@ class UserController extends Controller
 		$out = ['results' => ['id' => '', 'text' => '']];
 		if (!is_null($q)) {
 			$query = new Query;
-			$query->select('id, fullname AS text')
+			$query->select(['id', 'concat(fullname, " - ", email) AS text'])
 				->from('user')
 				->where(['like', 'fullname', $q])
+				->orWhere(['like', 'email', $q])
 				->limit(20);
 			$command = $query->createCommand();
 			$data = $command->queryAll();

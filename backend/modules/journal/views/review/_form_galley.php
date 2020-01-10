@@ -17,8 +17,8 @@ $form = ActiveForm::begin(); ?>
 <h6 class="m-0 font-weight-bold text-primary">Assistant Editor Assignment</h6>
 </div>
             <div class="card-body"><div class="row">
-<div class="col-md-6"><?=$form->field($model, 'assistant_editor')->dropDownList(
-        ArrayHelper::map(AuthAssignment::getUsersByAssignment('journal-assistant-editor'),'user_id', 'user.fullname')
+<div class="col-md-10"><?=$form->field($model, 'assistant_editor')->dropDownList(
+        AuthAssignment::getUsersByAssignmentArray('journal-assistant-editor')
     ) 
  ?></div>
 

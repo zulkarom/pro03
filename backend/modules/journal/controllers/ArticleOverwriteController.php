@@ -10,7 +10,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\Upload;
+use backend\models\UploadFile;
+use yii\helpers\Json;
+use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use common\models\Model;
 
@@ -223,6 +225,37 @@ class ArticleOverwriteController extends Controller
 
         return $this->redirect(['index']);
     }
+	
+	public function actionDeleteFile($attr, $id)
+    {
+        $attr = $this->clean($attr);
+        $model = $this->findModel($id);
+        $attr_db = $attr . '_file';
+        
+        $file = Yii::getAlias('@upload/' . $model->{$attr_db});
+        
+        $model->scenario = $attr . '_delete';
+        $model->{$attr_db} = '';
+        $model->updated_at = new Expression('NOW()');
+        if($model->save()){
+            if (is_file($file)) {
+                unlink($file);
+                
+            }
+            
+            return Json::encode([
+                        'good' => 1,
+                    ]);
+        }else{
+            return Json::encode([
+                        'errors' => $model->getErrors(),
+                    ]);
+        }
+        
+
+
+    }
+
 
     /**
      * Finds the ArticleOverwrite model based on its primary key value.
@@ -240,19 +273,19 @@ class ArticleOverwriteController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 	
-	public function actionDownload($attr, $id, $identity = true){
+	public function actionDownloadFile($attr, $id, $identity = true){
 		$attr = $this->clean($attr);
         $model = $this->findModel($id);
 		$filename = strtoupper($attr);
-		Upload::download($model, $attr, $filename);
+		UploadFile::download($model, $attr, $filename);
 	}
 	
-	public function actionUpload($attr, $id){
+	public function actionUploadFile($attr, $id){
         $attr = $this->clean($attr);
         $model = $this->findModel($id);
-        $model->file_controller = 'submission';
+        $model->file_controller = 'article-overwrite';
 
-        return Upload::upload($model, $attr, 'updated_at');
+        return UploadFile::upload($model, $attr, 'updated_at');
 
     }
 	

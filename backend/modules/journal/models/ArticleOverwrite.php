@@ -97,7 +97,7 @@ class ArticleOverwrite extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['journal_id', 'user_id'], 'required'],
+            [['journal_id', 'user_id', 'page_from', 'page_to'], 'required'],
 			
 			
             [['journal_id', 'yearly_number', 'user_id', 'scope_id', 'pre_evaluate_by', 'invoice_id', 'associate_editor', 'asgn_reviewer_by', 'response_by', 'response_option', 'post_evaluate_by', 'assistant_editor', 'camera_ready_by', 'journal_by', 'journal_issue_id', 'reject_by', 'withdraw_by', 'page_from', 'page_to'], 'integer'],

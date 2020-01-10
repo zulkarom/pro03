@@ -42,7 +42,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@ijeob/views/myasset
                 'buttons'=>[
                     'view'=>function ($url, $model) {
 
-                        return '<a href="'.Url::to(['page/journal/', 'id' => $model->id]).'" class="btn btn-info btn-sm"><span class="fa fa-book"></span> VIEW</a>';
+                        return '<a href="'.Url::to(['page/journal-issue/', 'id' => $model->id]).'" class="btn btn-info btn-sm"><span class="fa fa-book"></span> VIEW</a>';
                     }
                 ],
             
