@@ -54,6 +54,3 @@ phpunit.phar
 #uploaded
 /frontend/uploaded
 
-# cpanel
-
-.cpanel.yml
