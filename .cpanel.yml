@@ -1,5 +1,0 @@
----
-deployment:
- tasks:
- - export DEPLOYPATH=/home/confvall/esncode/
- - /bin/cp -R /home/confvall/repositories/pro03 $DEPLOYPATH
