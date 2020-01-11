@@ -59,11 +59,11 @@ phpunit.phar
 # others yii
 /environments
 .bowerrc
-.codeception.yml
+codeception.yml
 composer.json
 composer.lock
 init
 init.bat
 Vagrantfile
-requirement.php
+requirements.php
 yii.bat
