@@ -3,6 +3,7 @@
 namespace backend\modules\journal\controllers;
 
 use Yii;
+use backend\modules\journal\models\Article;
 use backend\modules\journal\models\ArticleOverwrite;
 use backend\modules\journal\models\ArticleAuthor;
 use backend\modules\journal\models\ArticleOverwriteSearch;
@@ -78,6 +79,9 @@ class ArticleOverwriteController extends Controller
     public function actionCreate()
     {
         $model = new ArticleOverwrite();
+		$ori = new Article;
+		$model->manuscript_no = Yii::$app->user->identity->id . '-' . time();
+		$model->yearly_number = $ori->genYearlyNumber();
 		
 		$authors = [new ArticleAuthor];
 
