@@ -126,7 +126,7 @@ class JournalIssue extends \yii\db\ActiveRecord
 		
 	}
 	
-	public function listIssues($journal){
+	public static function listIssues($journal){
 		$result = JournalIssue::find()->where(['journal_id' => $journal])
 		->all();
 		return ArrayHelper::map($result, 'id', 'journalIssueName');
