@@ -265,7 +265,7 @@ if($model->id){
 </div>
 
 <div class="row">
-<div class="col-md-6"> <?= $form->field($model, 'journal_id')->dropDownList(ArrayHelper::map(Journal::find()->all(), 'id', 'journal_abbr'))->label('Journal')?></div>
+<div class="col-md-6"> <?= $form->field($model, 'journal_id')->dropDownList(ArrayHelper::map(Journal::find()->all(), 'id', 'journal_abbr'), ['prompt' => 'Please Select' ])->label('Journal')?></div>
 
 <div class="col-md-6">
 </div>
