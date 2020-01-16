@@ -91,15 +91,6 @@ $this->params['breadcrumbs'][] = $this->title;
 							
 							case 'review':
 							$button = '';
-							if(Todo::can('journal-reviewer') and $model->isReviewer()){
-								if($model->myReview->status == 20){
-									$button =  '<a href="'.Url::to(['review/login-reviewer/', 'id' => $model->myReview->id]).'" class="btn btn-info btn-sm" target="_blank"><span class="glyphicon glyphicon-ok"></span> REVIEW COMPLETED</a>';
-								}else{
-									$button =  '<a href="'.Url::to(['review/login-reviewer/', 'id' => $model->myReview->id]).'" class="btn btn-'.$color.' btn-sm" target="_blank"><span class="glyphicon glyphicon-pencil"></span> REVIEW</a> ';
-								}
-								
-							
-							}
 							if(Todo::can('journal-associate-editor') and $model->isAssociateEditor()){
 								$button .= '<a href="'.Url::to(['review/update-reviewer/', 'id' => $model->id]).'" class="btn btn-'.$color.' btn-sm"><span class="glyphicon glyphicon-user"></span> MANAGE REVIEW</a>';
 							}
