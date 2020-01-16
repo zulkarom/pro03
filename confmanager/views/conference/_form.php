@@ -26,7 +26,7 @@ $model->file_controller = 'conference';
 			
 			<div class="form-group">
 			<label>Conference Url</label>
-			<h4><?=$model->conf_url?><h4>
+			<h4><a href="https://site.confvalley.com/<?=$model->conf_url?>"  target="_blank">https://site.confvalley.com/<?=$model->conf_url?></a><h4>
 			
 			</div>
 
@@ -39,6 +39,20 @@ $model->file_controller = 'conference';
 <div class="col-md-4"><?= $form->field($model, 'conf_abbr')->textInput(['maxlength' => true])->label('Abbreviation') ?></div>
 
 <div class="col-md-4"> <?=$form->field($model, 'date_start')->widget(DatePicker::classname(), [
+    'removeButton' => false,
+    'pluginOptions' => [
+        'autoclose'=>true,
+        'format' => 'yyyy-mm-dd',
+        'todayHighlight' => true,
+        
+    ],
+    
+    
+])->label('Date Start');
+?>
+</div>
+
+<div class="col-md-4"> <?=$form->field($model, 'date_end')->widget(DatePicker::classname(), [
     'removeButton' => false,
     'pluginOptions' => [
         'autoclose'=>true,
@@ -104,8 +118,14 @@ echo $form->field($model, 'currency_int')->widget(Select2::classname(), [
 <label>MENUS</label><br />
 <?php 
 $old_page_menu = $model->page_menu ? json_decode($model->page_menu) : [];
+
+
 foreach($model->pages as $key=>$val){
-	$chk = in_array($key,$old_page_menu) ? 'checked' : '';
+	$chk = '';
+	if(is_array($old_page_menu)){
+		$chk = in_array($key,$old_page_menu) ? 'checked' : '';
+	}
+	
 	echo '<label><input type="checkbox" name="page-menu[]" value="'.$key.'" '.$chk.' /> '.$val[0].'</label><br />';
 }
 

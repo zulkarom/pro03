@@ -36,7 +36,7 @@ class Conference extends \yii\db\ActiveRecord
         return [
             [['conf_name', 'conf_abbr', 'date_start', 'conf_venue', 'conf_url', 'user_id'], 'required'],
 			
-            [['date_start', 'updated_at', 'created_at'], 'safe'],
+            [['date_start','date_end', 'updated_at', 'created_at'], 'safe'],
 			
             [['conf_name', 'conf_venue'], 'string', 'max' => 200],
 			
@@ -77,6 +77,14 @@ class Conference extends \yii\db\ActiveRecord
 	public function getUser(){
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+	
+	public function getConferenceDate($sep = ' - '){
+		if(($this->date_start == $this->date_end) or ($this->date_end == '0000-00-00')){
+			return date('d M Y', strtotime($this->date_start));
+		}else{
+			return date('d M Y', strtotime($this->date_end)) . $sep . date('d M Y', strtotime($this->date_end));
+		}
+	}
 	
 	public function getConfDates()
     {

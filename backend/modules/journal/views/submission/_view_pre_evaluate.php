@@ -25,7 +25,10 @@ table.detail-view th {
 			[
 				'attribute' => 'pre_evaluate_by',
 				'value' => function($model){
-					return $model->preEvaluateBy->fullname;
+					if($model->preEvaluateBy){
+						return $model->preEvaluateBy->fullname;
+					}
+					
 				}
 			],
 			'pre_evaluate_note',

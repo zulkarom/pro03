@@ -20,7 +20,8 @@ use common\models\User;
     <?php $form = ActiveForm::begin(); ?>
 	
 	<?php
-$userDesc = empty($model->user_id) ? '' : User::findOne($model->user_id)->fullname;
+$user = User::findOne($model->user_id);
+$userDesc = empty($model->user_id) ? '' : $user->fullname .  ' - ' . $user->email ;
 $url = Url::to(['/user/user-list-json']);
 echo $form->field($model, 'user_id')->widget(Select2::classname(), [
     'initValueText' => $userDesc, // set the initial display text
@@ -50,7 +51,30 @@ echo $form->field($model, 'user_id')->widget(Select2::classname(), [
 	<div class="row">
 <div class="col-md-4"><?= $form->field($model, 'conf_abbr')->textInput(['maxlength' => true]) ?></div>
 
+<?php 
+if($model->date_start == '0000-00-00'){
+	$model->date_start = date('Y-m-d');
+}
+if($model->date_end == '0000-00-00'){
+	$model->date_end = date('Y-m-d');
+}
+?>
+
 <div class="col-md-4"> <?=$form->field($model, 'date_start')->widget(DatePicker::classname(), [
+    'removeButton' => false,
+    'pluginOptions' => [
+        'autoclose'=>true,
+        'format' => 'yyyy-mm-dd',
+        'todayHighlight' => true,
+        
+    ],
+    
+    
+]) -> label('Date Start');
+?>
+</div>
+
+<div class="col-md-4"> <?=$form->field($model, 'date_end')->widget(DatePicker::classname(), [
     'removeButton' => false,
     'pluginOptions' => [
         'autoclose'=>true,
