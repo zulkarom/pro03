@@ -73,10 +73,7 @@ class ReviewSearch extends Article
 
         // grid filtering conditions
         
-		
-		
-		$access = true;
-		}
+
 		
 		
 		
