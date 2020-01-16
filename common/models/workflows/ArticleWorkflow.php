@@ -78,7 +78,7 @@ class ArticleWorkflow implements \raoul2000\workflow\source\file\IWorkflowDefini
 				
 				'ga-response' => [
 					'label' => 'Response to Author',
-					'transition' => ['ha-correction', 'oa-camera-ready','ra-reject', 'sa-withdraw-request'],
+					'transition' => ['ha-correction', 'oa-camera-ready','ra-reject', 'sa-withdraw-request', 'ia-post-evaluate'],
 					'metadata' => [
 						'color' => 'info',
 						'start_at' => 'review_submit_at'
