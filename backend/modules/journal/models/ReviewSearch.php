@@ -74,12 +74,6 @@ class ReviewSearch extends Article
         // grid filtering conditions
         
 		
-		if(Todo::can('journal-reviewer')){
-			$query->orFilterWhere([
-			'jeb_article_reviewer.user_id' => Yii::$app->user->identity->id ,
-			'jeb_article_reviewer.status' => [0, 10, 20]
-			
-        ]);
 		
 		$access = true;
 		}
