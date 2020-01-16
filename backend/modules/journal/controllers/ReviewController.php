@@ -627,7 +627,7 @@ class ReviewController extends \yii\web\Controller
 				}
 				
 			}else if($response_option == 4){
-				$model->sendToStatus('io-post-evaluate');
+				$model->sendToStatus('ia-post-evaluate');
 				$model->correction_at =  new Expression('NOW()');
 				$model->correction_file = $model->review_file;
 				if($model->save()){
