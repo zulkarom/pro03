@@ -57,7 +57,8 @@ $this->params['breadcrumbs'][] = 'Volume ' . $model->volume . ' Issue ' . $model
 				
 				<td>
                     <?=$article->title ?><br />
-					<i><?=$article->articleUrl ?></i>
+					<i>Full PDF Paper: <a href="<?=$article->articleUrl ?>" target="_blank"><?=$article->articleUrl ?></a></i><br />
+					<i>Article Page: <a href="<?=$article->articleUrlPage ?>" target="_blank"><?=$article->articleUrlPage ?></a></i>
                 </td>
             
                 <td>

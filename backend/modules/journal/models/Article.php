@@ -384,7 +384,7 @@ class Article extends \yii\db\ActiveRecord
 		}
 	}
 	
-	public function getArticlePageUrl(){
+	public function getArticleUrlPage(){
 		if($this->journalIssue){
 			$volume = $this->journalIssue->volume; 
 			$len = strlen((string)$volume);
