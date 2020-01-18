@@ -397,7 +397,7 @@ class Article extends \yii\db\ActiveRecord
 				$issue = '0' . $issue;
 			}
 			$web = $this->journal->journal_url;
-			return $web.'download/'.$volume . $issue .'.'. $this->publish_number . '.pdf';
+			return $web.'/article/'.$volume . $issue .'.'. $this->publish_number . '.html';
 		}else{
 			return '';
 		}
