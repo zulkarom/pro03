@@ -122,6 +122,25 @@ class PageController extends Controller
         ]);
 	}
 	
+	public function actionArticleVolume($volume, $issue, $publish_number){
+		$model = $this->searchArticle($volume, $issue, $publish_number);
+		return $this->render('article', [
+            'model' => $model,
+        ]);
+	}
+	
+	protected function searchArticle($volume, $issue, $publish_number)
+    {
+        if (($model = Article::find()
+        ->innerJoin('jeb_journal_issue', 'jeb_journal_issue.id = jeb_article.journal_issue_id')
+         ->where(['jeb_journal_issue.volume' => $volume, 'jeb_journal_issue.issue' => $issue, 'jeb_article.publish_number' => $publish_number])
+        ->one()) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+	
 	public function actionTemplateBm(){
 		$journal_id = Yii::$app->params['journal_id'];
 		$journal = $this->findJournal($journal_id);

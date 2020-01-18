@@ -45,6 +45,9 @@ return [
             'enablePrettyUrl' => true,
              'showScriptName' => false,
             'rules' => [
+			'download/<volume><issue>.<publish_number>.pdf' => 'site/download',
+			'download/<volume><issue>.<publish_number>' => 'site/download',
+			'article/v-<volume>.i-<issue>.<publish_number>.html' => 'page/article-volume',
 			'<controller>/<action>' => '<controller>/<action>',
 			
 			

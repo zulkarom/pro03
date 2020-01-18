@@ -27,12 +27,13 @@ use yii\helpers\Url;
 			if($article){
 				
 				foreach($article as $ar){
+					$issue = $ar->journalIssue;
 					echo '
 						
 					
 <div class="col-md-6 form-group">
 						
-						<a href="'.Url::to(['page/article' , 'id' => $ar->id]).'">'.$ar->title .'</a> <br />
+						<a href="'.Url::to(['page/article-volume' , 'volume' => $issue->volume, 'issue' => $issue->issue, 'publish_number' => $ar->publish_number]).'">'.$ar->title .'</a> <br />
 						<i>'.$ar->stringAuthors .'</i>
 						
 						<br />
