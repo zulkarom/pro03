@@ -27,18 +27,13 @@ use yii\helpers\Url;
 			if($article){
 				
 				foreach($article as $ar){
-					$issue = $ar->journalIssue;
-					echo '
-						
-					
-<div class="col-md-6 form-group">
-						
-						<a href="'.Url::to(['page/article-volume' , 'volume' => $issue->volume, 'issue' => $issue->issue, 'publish_number' => $ar->publish_number]).'">'.$ar->title .'</a> <br />
+					echo '<div class="col-md-6 form-group">
+						<a href="'.Url::to($ar->linkArticlePage()).'" style="font-size:14pt">'.$ar->title .'</a> <br />
 						<i>'.$ar->stringAuthors .'</i>
 						
 						<br />
 						
-						<a href="javascript:void(0)"  class="btn-abs" id="show-abs-'.$ar->id .'"><i id="icon-'.$ar->id .'" class="fa  fa-plus-square-o hide"></i> <i>View Abstract</i></a> | <a href="'.Url::to($ar->linkArticle()).'" target="_blank"><i class="fa fa-file-pdf-o"></i> <i>Download Full Paper</i></a>
+						<a href="javascript:void(0)"  class="btn-abs" id="show-abs-'.$ar->id .'"><i id="icon-'.$ar->id .'" class="fa  fa-plus-square-o hide"></i> <i>View Abstract</i></a>  &nbsp;&nbsp;<a href="'.Url::to($ar->linkArticle()).'" target="_blank"><i class="fa fa-file-pdf-o"></i> <i>Download Full Paper</i></a>
 						<br />
 						
 						<div class="abs-con" id="abs-'.$ar->id .'" style="display:none; text-align:justify";>
@@ -48,10 +43,7 @@ use yii\helpers\Url;
 						'.Html::encode($ar->keyword) .'
 						</div>
 						
-						</div>
-						
-						
-						';
+						</div>';
 
 				}
 			}

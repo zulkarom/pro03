@@ -378,13 +378,29 @@ class Article extends \yii\db\ActiveRecord
 				$issue = '0' . $issue;
 			}
 			$web = $this->journal->journal_url;
-			return $web.'/'.$volume . $issue .'.'. $this->publish_number;
+			return $web.'/download/'.$volume . $issue .'.'. $this->publish_number . '.pdf';
 		}else{
 			return '';
 		}
-		
-		
-		
+	}
+	
+	public function getArticlePageUrl(){
+		if($this->journalIssue){
+			$volume = $this->journalIssue->volume; 
+			$len = strlen((string)$volume);
+			if($len == 1){
+				$volume = '0' . $volume;
+			}
+			$issue = $this->journalIssue->issue;
+			$len = strlen((string)$issue);
+			if($len == 1){
+				$issue = '0' . $issue;
+			}
+			$web = $this->journal->journal_url;
+			return $web.'download/'.$volume . $issue .'.'. $this->publish_number . '.pdf';
+		}else{
+			return '';
+		}
 	}
 	
 	
@@ -405,6 +421,27 @@ class Article extends \yii\db\ActiveRecord
 		}
 		
 		return ['site/download', 'volume' => $volume, 'issue' => $issue, 'publish_number' => $this->publish_number];
+
+	}
+	
+	public function linkArticlePage(){
+		$volume = '';
+		$issue = '';
+		if($this->journalIssue){
+			$volume = $this->journalIssue->volume; 
+			$len = strlen((string)$volume);
+			if($len == 1){
+				$volume = '0' . $volume;
+			}
+			$issue = $this->journalIssue->issue;
+			$len = strlen((string)$issue);
+			if($len == 1){
+				$issue = '0' . $issue;
+			}
+		}
+		
+		return ['page/article-volume', 'volume' => $volume, 'issue' => $issue, 'publish_number' => $this->publish_number];
+
 
 	}
 	

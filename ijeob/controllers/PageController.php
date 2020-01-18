@@ -123,6 +123,44 @@ class PageController extends Controller
 	}
 	
 	public function actionArticleVolume($volume, $issue, $publish_number){
+		$all = $volume.$issue;
+		
+		$len = strlen((string)$all);
+		
+		if($len == 4){
+			$first = $all[0];
+			$second = $all[1];
+			$third = $all[2];
+			$forth = $all[3];
+			
+			if($first == '0'){
+				$volume = $second;
+			}else{
+				$volume = $first.$second;
+			}
+			
+			if($third == '0'){
+				$issue = $forth;
+			}else{
+				$issue = $third.$forth;
+			}
+		}else if($len == 5){
+			$first = $all[0];
+			$second = $all[1];
+			$third = $all[2];
+			$forth = $all[3];
+			$fifth = $all[4];
+			
+			$volume = $first.$second.$third;
+			
+			if($forth == '0'){
+				$issue = $fifth;
+			}else{
+				$issue = $forth.$fifth;
+			}
+		}
+		
+		
 		$model = $this->searchArticle($volume, $issue, $publish_number);
 		return $this->render('article', [
             'model' => $model,
