@@ -26,6 +26,8 @@ class ConfPaper extends \yii\db\ActiveRecord
 	public $paper_instance;
 	public $file_controller;
 	public $form_abstract_only = 1;
+	public $abstract_decide = 1;
+	public $full_paper_decide = 1;
 
 
     /**
@@ -46,7 +48,11 @@ class ConfPaper extends \yii\db\ActiveRecord
 			
 			[['conf_id', 'user_id', 'pap_title', 'pap_abstract', 'created_at', 'status', 'paper_file', 'keyword'], 'required', 'on' => 'fullpaper'],
 			
-            [['conf_id', 'user_id', 'status', 'form_abstract_only'], 'integer'],
+			[['abstract_decide'], 'required', 'on' => 'abstract_decide'],
+			
+			
+			
+            [['conf_id', 'user_id', 'status', 'form_abstract_only', 'abstract_decide'], 'integer'],
             [['pap_title', 'pap_abstract', 'paper_file'], 'string'],
             [['created_at'], 'safe'],
             [['conf_id'], 'exist', 'skipOnError' => true, 'targetClass' => Conference::className(), 'targetAttribute' => ['conf_id' => 'id']],
@@ -153,6 +159,23 @@ class ConfPaper extends \yii\db\ActiveRecord
         }
 
     }
+	
+	public function getAbstractOptions(){
+		return [
+			1 => 'Accept Abstract',
+			0 => 'Reject Abstract',
+			
+		];
+	}
+	
+	public function getFullPaperOptions(){
+		return [
+			1 => 'Accept Full Paper',
+			//2 => 'Review Full Paper',
+			0 => 'Reject',
+			
+		];
+	}
 
 
 }

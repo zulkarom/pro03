@@ -134,8 +134,8 @@ $sub = [
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list" style="display:'.$showpaper.'">
 							';
-							echo '<li><a href="'.Url::to(['paper/abstract', 'conf' => $confurl]).'"><i class="fas fa-file"></i> Abstract <span class="badge badge-danger">'.$conf->paperCountAbstract .'</span></a></li>';
-							echo '<li><a href="'.Url::to(['paper/full-paper', 'conf' => $confurl]).'"><i class="fas fa-file-alt"></i> Full Paper <span class="badge badge-danger">'.$conf->paperCountFullPaper .'</span></a></li>';
+							echo '<li><a href="'.Url::to(['paper/abstract', 'conf' => $confurl]).'"><i class="fas fa-file"></i> Abstract '.badge($conf->paperCountAbstract). '</a></li>';
+							echo '<li><a href="'.Url::to(['paper/full-paper', 'conf' => $confurl]).'"><i class="fas fa-file-alt"></i> Full Paper '.badge($conf->paperCountFullPaper). '</a></li>';
 							echo '<li><a href=""><i class="fas fa-search"></i> Review</a></li>';
 							echo '<li><a href=""><i class="fas fa-dollar-sign"></i> Payment</a></li>';
 							echo '<li><a href=""><i class="fas fa-check"></i> Complete</a></li>';
@@ -175,4 +175,16 @@ $sub = [
         </aside>
         <!-- END MENU SIDEBAR-->
 
-       
+<?php 
+
+function badge($count){
+	if($count == 0){
+		return '';
+	}else{
+		return '<span class="badge badge-danger">
+		'.$count.'
+		</span>';
+	}
+}
+
+?>  

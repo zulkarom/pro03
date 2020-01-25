@@ -217,6 +217,7 @@ class MemberController extends Controller
             $model->updated_at = new Expression('NOW()'); 
 			$model->status = 35;
 			if($model->save()){
+				Yii::$app->session->addFlash('success', "Thank you, your full paper has been successfully submitted.");
 				return $this->redirect(['member/index', 'confurl' => $confurl]);
 			}else{
 				$model->flashError();
@@ -228,6 +229,31 @@ class MemberController extends Controller
     }
     
      return $this->render('upload', [
+            'model' => $model
+        ]);
+   
+	}
+	
+	public function actionFullPaper($confurl=null,$id){
+		if($confurl){
+        $model = $this->findModel($id);
+		$model->scenario = 'fullpaper';
+        if ($model->load(Yii::$app->request->post())) {
+            $model->updated_at = new Expression('NOW()'); 
+			$model->status = 50; //full paper submission
+			if($model->save()){
+				Yii::$app->session->addFlash('success', "Thank you, your full paper has been successfully submitted.");
+				return $this->redirect(['member/index', 'confurl' => $confurl]);
+			}else{
+				$model->flashError();
+				return $this->redirect(['member/full-paper', 'confurl' => $confurl, 'id' => $id]);
+				
+			}
+           
+        }
+    }
+    
+     return $this->render('full-paper', [
             'model' => $model
         ]);
    

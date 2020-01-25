@@ -144,12 +144,12 @@ class Conference extends \yii\db\ActiveRecord
 	}
 	
 	public function getPaperCountAbstract(){
-		$kira = ConfPaper::find()->where(['conf_id' => $this->id, 'status' => 30])->count();
+		$kira = ConfPaper::find()->where(['conf_id' => $this->id, 'status' => [30, 40]])->count();
 		return $kira ? $kira : 0;
 	}
 	
 	public function getPaperCountFullPaper(){
-		$kira = ConfPaper::find()->where(['conf_id' => $this->id, 'status'=> [35, 40]])->count();
+		$kira = ConfPaper::find()->where(['conf_id' => $this->id, 'status'=> [50]])->count();
 		return $kira ? $kira : 0;
 	}
 

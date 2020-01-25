@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 
    [
-				'label' => 'Paper',
+				'label' => 'Titles',
 				'value' => function($model){
 					return $model->pap_title;
 				}
@@ -51,7 +51,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'visible' => false,
                 'buttons'=>[
                     'update'=>function ($url, $model) {
-                        return Html::a('<span class="fa fa-edit"></span> UPDATE',['member/update/', 'confurl' => $model->conference->conf_url ,'id' => $model->id],['class'=>'btn btn-warning btn-sm']);
+						$status = $model->status;
+						switch($status){
+							case 30:
+							case 35:
+							 return Html::a('<span class="fa fa-edit"></span> UPDATE ',['member/update/', 'confurl' => $model->conference->conf_url ,'id' => $model->id],['class'=>'btn btn-warning btn-sm']);
+							break;
+							
+							case 40:
+							return Html::a('SUBMIT FULL PAPER ',['member/full-paper/', 'confurl' => $model->conference->conf_url ,'id' => $model->id],['class'=>'btn btn-warning btn-sm']);
+							break;
+							
+						}
+                       
                     }
                 ],
             

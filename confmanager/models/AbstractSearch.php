@@ -65,7 +65,7 @@ class AbstractSearch extends ConfPaper
 		
 		$query->andFilterWhere([
             'user_id' => Yii::$app->user->identity->id,
-            'status' => 30,
+            'status' => [30, 40],
         ]);
 
 

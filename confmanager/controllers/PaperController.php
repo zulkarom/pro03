@@ -65,10 +65,49 @@ class PaperController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionAbstractView($id)
+    public function actionAbstractView($conf, $id)
     {
+		
+		$model = $this->findModel($id);
+		
+		if ($model->load(Yii::$app->request->post())) {
+			$option = $model->abstract_decide;
+			if($option == 1){
+				$model->status = 40;//abstract accepted
+			}else{
+				$model->status = 10;//rejected
+			}
+			if($model->save()){
+				return $this->redirect(['paper/abstract', 'conf' => $conf]);
+			}
+            
+        }
+		
         return $this->render('abstract-view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+        ]);
+    }
+	
+	public function actionFullPaperView($conf, $id)
+    {
+		
+		$model = $this->findModel($id);
+		
+		if ($model->load(Yii::$app->request->post())) {
+			$option = $model->abstract_decide;
+			if($option == 1){
+				$model->status = 80;//paper accepted
+			}else if($option == 0){
+				$model->status = 10;//rejected
+			}
+			if($model->save()){
+				return $this->redirect(['paper/full-paper', 'conf' => $conf]);
+			}
+            
+        }
+		
+        return $this->render('full-paper-view', [
+            'model' => $model,
         ]);
     }
 

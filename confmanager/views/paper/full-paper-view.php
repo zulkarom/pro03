@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model backend\modules\conference\models\ConfPaper */
@@ -64,5 +65,32 @@ table.detail-view th {
         ],
     ]) ?></div>
 </div>
+
+
+<?php $form = ActiveForm::begin(); ?>
+
+
+
+<div class="card">
+
+            <div class="card-body">   
+
+<?php 
+	
+	echo $form->field($model, 'full_paper_decide')->radioList($model->fullPaperOptions, [ 'separator' => '<br />'])->label('Choose One:');
+
+
+	?>
+
+<div class="form-group">
+        
+<?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
+    </div>
+	
+	
+</div>
+</div>
+
+<?php ActiveForm::end(); ?>
 
 </div>
