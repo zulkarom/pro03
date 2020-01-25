@@ -39,12 +39,17 @@ class MemberController extends Controller
             ],
         ];
     }
+	
+	public function actionIndex($confurl=null)
+    {
+		return $this->redirect(['member/paper', 'confurl' => $confurl]);
+	}
 
     /**
      * Lists all ConfPaper models.
      * @return mixed
      */
-    public function actionIndex($confurl=null)
+    public function actionPaper($confurl=null)
     {
 		$this->layout = 'main-member';
 		$conf = $this->findConferenceByUrl($confurl);
@@ -53,10 +58,50 @@ class MemberController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		
 		if($confurl){
-			return $this->render('index', [
+			return $this->render('paper', [
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 				'conf' => $conf
+			]);
+		}
+        
+    }
+	
+	public function actionReview($confurl=null)
+    {
+		$this->layout = 'main-member';
+		$conf = $this->findConferenceByUrl($confurl);
+        $searchModel = new ConfPaperSearch();
+		$searchModel->conf_id = $conf->id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		
+		if($confurl){
+			return $this->render('review', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+				'conf' => $conf
+			]);
+		}
+        
+    }
+	
+	public function actionPayment($confurl=null)
+    {
+		$this->layout = 'main-member';
+		
+		if($confurl){
+			return $this->render('payment', [
+			]);
+		}
+        
+    }
+	
+	public function actionProfile($confurl=null)
+    {
+		$this->layout = 'main-member';
+		
+		if($confurl){
+			return $this->render('profile', [
 			]);
 		}
         
@@ -94,6 +139,10 @@ class MemberController extends Controller
 			$model->user_id = Yii::$app->user->identity->id;
 			$model->created_at = new Expression('NOW()');
 			$model->updated_at = new Expression('NOW()');
+			$model->status = 30;
+			$abstract_full = $model->form_abstract_only;
+
+				
             $authors = Model::createMultiple(ConfAuthor::classname());
             Model::loadMultiple($authors, Yii::$app->request->post());
             
@@ -128,8 +177,14 @@ class MemberController extends Controller
 
                     if ($flag) {
                         $transaction->commit();
-                            Yii::$app->session->addFlash('success', "New Paper is successfully created");
-                            return $this->redirect(['update', 'confurl'=> $confurl, 'id' => $model->id]);
+							if($abstract_full == 1){
+								Yii::$app->session->addFlash('success', "Thank you, your abstract has been successfully submitted");
+								return $this->redirect(['member/index', 'confurl'=> $confurl]);
+							}else if($abstract_full == 2){
+								return $this->redirect(['member/upload', 'confurl'=> $confurl, 'id' => $model->id]);
+							}
+                            
+                            
                     } else {
                         $transaction->rollBack();
                     }
@@ -145,13 +200,37 @@ class MemberController extends Controller
 
     }
     
-     return $this->render('create', [
+     return $this->render('abstract', [
             'model' => $model,
             'authors' => (empty($authors)) ? [new ConfAuthor] : $authors
         ]);
    
 	} 
 	
+	}
+	
+	public function actionUpload($confurl=null,$id){
+		if($confurl){
+        $model = $this->findModel($id);
+		$model->scenario = 'fullpaper';
+        if ($model->load(Yii::$app->request->post())) {
+            $model->updated_at = new Expression('NOW()'); 
+			$model->status = 35;
+			if($model->save()){
+				return $this->redirect(['member/index', 'confurl' => $confurl]);
+			}else{
+				$model->flashError();
+				return $this->redirect(['member/upload', 'confurl' => $confurl, 'id' => $id]);
+				
+			}
+           
+        }
+    }
+    
+     return $this->render('upload', [
+            'model' => $model
+        ]);
+   
 	}
 
     /**
@@ -169,7 +248,8 @@ class MemberController extends Controller
        
         if ($model->load(Yii::$app->request->post())) {
             
-            $model->updated_at = new Expression('NOW()');    
+            $model->updated_at = new Expression('NOW()');
+			$abstract_full = $model->form_abstract_only;
             
             $oldIDs = ArrayHelper::map($authors, 'id', 'id');
             
@@ -213,8 +293,12 @@ class MemberController extends Controller
 
                     if ($flag) {
                         $transaction->commit();
-                            Yii::$app->session->addFlash('success', "Paper Information is updated");
-                            return $this->redirect(['update', 'confurl'=> $confurl, 'id' => $model->id]);
+							if($abstract_full == 1){
+								Yii::$app->session->addFlash('success', "Paper Information is updated");
+								return $this->redirect(['member/index', 'confurl'=> $confurl]);
+							}else if($abstract_full == 2){
+								return $this->redirect(['member/upload', 'confurl'=> $confurl, 'id' => $model->id]);
+							}
                     } else {
                         $transaction->rollBack();
                     }
@@ -230,7 +314,7 @@ class MemberController extends Controller
 
     }
     
-     return $this->render('update', [
+     return $this->render('abstract', [
             'model' => $model,
             'authors' => (empty($authors)) ? [new ConfAuthor] : $authors
         ]);

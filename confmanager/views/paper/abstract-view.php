@@ -42,18 +42,21 @@ table.detail-view th {
 			]
 			,
             'pap_title:ntext',
-            'pap_abstract:ntext',
 			[
-				'attribute' => 'paper_file',
-				'label' => 'Uploaded File',
-				'format' => 'raw',
+				'label' => 'Authors',
+				'format' => 'html',
 				'value' => function($model){
-					return Html::a('DOWNLOAD FILE', ['paper/download-file', 'id' => $model->id, 'attr' => 'paper'], ['target' => '_blank']);
+					return $model->authorString();
 				}
-			]
+				
+			],
+            'pap_abstract:ntext',
+			'keyword:ntext',
   
         ],
-    ]) ?></div>
+    ]) ?>
+	
+</div>
 </div>
 
 </div>

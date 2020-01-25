@@ -19,10 +19,10 @@ if (Yii::$app->user->isGuest) {
 ];
 }else{
 	$menu = [
-	['My Paper', ['/site/login', 'confurl' => $confurl], 'files-o'],
-	['My Review', ['/site/login', 'confurl' => $confurl], 'files-o'],
-	['My Payment', ['/site/logout', 'confurl' => $confurl], 'table'],
-	['My Profile', ['/site/logout', 'confurl' => $confurl], 'table'],
+	['My Paper', ['/member/paper', 'confurl' => $confurl], 'files-o'],
+	['My Review', ['/member/review', 'confurl' => $confurl], 'files-o'],
+	['My Payment', ['/member/payment', 'confurl' => $confurl], 'table'],
+	['My Profile', ['/member/profile', 'confurl' => $confurl], 'table'],
 	['Log Out', ['/site/logout', 'confurl' => $confurl], 'table'],
 ];
 }

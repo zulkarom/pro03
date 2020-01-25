@@ -142,6 +142,16 @@ class Conference extends \yii\db\ActiveRecord
 		$kira = ConfPaper::find()->where(['conf_id' => $this->id])->count();
 		return $kira ? $kira : 0;
 	}
+	
+	public function getPaperCountAbstract(){
+		$kira = ConfPaper::find()->where(['conf_id' => $this->id, 'status' => 30])->count();
+		return $kira ? $kira : 0;
+	}
+	
+	public function getPaperCountFullPaper(){
+		$kira = ConfPaper::find()->where(['conf_id' => $this->id, 'status'=> [35, 40]])->count();
+		return $kira ? $kira : 0;
+	}
 
 
 }

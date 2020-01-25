@@ -1,7 +1,7 @@
 <?php
 
 namespace confmanager\models;
-
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\modules\conference\models\ConfPaper;
@@ -9,7 +9,7 @@ use backend\modules\conference\models\ConfPaper;
 /**
  * ConfPaperSearch represents the model behind the search form of `backend\modules\conference\models\ConfPaper`.
  */
-class ConfPaperSearch extends ConfPaper
+class FullPaperSearch extends ConfPaper
 {
 	public $fullname;
     /**
@@ -45,8 +45,6 @@ class ConfPaperSearch extends ConfPaper
     public function search($params)
     {
         $query = ConfPaper::find()->where(['conf_id' => $this->conf_id]);
-		
-		$query->joinWith(['user']);
 
         // add conditions that should always apply here
 
@@ -65,11 +63,13 @@ class ConfPaperSearch extends ConfPaper
             return $dataProvider;
         }
 		
-		$dataProvider->sort->attributes['fullname'] = [
-        'asc' => ['user.fullname' => SORT_ASC],
-        'desc' => ['user.fullname' => SORT_DESC],
-        ]; 
+		$query->andFilterWhere([
+            'user_id' => Yii::$app->user->identity->id,
+			'status' => [35, 40]
+        ]);
+		
 
+		
        
 
         return $dataProvider;

@@ -4,7 +4,8 @@ namespace confmanager\controllers;
 
 use Yii;
 use backend\modules\conference\models\ConfPaper;
-use confmanager\models\ConfPaperSearch;
+use confmanager\models\AbstractSearch;
+use confmanager\models\FullPaperSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -34,13 +35,25 @@ class PaperController extends Controller
      * Lists all ConfPaper models.
      * @return mixed
      */
-    public function actionIndex($conf)
+    public function actionAbstract($conf)
     {
-        $searchModel = new ConfPaperSearch();
+        $searchModel = new AbstractSearch();
 		$searchModel->conf_id = $conf;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
+        return $this->render('abstract', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+	
+	public function actionFullPaper($conf)
+    {
+        $searchModel = new FullPaperSearch();
+		$searchModel->conf_id = $conf;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('full-paper', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -52,9 +65,9 @@ class PaperController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionAbstractView($id)
     {
-        return $this->render('view', [
+        return $this->render('abstract-view', [
             'model' => $this->findModel($id),
         ]);
     }

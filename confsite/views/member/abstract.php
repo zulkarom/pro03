@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\jui\JuiAsset;
+use richardfan\widget\JSRegister;
 
 /* @var $this yii\web\View */
 /* @var $model backend\modules\conference\models\ConfPaper */
@@ -98,11 +99,37 @@ label{
 
     <?= $form->field($model, 'pap_abstract')->textarea(['rows' => 6]) ?>
 	
+	<?= $form->field($model, 'keyword')->textarea(['rows' => 2]) ?>
+	
+	
+	<?php 
+	
+	echo $form->field($model, 'form_abstract_only')->radioList([
+    1 => ' I want to submit abstract only', 
+    2 => ' I want to submit abstract with full paper'
+], ['encode' => false, 'separator' => '<br />'])->label('Choose One:');
+
+
+	?>
+	
 	
 
 
+<?php JSRegister::begin(); ?>
+<script>
+$("input[name='ConfPaper[form_abstract_only]']").click(function(){
+	if($(this).val() == 1){
+		$('#abstract-next').text('Submit Abstract');
+	}else if($(this).val() == 2){
+		$('#abstract-next').text('Proceed to Full Paper Submission');
+	}
+});
+</script>
+<?php JSRegister::end(); ?>
+
+
     <div class="form-group">
-        <?= Html::submitButton('Submit Abstract', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Submit Abstract', ['id' => 'abstract-next','class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

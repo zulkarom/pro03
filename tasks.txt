@@ -1,0 +1,123 @@
+ALTER TABLE `conf_paper` ADD `status` INT NOT NULL AFTER `pap_title`;
+ALTER TABLE `conf_paper` ADD `keyword` VARCHAR(200) NOT NULL AFTER `pap_abstract`;
+ALTER TABLE `jeb_associate` ADD `phone` VARCHAR(50) NOT NULL AFTER `title`;
+
+=============conference workflow ================
+registration participant
+submit abstract
+notification of abstract accept
+submit full paper by participant
+full paper acceptance & invoice
+payment by participant
+receipt issue
+=================================================
+
+Status:
+Draft
+Submitted - waiting for approval
+Abstract Accepted - Submit Full Paper
+Review - waiting for review
+Correction - Please Correct
+Accepted - Acceptance Letter
+
+
+
+
+
+confvalley advantages edit at edusage
+
+
+setting at confvally
+
+kena create email utk info@confvalley.com
+
+tajuk email
+
+thank you page after registration -link to submit
+
+review file masa nk assign reviewer got problem
+
+why invoice to ada space after name before address
+
+
+
+--account--
+list of receipt at backend
+----
+
+corresponding author
+save at camera ready
+on update current issue -> turn archive
+
+::note to jeb::
+bila direct link searc/index - dia kluar semua result
+=====================KIV===================
+registration molek firstname last name la - KIV
+====================DONE=========================
+alert kena col10 at front
+ALTER TABLE `user` ADD UNIQUE(`email`);
+login administration layout bg comel sikit
+note on edusage account on login & register
+template file public link
+still cannot create invoice
+pagination bs4 at scope list
+create scope
+add scope to journal at edit journal
+publish date
+-journal issue at overwrite
+bib file
+article page at public page
+acceptance letter
+select a scope at pre evaluate
+TEMPLATE AT CORRECTION STAGE
+assign journal - kena buat issue tu depends on journal
+placeholder - {admin-url} {author-amount}
+
+International Conference on Hospitality, Wellness and Tourism (HOWELT 2019)
+Bayview Beach Resort, Penang, Malaysia
+7 September 2019
+https://submit.confbay.com/conf/howelt2019
+
+2nd International Conference on Sustainability, Technology and Business (ICSTB 2019)
+Grand Bluewave Hotel, Johor Bahru, Johor, Malaysia.
+14 December 2019
+https://submit.confbay.com/conf/icstb2019
+
+2nd International Conference on Governance, Organization and Business (ICGOB 2019)
+Grand Riverview Hotel, Kota Bharu, Kelantan, Malaysia.
+14 December 2019
+https://submit.confbay.com/conf/icgob2019
+
+2nd International Conference on Social Sciences Studies (ICSSS 2019)
+Grand Magherita Hotel, Kuching, Sarawak, Malaysia.
+23 November 2019
+https://submit.confbay.com/conf/icsss2019
+
+
+ALTER TABLE `conf_date` ADD `published` TINYINT(1) NOT NULL AFTER `date_end`;
+ALTER TABLE `conf_date` CHANGE `published` `published` TINYINT(1) NOT NULL DEFAULT '1';
+ALTER TABLE `conf_date` ADD INDEX(`conf_id`);
+ALTER TABLE `conf_date` ADD FOREIGN KEY (`conf_id`) REFERENCES `qib_confvalley`.`conference`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `conf_date` CHANGE `date_name` `date_name` VARCHAR(100) NOT NULL;
+ALTER TABLE `conf_download` CHANGE `filename` `download_name` VARCHAR(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+
+ALTER TABLE `conf_download` ADD `download_order` INT NOT NULL AFTER `download_file`;
+ALTER TABLE `conf_download` ADD INDEX(`conf_id`);
+ALTER TABLE `conf_download` ADD FOREIGN KEY (`conf_id`) REFERENCES `qib_confvalley`.`conference`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `conf_download` ADD `created_by` INT NOT NULL AFTER `download_order`, ADD `created_at` DATETIME NOT NULL AFTER `created_by`, ADD `updated_at` DATETIME NOT NULL AFTER `created_at`;
+ALTER TABLE `conf_fee` ADD `fee_order` INT NOT NULL AFTER `minimum_paper`;
+ALTER TABLE `conf_fee` ADD `fee_early` DECIMAL(11,2) NOT NULL AFTER `fee_amount`;
+ALTER TABLE `conf_fee` CHANGE `minimum_paper` `minimum_paper` TINYINT(4) NOT NULL DEFAULT '1';
+
+ALTER TABLE `conference` ADD `early_date` INT NOT NULL AFTER `payment_info`;
+DROP TABLE conf_fee_info;
+ALTER TABLE `conference` ADD `announcement` TEXT NOT NULL AFTER `conf_background`;
+ALTER TABLE `conference` ADD `currency_local` VARCHAR(10) NOT NULL AFTER `early_date`;
+ALTER TABLE `conference` ADD `currency_int` VARCHAR(10) NOT NULL AFTER `currency_local`;
+UPDATE `conference` SET `currency_local` = 'MYR';
+UPDATE `conference` SET `currency_int` = 'USD';
+ALTER TABLE `conf_fee` ADD `fee_currency` VARCHAR(10) NOT NULL AFTER `fee_name`;
+ALTER TABLE `conference` ADD `conf_accommodation` TEXT NOT NULL AFTER `conf_submission`;
+
+buat pages menu
+setting page at front @site

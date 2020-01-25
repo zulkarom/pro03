@@ -26,11 +26,23 @@ $this->params['breadcrumbs'][] = $this->title;
 			'contentOptions' => ['style' => 'width: 7%'],
 			],
 
-   
+   [
+				'label' => 'Paper',
+				'value' => function($model){
+					return $model->pap_title;
+				}
+				
+			],
            
-            'pap_title:ntext',
 			
-			
+			[
+				'attribute' => 'Status',
+				'format' => 'html',
+				'value' => function($model){
+					return $model->paperStatus;
+				}
+				
+			],
       
 
             ['class' => 'yii\grid\ActionColumn',

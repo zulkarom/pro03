@@ -71,7 +71,6 @@ class SiteController extends Controller
 	public function actionHome($confurl=null)
     {
 		$model = $this->findConferenceByUrl($confurl);
-		
 		if($confurl){
 			return $this->render('home', [
 			'model' => $model
@@ -143,6 +142,10 @@ class SiteController extends Controller
 		}
 
     }
+	
+	public function actionError(){
+		return $this->redirect(['site/index']);
+	}
 	
 	public function actionRegister($confurl=null, $email='')
     {

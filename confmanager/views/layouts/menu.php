@@ -3,6 +3,8 @@
 /* @var $content string */
 use yii\helpers\Url;
 use backend\modules\conference\models\Conference;
+
+
 $conf = null;
 
 $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
@@ -91,8 +93,6 @@ $sub = [
 						echo '<li>
                             <a href="'.Url::to($m[1]).'">
                                 <i class="fas fa-'.$m[2].'"></i>'.$m[0].'</a> ';
-						
-						
                         echo '</li>';
 					}
 					
@@ -102,23 +102,57 @@ $sub = [
 					
 					<?php if(Yii::$app->getRequest()->getQueryParam('conf')){?>
 					
-					<li class="has-sub">
+					<li class="has-sub ">
                             <a class="js-arrow open" href="#">
                                 <i class="fas fa-trophy"></i> <?=$conf->conf_abbr?>
                                 <span class="arrow">
                                     <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
+					<?php 
+					
+					$controller = Yii::$app->controller->id;
+					if($controller == 'paper'){
+						$showpaper = 'block';
+					}else{
+						$showpaper = 'none';
+					}
+					
+					?>
                             <ul class="list-unstyled navbar__sub-list js-sub-list" style="display:block">
 								<?php 
 						
 								foreach($sub as $s){
-									echo '<li>
-										<a href="'.Url::to($s[1]).'">
-											<i class="fas fa-'.$s[2].'"></i>'.$s[0].' <span class="badge badge-primary">'.$s[3].'</span></a>';
-											
-								
+									if($s[0] == 'Papers'){
+									echo '<li class="has-sub">';
+									
+									echo '<a class="js-arrow open" href="#">
+                                <i class="fas fa-clone"></i> Papers <span class="badge badge-primary">'.$s[3].'</span>  
+                                <span class="arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </span>
+                            </a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list" style="display:'.$showpaper.'">
+							';
+							echo '<li><a href="'.Url::to(['paper/abstract', 'conf' => $confurl]).'"><i class="fas fa-file"></i> Abstract <span class="badge badge-danger">'.$conf->paperCountAbstract .'</span></a></li>';
+							echo '<li><a href="'.Url::to(['paper/full-paper', 'conf' => $confurl]).'"><i class="fas fa-file-alt"></i> Full Paper <span class="badge badge-danger">'.$conf->paperCountFullPaper .'</span></a></li>';
+							echo '<li><a href=""><i class="fas fa-search"></i> Review</a></li>';
+							echo '<li><a href=""><i class="fas fa-dollar-sign"></i> Payment</a></li>';
+							echo '<li><a href=""><i class="fas fa-check"></i> Complete</a></li>';
+							
+							echo '</ul>';
 									echo '</li>';
+									
+									
+									}else{
+										echo '<li>
+											<a href="'.Url::to($s[1]).'">
+												<i class="fas fa-'.$s[2].'"></i>'.$s[0].' <span class="badge badge-primary">'.$s[3].'</span></a>';
+												
+									
+										echo '</li>';
+									}
+									
 								}
 
 

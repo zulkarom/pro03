@@ -102,6 +102,8 @@ label{
 
     <?= $form->field($model, 'pap_abstract')->textarea(['rows' => 6]) ?>
 	
+	<?= $form->field($model, 'keyword')->textarea(['rows' => 2]) ?>
+	
 	<?=UploadFile::fileInput($model, 'paper')?>
 	
 	
