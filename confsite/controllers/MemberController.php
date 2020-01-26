@@ -139,6 +139,7 @@ class MemberController extends Controller
 			$model->user_id = Yii::$app->user->identity->id;
 			$model->created_at = new Expression('NOW()');
 			$model->updated_at = new Expression('NOW()');
+			$model->abstract_at = new Expression('NOW()');
 			$model->status = 30;
 			$abstract_full = $model->form_abstract_only;
 
@@ -215,6 +216,7 @@ class MemberController extends Controller
 		$model->scenario = 'fullpaper';
         if ($model->load(Yii::$app->request->post())) {
             $model->updated_at = new Expression('NOW()'); 
+			$model->full_paper_at = new Expression('NOW()');
 			$model->status = 35;
 			if($model->save()){
 				Yii::$app->session->addFlash('success', "Thank you, your full paper has been successfully submitted.");
@@ -240,6 +242,7 @@ class MemberController extends Controller
 		$model->scenario = 'fullpaper';
         if ($model->load(Yii::$app->request->post())) {
             $model->updated_at = new Expression('NOW()'); 
+			$model->full_paper_at = new Expression('NOW()');
 			$model->status = 50; //full paper submission
 			if($model->save()){
 				Yii::$app->session->addFlash('success', "Thank you, your full paper has been successfully submitted.");

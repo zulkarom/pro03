@@ -4,12 +4,19 @@ namespace confmanager\controllers;
 
 use Yii;
 use backend\modules\conference\models\ConfPaper;
+use backend\modules\conference\models\ConfAuthor;
 use confmanager\models\AbstractSearch;
 use confmanager\models\FullPaperSearch;
+use confmanager\models\PaymentSearch;
+use confmanager\models\OverwriteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use confsite\models\UploadFile;
+use yii\db\Expression;
+use yii\helpers\ArrayHelper;
+use common\models\Model;
+
 
 /**
  * PaperController implements the CRUD actions for ConfPaper model.
@@ -58,6 +65,103 @@ class PaperController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+	
+	public function actionPayment($conf)
+    {
+        $searchModel = new PaymentSearch();
+		$searchModel->conf_id = $conf;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('payment', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+	
+	public function actionOverwrite($conf)
+    {
+        $searchModel = new OverwriteSearch();
+		$searchModel->conf_id = $conf;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('overwrite', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+	
+	public function actionOverwriteForm($conf, $id){
+		if($conf){
+        $model = $this->findModel($id);
+        $authors = $model->authors;
+       
+        if ($model->load(Yii::$app->request->post())) {
+            
+            $model->updated_at = new Expression('NOW()');
+            $oldIDs = ArrayHelper::map($authors, 'id', 'id');
+            $authors = Model::createMultiple(ConfAuthor::classname(), $authors);
+            
+            Model::loadMultiple($authors, Yii::$app->request->post());
+            
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($authors, 'id', 'id')));
+            
+            foreach ($authors as $i => $author) {
+                $author->author_order = $i;
+            }
+            
+            
+            $valid = $model->validate();
+            
+            $valid = Model::validateMultiple($authors) && $valid;
+            
+            if ($valid) {
+
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if (! empty($deletedIDs)) {
+                            ConfAuthor::deleteAll(['id' => $deletedIDs]);
+                        }
+                        foreach ($authors as $i => $author) {
+                            if ($flag === false) {
+                                break;
+                            }
+                            //do not validate this in model
+                            $author->paper_id = $model->id;
+
+                            if (!($flag = $author->save(false))) {
+                                break;
+                            }
+                        }
+
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+							Yii::$app->session->addFlash('success', "Paper Information is updated");
+							return $this->redirect(['paper/overwrite', 'conf'=> $conf]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    
+                }
+            }
+
+        
+        
+       
+
+    }
+    
+     return $this->render('overwrite-form', [
+            'model' => $model,
+            'authors' => (empty($authors)) ? [new ConfAuthor] : $authors
+        ]);
+   
+	} 
+	}
 
     /**
      * Displays a single ConfPaper model.

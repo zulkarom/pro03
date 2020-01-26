@@ -9,7 +9,7 @@ use backend\modules\conference\models\ConfPaper;
 /**
  * ConfPaperSearch represents the model behind the search form of `backend\modules\conference\models\ConfPaper`.
  */
-class AbstractSearch extends ConfPaper
+class OverwriteSearch extends ConfPaper
 {
 	public $fullname;
     /**
@@ -50,6 +50,7 @@ class AbstractSearch extends ConfPaper
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+			'sort'=> ['defaultOrder' => ['status'=>SORT_ASC]],
 			'pagination' => [
                 'pageSize' => 100,
             ],
@@ -62,10 +63,6 @@ class AbstractSearch extends ConfPaper
             // $query->where('0=1');
             return $dataProvider;
         }
-		
-		$query->andFilterWhere([
-            'status' => [30, 40],
-        ]);
 
 
         return $dataProvider;

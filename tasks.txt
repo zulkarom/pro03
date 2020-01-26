@@ -2,8 +2,9 @@ ALTER TABLE `conf_paper` ADD `status` INT NOT NULL AFTER `pap_title`;
 ALTER TABLE `conf_paper` ADD `keyword` VARCHAR(200) NOT NULL AFTER `pap_abstract`;
 ALTER TABLE `jeb_associate` ADD `phone` VARCHAR(50) NOT NULL AFTER `title`;
 ALTER TABLE `conf_paper` ADD `abstract_at` DATETIME NOT NULL AFTER `updated_at`, ADD `full_paper_at` DATETIME NOT NULL AFTER `abstract_at`;
-
-
+ALTER TABLE `conf_paper` ADD `invoice_ts` INT NOT NULL AFTER `full_paper_at`, ADD `invoice_amount` DOUBLE NOT NULL AFTER `invoice_ts`;
+ALTER TABLE `conf_paper` ADD `invoice_currency` VARCHAR(5) NOT NULL AFTER `invoice_amount`;
+ALTER TABLE `conf_paper` ADD `reject_note` TEXT NOT NULL AFTER `invoice_currency`, ADD `reject_at` DATETIME NOT NULL AFTER `reject_note`;
 =============conference workflow ================
 registration participant
 submit abstract

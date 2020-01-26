@@ -64,8 +64,7 @@ class FullPaperSearch extends ConfPaper
         }
 		
 		$query->andFilterWhere([
-            'user_id' => Yii::$app->user->identity->id,
-			'status' => [50]
+			'status' => [35, 50]
         ]);
 		
 

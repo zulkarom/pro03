@@ -136,9 +136,11 @@ $sub = [
 							';
 							echo '<li><a href="'.Url::to(['paper/abstract', 'conf' => $confurl]).'"><i class="fas fa-file"></i> Abstract '.badge($conf->paperCountAbstract). '</a></li>';
 							echo '<li><a href="'.Url::to(['paper/full-paper', 'conf' => $confurl]).'"><i class="fas fa-file-alt"></i> Full Paper '.badge($conf->paperCountFullPaper). '</a></li>';
-							echo '<li><a href=""><i class="fas fa-search"></i> Review</a></li>';
-							echo '<li><a href=""><i class="fas fa-dollar-sign"></i> Payment</a></li>';
+							echo '<li><a href="'.Url::to(['paper/review', 'conf' => $confurl]).'"><i class="fas fa-search"></i> Review</a></li>';
+							echo '<li><a href="'.Url::to(['paper/payment', 'conf' => $confurl]).'"><i class="fas fa-dollar-sign"></i> Payment '.badge($conf->paperCountPayment). '</a></li>';
 							echo '<li><a href=""><i class="fas fa-check"></i> Complete</a></li>';
+							
+							echo '<li><a href="'.Url::to(['paper/overwrite', 'conf' => $confurl]).'"><i class="fas fa-edit"></i> Overwrite</a></li>';
 							
 							echo '</ul>';
 									echo '</li>';

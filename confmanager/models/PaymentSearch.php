@@ -9,7 +9,7 @@ use backend\modules\conference\models\ConfPaper;
 /**
  * ConfPaperSearch represents the model behind the search form of `backend\modules\conference\models\ConfPaper`.
  */
-class AbstractSearch extends ConfPaper
+class PaymentSearch extends ConfPaper
 {
 	public $fullname;
     /**
@@ -64,9 +64,12 @@ class AbstractSearch extends ConfPaper
         }
 		
 		$query->andFilterWhere([
-            'status' => [30, 40],
+			'status' => [80, 90]
         ]);
+		
 
+		
+       
 
         return $dataProvider;
     }

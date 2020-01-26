@@ -70,7 +70,8 @@ class Conference extends \yii\db\ActiveRecord
             'conf_url' => 'Conference Url',
 			'user_id' => 'Manager',
 			'currency_int' => 'International Currency',
-			'currency_local' => 'Local Currency'
+			'currency_local' => 'Local Currency',
+			
         ];
     }
 	
@@ -149,7 +150,17 @@ class Conference extends \yii\db\ActiveRecord
 	}
 	
 	public function getPaperCountFullPaper(){
-		$kira = ConfPaper::find()->where(['conf_id' => $this->id, 'status'=> [50]])->count();
+		$kira = ConfPaper::find()->where(['conf_id' => $this->id, 'status'=> [35,50]])->count();
+		return $kira ? $kira : 0;
+	}
+	
+	public function getPaperCountReview(){
+		$kira = ConfPaper::find()->where(['conf_id' => $this->id, 'status'=> [60, 70]])->count();
+		return $kira ? $kira : 0;
+	}
+	
+	public function getPaperCountPayment(){
+		$kira = ConfPaper::find()->where(['conf_id' => $this->id, 'status'=> [80, 90]])->count();
 		return $kira ? $kira : 0;
 	}
 

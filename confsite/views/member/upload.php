@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use confsite\models\UploadFile;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\jui\JuiAsset;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model backend\modules\conference\models\ConfPaper */
@@ -31,12 +32,24 @@ label{
 
 <div class="conf-paper-form">
 
-<?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
+<?php $form = ActiveForm::begin(); ?>
 
 
     <h4><?=$model->pap_title ?></h4>
 	<br /><br />
 	
+	
+
+
+<div class="row">
+<div class="col-md-7"><?php 
+$fees = $model->conference->confFees;
+echo $form->field($model, 'myrole') ->dropDownList(
+        ArrayHelper::map($fees,'id', 'fee_name'), ['prompt' => 'Please Select' ]
+    ) ?></div>
+</div>
+<br />
+
 	
 	<?=UploadFile::fileInput($model, 'paper')?>
 	

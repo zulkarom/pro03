@@ -46,15 +46,17 @@ class ConfPaper extends \yii\db\ActiveRecord
         return [
             [['conf_id', 'user_id', 'pap_title', 'pap_abstract', 'created_at', 'status', 'keyword'], 'required', 'on' => 'create'],
 			
-			[['conf_id', 'user_id', 'pap_title', 'pap_abstract', 'created_at', 'status', 'paper_file', 'keyword'], 'required', 'on' => 'fullpaper'],
+			[['conf_id', 'user_id', 'pap_title', 'pap_abstract', 'created_at', 'status', 'paper_file', 'keyword', 'myrole'], 'required', 'on' => 'fullpaper'],
 			
 			[['abstract_decide'], 'required', 'on' => 'abstract_decide'],
 			
+            [['conf_id', 'user_id', 'status', 'form_abstract_only', 'abstract_decide', 'invoice_ts', 'myrole'], 'integer'],
 			
+			[['invoice_amount'], 'number'],
 			
-            [['conf_id', 'user_id', 'status', 'form_abstract_only', 'abstract_decide'], 'integer'],
-            [['pap_title', 'pap_abstract', 'paper_file'], 'string'],
-            [['created_at'], 'safe'],
+            [['pap_title', 'pap_abstract', 'paper_file', 'invoice_currency', 'reject_note'], 'string'],
+            [['created_at', 'reject_at'], 'safe'],
+			
             [['conf_id'], 'exist', 'skipOnError' => true, 'targetClass' => Conference::className(), 'targetAttribute' => ['conf_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
 			
@@ -79,7 +81,8 @@ class ConfPaper extends \yii\db\ActiveRecord
             'pap_abstract' => 'Abstract',
             'paper_file' => 'Upload Full Paper',
             'created_at' => 'Created At',
-			'form_abstract_only' => 'Choose One:'
+			'form_abstract_only' => 'Choose One:',
+			'myrole' => 'My Role'
         ];
     }
 
@@ -98,6 +101,10 @@ class ConfPaper extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+	
+	public function getAuthorRole(){
+		return $this->hasOne(ConfFee::className(), ['id' => 'myrole']);
+	}
 	
 	public function getAuthors()
     {
@@ -141,7 +148,8 @@ class ConfPaper extends \yii\db\ActiveRecord
 			60 => 'PAPER REVIEW',
 			70 => 'PAPER CORRECTION',
 			80 => 'PAPER ACCEPTED',
-			90 => 'CONFERENCE PAYMENT',
+			90 => 'PAYMENT SUBMITTED',
+			95 => 'PAYMENT APPROVED',
 			100 => 'COMPLETE',
 			
 		];

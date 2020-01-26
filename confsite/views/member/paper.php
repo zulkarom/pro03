@@ -62,6 +62,10 @@ $this->params['breadcrumbs'][] = $this->title;
 							return Html::a('SUBMIT FULL PAPER ',['member/full-paper/', 'confurl' => $model->conference->conf_url ,'id' => $model->id],['class'=>'btn btn-warning btn-sm']);
 							break;
 							
+							case 80:
+							return Html::a('ACCEPTANCE LETTER<br /> & INVOICE',['member/invoice/', 'confurl' => $model->conference->conf_url ,'id' => $model->id],['class'=>'btn btn-info btn-sm']);
+							break;
+							
 						}
                        
                     }
