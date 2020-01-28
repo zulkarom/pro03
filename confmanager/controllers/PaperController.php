@@ -5,6 +5,8 @@ namespace confmanager\controllers;
 use Yii;
 use backend\modules\conference\models\ConfPaper;
 use backend\modules\conference\models\ConfAuthor;
+use backend\modules\conference\models\pdf\InvoicePdf;
+use backend\modules\conference\models\pdf\AcceptLetterPdf;
 use confmanager\models\AbstractSearch;
 use confmanager\models\FullPaperSearch;
 use confmanager\models\PaymentSearch;
@@ -192,6 +194,16 @@ class PaperController extends Controller
         ]);
     }
 	
+	public function actionInvoiceView($conf, $id)
+    {
+		
+		$model = $this->findModel($id);
+		
+        return $this->render('invoice-view', [
+            'model' => $model,
+        ]);
+    }
+	
 	public function actionFullPaperView($conf, $id)
     {
 		
@@ -201,6 +213,7 @@ class PaperController extends Controller
 			$option = $model->abstract_decide;
 			if($option == 1){
 				$model->status = 80;//paper accepted
+				$model->invoice_ts = time();
 			}else if($option == 0){
 				$model->status = 10;//rejected
 			}
@@ -214,6 +227,22 @@ class PaperController extends Controller
             'model' => $model,
         ]);
     }
+	
+	public function actionAcceptLetterPdf($id){
+		$model = $this->findModel($id);
+		$pdf = new AcceptLetterPdf;
+		$pdf->model = $model;
+		$pdf->generatePdf();
+	}
+	
+	public function actionInvoicePdf($id){
+		
+		$model = $this->findModel($id);
+		$pdf = new InvoicePdf;
+		$pdf->model = $model;
+		$pdf->generatePdf();
+		
+	}
 
     /**
      * Creates a new ConfPaper model.

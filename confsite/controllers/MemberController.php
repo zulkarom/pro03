@@ -96,6 +96,18 @@ class MemberController extends Controller
         
     }
 	
+	public function actionInvoiceView($confurl=null, $id)
+    {
+		$this->layout = 'main-member';
+        $model = $this->findModel($id);
+		if($confurl){
+			return $this->render('invoice-view', [
+				'model' => $model
+			]);
+		}
+        
+    }
+	
 	public function actionProfile($confurl=null)
     {
 		$this->layout = 'main-member';
@@ -403,7 +415,7 @@ class MemberController extends Controller
     }
 
 	protected function clean($string){
-        $allowed = ['paper'];
+        $allowed = ['paper', 'payment'];
         
         foreach($allowed as $a){
             if($string == $a){

@@ -5,6 +5,8 @@ ALTER TABLE `conf_paper` ADD `abstract_at` DATETIME NOT NULL AFTER `updated_at`,
 ALTER TABLE `conf_paper` ADD `invoice_ts` INT NOT NULL AFTER `full_paper_at`, ADD `invoice_amount` DOUBLE NOT NULL AFTER `invoice_ts`;
 ALTER TABLE `conf_paper` ADD `invoice_currency` VARCHAR(5) NOT NULL AFTER `invoice_amount`;
 ALTER TABLE `conf_paper` ADD `reject_note` TEXT NOT NULL AFTER `invoice_currency`, ADD `reject_at` DATETIME NOT NULL AFTER `reject_note`;
+ALTER TABLE `conf_paper` ADD `payment_at` DATETIME NOT NULL AFTER `reject_at`, ADD `payment_info` VARCHAR(200) NOT NULL AFTER `payment_at`;
+ALTER TABLE `conf_paper` ADD `payment_file` TEXT NOT NULL AFTER `payment_info`;
 =============conference workflow ================
 registration participant
 submit abstract

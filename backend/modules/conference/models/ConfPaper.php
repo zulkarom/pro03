@@ -24,6 +24,7 @@ use yii\helpers\Html;
 class ConfPaper extends \yii\db\ActiveRecord
 {
 	public $paper_instance;
+	public $payment_instance;
 	public $file_controller;
 	public $form_abstract_only = 1;
 	public $abstract_decide = 1;
@@ -54,8 +55,9 @@ class ConfPaper extends \yii\db\ActiveRecord
 			
 			[['invoice_amount'], 'number'],
 			
-            [['pap_title', 'pap_abstract', 'paper_file', 'invoice_currency', 'reject_note'], 'string'],
-            [['created_at', 'reject_at'], 'safe'],
+            [['pap_title', 'pap_abstract', 'paper_file', 'invoice_currency', 'reject_note', 'payment_file', 'payment_info'], 'string'],
+			
+            [['created_at', 'reject_at', 'payment_at'], 'safe'],
 			
             [['conf_id'], 'exist', 'skipOnError' => true, 'targetClass' => Conference::className(), 'targetAttribute' => ['conf_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -63,6 +65,10 @@ class ConfPaper extends \yii\db\ActiveRecord
 			[['paper_file'], 'required', 'on' => 'paper_upload'],
             [['paper_instance'], 'file', 'skipOnEmpty' => true, 'extensions' => 'doc, docx', 'maxSize' => 5000000],
             [['updated_at'], 'required', 'on' => 'paper_delete'],
+			
+			[['payment_file'], 'required', 'on' => 'payment_upload'],
+            [['payment_instance'], 'file', 'skipOnEmpty' => true, 'extensions' => 'pdf,jpg,jpeg,png,gif', 'maxSize' => 5000000],
+            [['updated_at'], 'required', 'on' => 'payment_delete'],
         ];
     }
 
@@ -82,7 +88,8 @@ class ConfPaper extends \yii\db\ActiveRecord
             'paper_file' => 'Upload Full Paper',
             'created_at' => 'Created At',
 			'form_abstract_only' => 'Choose One:',
-			'myrole' => 'My Role'
+			'myrole' => 'My Role',
+			'payment_file' => 'Payment Evidence File'
         ];
     }
 

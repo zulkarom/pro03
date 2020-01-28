@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						$status = $model->status;
 						switch($status){
 							case 80:
-							return Html::a('ACCEPTANCE LETTER <br />& INVOICE',['paper/invoice/', 'conf' => $model->conf_id, 'id' => $model->id],['class'=>'btn btn-info btn-sm']);
+							return Html::a('ACCEPTANCE LETTER <br />& INVOICE',['paper/invoice-view/', 'conf' => $model->conf_id, 'id' => $model->id],['class'=>'btn btn-info btn-sm']);
 							break;
 							
 							

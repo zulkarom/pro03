@@ -7,7 +7,7 @@ use backend\modules\conference\models\ConfPaper;
 use confsite\models\ConfPaperSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * PaperController implements the CRUD actions for ConfPaper model.
@@ -17,17 +17,22 @@ class PaperController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
+
+	public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
     }
+
 
     /**
      * Lists all ConfPaper models.
