@@ -49,6 +49,8 @@ class ConfPaper extends \yii\db\ActiveRecord
 			
 			[['conf_id', 'user_id', 'pap_title', 'pap_abstract', 'created_at', 'status', 'paper_file', 'keyword', 'myrole'], 'required', 'on' => 'fullpaper'],
 			
+			[['payment_info', 'payment_at'], 'required', 'on' => 'payment'],
+			
 			[['abstract_decide'], 'required', 'on' => 'abstract_decide'],
 			
             [['conf_id', 'user_id', 'status', 'form_abstract_only', 'abstract_decide', 'invoice_ts', 'myrole'], 'integer'],
@@ -89,7 +91,7 @@ class ConfPaper extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
 			'form_abstract_only' => 'Choose One:',
 			'myrole' => 'My Role',
-			'payment_file' => 'Payment Evidence File'
+			'payment_file' => 'Payment Evidence File (optional)'
         ];
     }
 
@@ -156,6 +158,7 @@ class ConfPaper extends \yii\db\ActiveRecord
 			70 => 'PAPER CORRECTION',
 			80 => 'PAPER ACCEPTED',
 			90 => 'PAYMENT SUBMITTED',
+			93 => 'PAYMENT DISAPPROVED',
 			95 => 'PAYMENT APPROVED',
 			100 => 'COMPLETE',
 			

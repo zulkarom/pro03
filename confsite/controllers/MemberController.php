@@ -13,6 +13,8 @@ use common\models\Model;
 use backend\modules\conference\models\ConfPaper;
 use backend\modules\conference\models\ConfAuthor;
 use backend\modules\conference\models\Conference;
+use backend\modules\conference\models\pdf\InvoicePdf;
+use backend\modules\conference\models\pdf\AcceptLetterPdf;
 use confsite\models\UploadFile;
 use confsite\models\ConfPaperSearch;
 
@@ -100,7 +102,21 @@ class MemberController extends Controller
     {
 		$this->layout = 'main-member';
         $model = $this->findModel($id);
+		$model->scenario = 'payment';
 		if($confurl){
+			
+			if ($model->load(Yii::$app->request->post())) {
+			$model->payment_at = new Expression('NOW()');
+			$model->status = 90;
+			
+			if($model->save()){
+				Yii::$app->session->addFlash('success', "Thank you for your payment, please wait while the organizer reviews your payment.");
+				return $this->redirect(['member/paper', 'confurl' => $confurl]);
+			}
+			
+			}
+			
+			
 			return $this->render('invoice-view', [
 				'model' => $model
 			]);
@@ -466,6 +482,21 @@ class MemberController extends Controller
         
         UploadFile::download($model, $attr, $filename);
     }
+	
+	public function actionAcceptLetterPdf($id){
+		$model = $this->findModel($id);
+		$pdf = new AcceptLetterPdf;
+		$pdf->model = $model;
+		$pdf->generatePdf();
+	}
+	
+	public function actionInvoicePdf($id){
+		$model = $this->findModel($id);
+		$pdf = new InvoicePdf;
+		$pdf->model = $model;
+		$pdf->generatePdf();
+		
+	}
 
 
 }

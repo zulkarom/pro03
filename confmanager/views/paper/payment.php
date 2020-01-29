@@ -53,6 +53,9 @@ $this->params['breadcrumbs'][] = $this->title;
 							
 							case 90:
 							
+							return Html::a('<i class="fas fa-dollar-sign"></i> REVIEW PAYMENT',['paper/payment-view/', 'conf' => $model->conf_id, 'id' => $model->id],['class'=>'btn btn-info btn-sm']);
+							break;
+							
 						}
                         
                     }

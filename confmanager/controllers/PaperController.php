@@ -18,6 +18,7 @@ use confsite\models\UploadFile;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use common\models\Model;
+use yii\filters\AccessControl;
 
 
 /**
@@ -28,17 +29,23 @@ class PaperController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
+    
+
+	public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
     }
+
 
     /**
      * Lists all ConfPaper models.
@@ -200,6 +207,16 @@ class PaperController extends Controller
 		$model = $this->findModel($id);
 		
         return $this->render('invoice-view', [
+            'model' => $model,
+        ]);
+    }
+	
+	public function actionPaymentView($conf, $id)
+    {
+		
+		$model = $this->findModel($id);
+		
+        return $this->render('payment-view', [
             'model' => $model,
         ]);
     }

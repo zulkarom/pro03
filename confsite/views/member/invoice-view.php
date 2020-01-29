@@ -82,7 +82,7 @@ table.detail-view th {
 				'label' => 'Acceptance Letter',
 				'format' => 'raw',
 				'value' => function($model){
-					return Html::a('DOWNLOAD ACCEPTANCE LETTER', ['paper/accept-letter-pdf', 'id' => $model->id], ['class' => 'btn btn-info btn-sm','target' => '_blank']);
+					return Html::a('DOWNLOAD ACCEPTANCE LETTER', ['member/accept-letter-pdf', 'id' => $model->id], ['class' => 'btn btn-info btn-sm','target' => '_blank']);
 				}
 				
 			],
@@ -90,7 +90,7 @@ table.detail-view th {
 				'label' => 'Invoice',
 				'format' => 'raw',
 				'value' => function($model){
-					return Html::a('DOWNLOAD INVOICE', ['paper/invoice-pdf', 'id' => $model->id], ['class' => 'btn btn-info btn-sm','target' => '_blank']);
+					return Html::a('DOWNLOAD INVOICE', ['member/invoice-pdf', 'id' => $model->id], ['class' => 'btn btn-info btn-sm','target' => '_blank']);
 				}
 				
 			],

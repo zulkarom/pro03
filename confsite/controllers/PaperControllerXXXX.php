@@ -4,6 +4,7 @@ namespace confsite\controllers;
 
 use Yii;
 use backend\modules\conference\models\ConfPaper;
+use backend\modules\conference\models\Conference;
 use confsite\models\ConfPaperSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -71,15 +72,14 @@ class PaperController extends Controller
     {
 		if($confurl){
 			$model = new ConfPaper();
-			
+			$conf = $this->findConference($confurl);
 			$model->scenario = 'create';
 
 			if ($model->load(Yii::$app->request->post())) {
-				$model->conf_id = 
+				$model->conf_id = $conf->id;
 				if($model->save()){
 					return $this->redirect(['index', 'confurl' => $confurl]);
 				}
-				
 			}
 			
 			return $this->render('create', [
@@ -133,6 +133,15 @@ class PaperController extends Controller
     protected function findModel($id)
     {
         if (($model = ConfPaper::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+	
+	protected function findConference($url)
+    {
+        if (($model = Conference::findOne($id)) !== null) {
             return $model;
         }
 
