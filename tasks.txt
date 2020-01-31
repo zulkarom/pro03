@@ -1,12 +1,23 @@
-ALTER TABLE `conf_paper` ADD `status` INT NOT NULL AFTER `pap_title`;
-ALTER TABLE `conf_paper` ADD `keyword` VARCHAR(200) NOT NULL AFTER `pap_abstract`;
-ALTER TABLE `jeb_associate` ADD `phone` VARCHAR(50) NOT NULL AFTER `title`;
-ALTER TABLE `conf_paper` ADD `abstract_at` DATETIME NOT NULL AFTER `updated_at`, ADD `full_paper_at` DATETIME NOT NULL AFTER `abstract_at`;
-ALTER TABLE `conf_paper` ADD `invoice_ts` INT NOT NULL AFTER `full_paper_at`, ADD `invoice_amount` DOUBLE NOT NULL AFTER `invoice_ts`;
-ALTER TABLE `conf_paper` ADD `invoice_currency` VARCHAR(5) NOT NULL AFTER `invoice_amount`;
-ALTER TABLE `conf_paper` ADD `reject_note` TEXT NOT NULL AFTER `invoice_currency`, ADD `reject_at` DATETIME NOT NULL AFTER `reject_note`;
-ALTER TABLE `conf_paper` ADD `payment_at` DATETIME NOT NULL AFTER `reject_at`, ADD `payment_info` VARCHAR(200) NOT NULL AFTER `payment_at`;
-ALTER TABLE `conf_paper` ADD `payment_file` TEXT NOT NULL AFTER `payment_info`;
+email template =>
+report excel - pilih colum
+maklumat author - phone
+non-presenter/presenter
+meal - vege/non-vege
+
+send invitation manual
+
+accept/reject/drop
+
+overview page all columns
+
+date fixed or not => fixed
+fixed fee payment => not fixed
+
+consent - time full paper
+
+email blasting database...
+date conferencd to
+
 =============conference workflow ================
 registration participant
 submit abstract
@@ -59,6 +70,17 @@ bila direct link searc/index - dia kluar semua result
 =====================KIV===================
 registration molek firstname last name la - KIV
 ====================DONE=========================
+ALTER TABLE `conf_paper` ADD `status` INT NOT NULL AFTER `pap_title`;
+ALTER TABLE `conf_paper` ADD `keyword` VARCHAR(200) NOT NULL AFTER `pap_abstract`;
+ALTER TABLE `jeb_associate` ADD `phone` VARCHAR(50) NOT NULL AFTER `title`;
+ALTER TABLE `conf_paper` ADD `abstract_at` DATETIME NOT NULL AFTER `updated_at`, ADD `full_paper_at` DATETIME NOT NULL AFTER `abstract_at`;
+ALTER TABLE `conf_paper` ADD `invoice_ts` INT NOT NULL AFTER `full_paper_at`, ADD `invoice_amount` DOUBLE NOT NULL AFTER `invoice_ts`;
+ALTER TABLE `conf_paper` ADD `invoice_currency` VARCHAR(5) NOT NULL AFTER `invoice_amount`;
+ALTER TABLE `conf_paper` ADD `reject_note` TEXT NOT NULL AFTER `invoice_currency`, ADD `reject_at` DATETIME NOT NULL AFTER `reject_note`;
+ALTER TABLE `conf_paper` ADD `payment_at` DATETIME NOT NULL AFTER `reject_at`, ADD `payment_info` VARCHAR(200) NOT NULL AFTER `payment_at`;
+ALTER TABLE `conf_paper` ADD `payment_file` TEXT NOT NULL AFTER `payment_info`;
+
+------------------------------------
 alert kena col10 at front
 ALTER TABLE `user` ADD UNIQUE(`email`);
 login administration layout bg comel sikit

@@ -3,8 +3,6 @@
 /* @var $content string */
 use yii\helpers\Url;
 use backend\modules\conference\models\Conference;
-
-
 $conf = null;
 
 $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/myasset');
@@ -22,8 +20,8 @@ $sub = [
 	['Papers', ['paper/index', 'conf' => $confurl], 'files-o', $conf->paperCount],
 	['Important Date', ['conference/dates', 'conf' => $confurl], 'calendar', null],
 	['Downloads', ['download/index','conf' => $confurl], 'download', null],
-	['Fees', ['conference/fees', 'conf' => $confurl], 'dollar-sign', null],
-	['Tentative', ['conference/tentative', 'conf' => $confurl], 'clock', null],
+	['Fees', ['conference/fees', 'conf' => $confurl], 'dollar', null],
+	['Tentative', ['conference/tentative', 'conf' => $confurl], 'clock-o', null],
 	//['Organized By', ['site/index'], 'bank', null],
 	//['Secretariat', ['site/index'], 'phone', null]
 ];
@@ -35,147 +33,81 @@ $sub = [
 }
 
 ?>
-        <header class="header-mobile d-block d-lg-none">
-            <div class="header-mobile__bar">
-                <div class="container-fluid">
-                    <div class="header-mobile-inner">
-                        <a class="logo" href="index.html">
-                           <img src="<?=$dirAsset?>/images/icon/logo-confvalley.png" alt="CONFVALLEY" />
-                        </a>
-                        <button class="hamburger hamburger--slider" type="button">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <nav class="navbar-mobile">
-                <div class="container-fluid">
-                    <ul class="navbar-mobile__list list-unstyled">
-					
-					<?php 
-					
-					foreach($menu as $m){
-						echo '<li>
-                            <a href="'.Url::to($m[1]).'">
-                                <i class="fas fa-'.$m[2].'"></i>'.$m[0].'</a>
-                        </li>';
-					}
+        <div id="sidebar-nav" class="sidebar">
+			<div class="sidebar-scroll">
+				<nav>
+					<ul class="nav">
 					
 					
-					?>
-                      
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <!-- END HEADER MOBILE-->
-
-        <!-- MENU SIDEBAR-->
-        <aside class="menu-sidebar d-none d-lg-block">
-            <div class="logo">
-                <a href="<?=Url::to('site/index')?>">
-                   <img src="<?=$dirAsset?>/images/icon/logo-confvalley.png" alt="CONFVALLEY" />
-                </a>
-            </div>
-            <div class="menu-sidebar__content js-scrollbar1">
-                <nav class="navbar-sidebar">
-                    <ul class="list-unstyled navbar__list">
-					
-					
-					
-					<?php 
-					
-					foreach($menu as $m){
-						echo '<li>
-                            <a href="'.Url::to($m[1]).'">
-                                <i class="fas fa-'.$m[2].'"></i>'.$m[0].'</a> ';
-                        echo '</li>';
-					}
-					
-					
-					?>
-					
-					
-					<?php if(Yii::$app->getRequest()->getQueryParam('conf')){?>
-					
-					<li class="has-sub ">
-                            <a class="js-arrow open" href="#">
-                                <i class="fas fa-trophy"></i> <?=$conf->conf_abbr?>
-                                <span class="arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </span>
-                            </a>
-					<?php 
-					
-					$controller = Yii::$app->controller->id;
-					if($controller == 'paper'){
-						$showpaper = 'block';
-					}else{
-						$showpaper = 'none';
-					}
-					
-					?>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list" style="display:block">
-								<?php 
+						<li><a href="<?=Url::to(['site/index'])?>"><i class="lnr lnr-home"></i> <span>List of Conference</span></a></li>
 						
-								foreach($sub as $s){
-									if($s[0] == 'Papers'){
+						<?php if(Yii::$app->getRequest()->getQueryParam('conf')){?>
+						
+						
+						
+						
+						
+						
+						<li><a href="#" class=""> &nbsp;&nbsp; <span><u><b><?=$conf->conf_abbr?></b></u></span></a></li>
+						
+					
+						
+						
+						<?php 
+						
+						foreach($sub as $s){
+							
+								if($s[0] == 'Papers'){
 									echo '<li class="has-sub">';
 									
-									echo '<a class="js-arrow open" href="#">
-                                <i class="fas fa-clone"></i> Papers <span class="badge badge-primary">'.$s[3].'</span>  
-                                <span class="arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </span>
-                            </a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list" style="display:'.$showpaper.'">
+									echo '<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Papers <span class="badge badge-primary">'.$s[3].'</span></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>';
+									
+									
+                            echo '
+							<div id="subPages" class="collapse ">
+							<ul class="nav">
 							';
-							echo '<li><a href="'.Url::to(['paper/abstract', 'conf' => $confurl]).'"><i class="fas fa-file"></i> Abstract '.badge($conf->paperCountAbstract). '</a></li>';
-							echo '<li><a href="'.Url::to(['paper/full-paper', 'conf' => $confurl]).'"><i class="fas fa-file-alt"></i> Full Paper '.badge($conf->paperCountFullPaper). '</a></li>';
-							echo '<li><a href="'.Url::to(['paper/review', 'conf' => $confurl]).'"><i class="fas fa-search"></i> Review</a></li>';
-							echo '<li><a href="'.Url::to(['paper/payment', 'conf' => $confurl]).'"><i class="fas fa-dollar-sign"></i> Payment '.badge($conf->paperCountPayment). '</a></li>';
+							echo '<li><a href="'.Url::to(['paper/abstract', 'conf' => $confurl]).'"><i class="fa fa-file"></i> Abstract '.badge($conf->paperCountAbstract). '</a></li>';
+							echo '<li><a href="'.Url::to(['paper/full-paper', 'conf' => $confurl]).'"><i class="fa fa-file-alt"></i> Full Paper '.badge($conf->paperCountFullPaper). '</a></li>';
+							echo '<li><a href="'.Url::to(['paper/review', 'conf' => $confurl]).'"><i class="fa fa-search"></i> Review</a></li>';
+							echo '<li><a href="'.Url::to(['paper/payment', 'conf' => $confurl]).'"><i class="fa fa-dollar"></i> Payment '.badge($conf->paperCountPayment). '</a></li>';
 							echo '<li><a href=""><i class="fas fa-check"></i> Complete</a></li>';
 							
-							echo '<li><a href="'.Url::to(['paper/overwrite', 'conf' => $confurl]).'"><i class="fas fa-edit"></i> Overwrite</a></li>';
+							echo '<li><a href="'.Url::to(['paper/overwrite', 'conf' => $confurl]).'"><i class="fas fa-edit"></i> Overview Table</a></li>';
 							
-							echo '</ul>';
+							echo '</ul>
+							</div>
+							';
 									echo '</li>';
 									
 									
 									}else{
 										echo '<li>
 											<a href="'.Url::to($s[1]).'">
-												<i class="fas fa-'.$s[2].'"></i>'.$s[0].' <span class="badge badge-primary">'.$s[3].'</span></a>';
+												<i class="fa fa-'.$s[2].'"></i>'.$s[0].' </a>';
 												
 									
 										echo '</li>';
 									}
 									
+										
+									
 								}
-
-
-								
-								?>
-                                
-                            </ul>
-                        </li>
-					
-					<?php } ?>
-					
-					
-                        
 						
-                      
-                       
-                    </ul>
-                </nav>
-            </div>
-        </aside>
-        <!-- END MENU SIDEBAR-->
+						
+						?>
+						
+						<?php } ?>
+						
+						
+						
+
+						
+						
+					</ul>
+				</nav>
+			</div>
+		</div>
 
 <?php 
 

@@ -21,9 +21,11 @@ $curr = [$local => $local, $int=>$int];
 ?>
 <div class="conference-update">
 
-<div class="card">
-
-            <div class="card-body">
+<div class="panel panel-headline">
+						<div class="panel-heading">
+							<h3 class="panel-title"><?=$this->title?></h3>
+						</div>
+						<div class="panel-body">
 <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
 
 <?=$form->field($model, 'updated_at')->hiddenInput(['value' => time()])->label(false)?>

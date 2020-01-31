@@ -10,9 +10,14 @@ use yii\grid\GridView;
 $this->title = 'Submitted Abstract';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="card">
-
-            <div class="card-body"><div class="conf-paper-index">
+<div class="panel panel-headline">
+						<div class="panel-heading">
+							<h3 class="panel-title"><?=$this->title?></h3>
+						</div>
+						<div class="panel-body">
+			
+			
+			<div class="conf-paper-index">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,

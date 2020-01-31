@@ -20,15 +20,18 @@ $model->file_controller = 'conference';
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="card">
+<div class="panel panel-headline">
+						<div class="panel-heading">
+							<h3 class="panel-title"><?=$model->conf_name?></h3>
+							<p class="panel-subtitle"><a href="https://site.confvalley.com/<?=$model->conf_url?>"  target="_blank">https://site.confvalley.com/<?=$model->conf_url?></a></p>
+						</div>
+						<div class="panel-body">
+			
+			
+			
+			<div class="conference-form">
+			
 
-            <div class="card-body"><div class="conference-form">
-			
-			<div class="form-group">
-			<label>Conference Url</label>
-			<h4><a href="https://site.confvalley.com/<?=$model->conf_url?>"  target="_blank">https://site.confvalley.com/<?=$model->conf_url?></a><h4>
-			
-			</div>
 
     <?php $form = ActiveForm::begin(); ?>
 

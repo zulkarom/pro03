@@ -17,9 +17,11 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="conference-update">
 
-<div class="card">
-
-            <div class="card-body">
+<div class="panel panel-headline">
+						<div class="panel-heading">
+							<h3 class="panel-title"><?=$this->title?></h3>
+						</div>
+						<div class="panel-body">
 <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
 
 <?=$form->field($model, 'updated_at')->hiddenInput(['value' => time()])->label(false)?>
@@ -57,7 +59,7 @@ $this->params['breadcrumbs'][] = 'Update';
         <?php foreach ($dates as $i => $date): ?>
             <tr class="date-item">
                 <td class="sortable-handle text-center vcenter" style="cursor: move;">
-                        <i class="fas fa-arrows-alt"></i>
+                        <i class="fa fa-arrows-alt"></i>
                     </td>
             
                 <td class="vcenter">
