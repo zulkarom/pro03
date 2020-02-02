@@ -3,27 +3,29 @@
 /* @var $content string */
 
 use yii\helpers\Url;
+use backend\modules\conference\models\Conference;
 
 $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myasset');
-$confurl = Yii::$app->getRequest()->getQueryParam('confurl');
+$confurl = $conf->conf_url;
 
 
 
 if (Yii::$app->user->isGuest) {
     $menu = [
-	['Home', ['/site/home', 'confurl' => $confurl], 'home'],
-	['Submit Paper', ['/page/submission', 'confurl' => $confurl], 'tachometer-alt'],
-	['Login', ['/site/login', 'confurl' => $confurl], 'files-o'],
-	['Register', ['/page/register', 'confurl' => $confurl], 'table'],
-	['Contact Us', ['/page/contact', 'confurl' => $confurl], 'dollar-sign'],
+	['Home', ['/site/home', 'confurl' => $confurl], 'home', 0],
+	['Submit Paper', ['/page/submission', 'confurl' => $confurl], 'tachometer-alt', 0],
+	['Login', ['/site/login', 'confurl' => $confurl], 'files-o', 0],
+	['Register', ['/page/register', 'confurl' => $confurl], 'table', 0],
+	['Contact Us', ['/page/contact', 'confurl' => $confurl], 'dollar-sign', 0],
 ];
 }else{
 	$menu = [
-	['My Paper', ['/member/paper', 'confurl' => $confurl], 'files-o'],
-	['My Review', ['/member/review', 'confurl' => $confurl], 'files-o'],
-	['My Payment', ['/member/payment', 'confurl' => $confurl], 'table'],
-	['My Profile', ['/member/profile', 'confurl' => $confurl], 'table'],
-	['Log Out', ['/site/logout', 'confurl' => $confurl], 'table'],
+	['<i class="fa fa-files-o"></i> Paper Submission', ['/member/paper', 'confurl' => $confurl], 'files-o', $conf->myPaperCount],
+	
+	['<i class="fa fa-dollar"></i> Transaction', ['/member/payment', 'confurl' => $confurl], 'table', 0],
+	//['My Review', ['/member/review', 'confurl' => $confurl], 'files-o'],
+	['<i class="fa fa-user"></i> Profile', ['/member/profile', 'confurl' => $confurl], 'table', 0],
+	['<i class="fa fa-arrow-left"></i>  Log Out', ['/site/logout', 'confurl' => $confurl], 'table', 0],
 ];
 }
 
@@ -42,9 +44,14 @@ if (Yii::$app->user->isGuest) {
 						<?php 
 					
 					foreach($menu as $m){
+						$num = $m[3];
+						$badge = '';
+						if($num > 0){
+							$badge = ' <span class="badge badge-danger">'.$num.'</span>';
+						}
 						echo '<li>
                             <a href="'.Url::to($m[1]).'">
-                                '.$m[0].'</a>
+                                '.$m[0]. $badge . '</a>
                         </li>';
 					}
 					

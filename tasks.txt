@@ -1,3 +1,9 @@
+ALTER TABLE `conf_paper` ADD `receipt_ts` INT NOT NULL AFTER `payment_file`;
+ALTER TABLE `conf_paper` ADD `attending` TINYINT(1) NOT NULL AFTER `receipt_ts`;
+
+mintak contoh acceptance letter
+
+---------------
 email template =>
 report excel - pilih colum
 maklumat author - phone

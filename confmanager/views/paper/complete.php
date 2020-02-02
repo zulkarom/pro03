@@ -7,12 +7,17 @@ use yii\grid\GridView;
 /* @var $searchModel confmanager\models\ConfPaperSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Overwrite Papers';
+$this->title = 'Completed Papers';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="card">
-
-            <div class="card-body"><div class="conf-paper-index">
+<div class="panel panel-headline">
+						<div class="panel-heading">
+							<h3 class="panel-title"><?=$this->title?></h3>
+						</div>
+						<div class="panel-body">
+			
+			
+<div class="conf-paper-index">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,
@@ -44,8 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'visible' => false,
                 'buttons'=>[
                     'update'=>function ($url, $model) {
-						return Html::a('UPDATE',['paper/overwrite-form/', 'conf' => $model->conf_id, 'id' => $model->id],['class'=>'btn btn-warning btn-sm']);
-                        
+                        return Html::a('<span class="fa fa-eye"></span> VIEW',['paper/complete-view/', 'conf' => $model->conf_id, 'id' => $model->id],['class'=>'btn btn-warning btn-sm']);
                     }
                 ],
             

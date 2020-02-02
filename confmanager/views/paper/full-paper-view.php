@@ -15,11 +15,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="conf-paper-view">
 
-
-
-<div class="card">
-
-            <div class="card-body">    
+<div class="panel panel-headline">
+						<div class="panel-heading">
+							<h3 class="panel-title">Review Full Paper</h3>
+							<p class="panel-subtitle"><?=$this->title?></p>
+						</div>
+						<div class="panel-body">
 			<style>
 table.detail-view th {
     width:17%;
@@ -83,21 +84,25 @@ table.detail-view th {
 
 
 
-<div class="card">
-<div class="card-body">   
+<div class="panel panel-headline">
+						<div class="panel-heading">
+							<h3 class="panel-title"></h3>
+							<p class="panel-subtitle"></p>
+						</div>
+						<div class="panel-body"> 
 
 <?php 
 	
-	echo $form->field($model, 'full_paper_decide')->radioList($model->fullPaperOptions, [ 'separator' => '<br />'])->label('Choose One:');
+	echo $form->field($model, 'full_paper_decide')->radioList($model->fullPaperOptions, [ 'separator' => ''])->label('Choose One:');
 
 
 	?>
 </div>
 </div>
 
+<div class="panel panel-headline" id="con-invoice">
 
-<div class="card" id="con-invoice">
-<div class="card-body">   
+						<div class="panel-body">
 
 <div class="row">
 <div class="col-md-3">
@@ -136,9 +141,10 @@ echo $form->field($model, "invoice_currency")->dropDownList($curr);
 </div>
 </div>
 
+<div class="panel panel-headline" id="con-reject" style="display:none">
 
-<div class="card" id="con-reject" style="display:none">
-<div class="card-body">  
+						<div class="panel-body">
+ 
 
 <div class="row">
 <div class="col-md-6"><?= $form->field($model, 'reject_note')->textarea(['rows' => '3']) ?></div>

@@ -29,6 +29,7 @@ class ConfPaper extends \yii\db\ActiveRecord
 	public $form_abstract_only = 1;
 	public $abstract_decide = 1;
 	public $full_paper_decide = 1;
+	public $payment_decide = 1;
 
 
     /**
@@ -91,7 +92,10 @@ class ConfPaper extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
 			'form_abstract_only' => 'Choose One:',
 			'myrole' => 'My Role',
-			'payment_file' => 'Payment Evidence File (optional)'
+			'payment_file' => 'Payment Evidence File (optional)',
+			'payment_at' => 'Payment Submitted At',
+			'payment_info' => 'Payment Details',
+			'payment_file' => 'Uploaded Payment File'
         ];
     }
 
@@ -158,8 +162,7 @@ class ConfPaper extends \yii\db\ActiveRecord
 			70 => 'PAPER CORRECTION',
 			80 => 'PAPER ACCEPTED',
 			90 => 'PAYMENT SUBMITTED',
-			93 => 'PAYMENT DISAPPROVED',
-			95 => 'PAYMENT APPROVED',
+			95 => 'PAYMENT DISAPPROVED',
 			100 => 'COMPLETE',
 			
 		];
@@ -191,6 +194,15 @@ class ConfPaper extends \yii\db\ActiveRecord
 			1 => 'Accept Full Paper',
 			//2 => 'Review Full Paper',
 			0 => 'Reject',
+			
+		];
+	}
+	
+	public function getPaymentConfirmOptions(){
+		return [
+			1 => 'Accept Payment',
+			//2 => 'Review Full Paper',
+			0 => 'Reject Payment',
 			
 		];
 	}

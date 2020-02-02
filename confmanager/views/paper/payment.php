@@ -10,9 +10,14 @@ use yii\grid\GridView;
 $this->title = 'Accepted Full Papers';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="card">
-
-            <div class="card-body"><div class="conf-paper-index">
+<div class="panel panel-headline">
+						<div class="panel-heading">
+							<h3 class="panel-title"><?=$this->title?></h3>
+						</div>
+						<div class="panel-body">
+			
+			
+<div class="conf-paper-index">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,
@@ -47,6 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						$status = $model->status;
 						switch($status){
 							case 80:
+							case 95:
 							return Html::a('ACCEPTANCE LETTER <br />& INVOICE',['paper/invoice-view/', 'conf' => $model->conf_id, 'id' => $model->id],['class'=>'btn btn-info btn-sm']);
 							break;
 							

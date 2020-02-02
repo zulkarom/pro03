@@ -160,9 +160,21 @@ class Conference extends \yii\db\ActiveRecord
 	}
 	
 	public function getPaperCountPayment(){
-		$kira = ConfPaper::find()->where(['conf_id' => $this->id, 'status'=> [80, 90]])->count();
+		$kira = ConfPaper::find()->where(['conf_id' => $this->id, 'status'=> [80, 90, 95]])->count();
 		return $kira ? $kira : 0;
 	}
-
+	
+	public function getPaperCountComplete(){
+		$kira = ConfPaper::find()->where(['conf_id' => $this->id, 'status'=> [100]])->count();
+		return $kira ? $kira : 0;
+	}
+	
+	public function getMyPaperCount(){
+		
+		$kira = ConfPaper::find()
+		->where(['user_id' => Yii::$app->user->identity->id ,'conf_id' => $this->id])
+		->count();
+		return $kira ? $kira : 0;
+	}
 
 }

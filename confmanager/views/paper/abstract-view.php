@@ -14,11 +14,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="conf-paper-view">
 
-
-
-<div class="card">
-
-            <div class="card-body">    
+<div class="panel panel-headline">
+						<div class="panel-heading">
+							<h3 class="panel-title">Review Abstract</h3>
+							<p class="panel-subtitle"><?=$this->title?></p>
+						</div>
+						<div class="panel-body">  
 			<style>
 table.detail-view th {
     width:17%;
@@ -67,10 +68,9 @@ table.detail-view th {
 <?php $form = ActiveForm::begin(); ?>
 
 
+<div class="panel panel-headline">
 
-<div class="card">
-
-            <div class="card-body">   
+						<div class="panel-body">
 
 <?php 
 	

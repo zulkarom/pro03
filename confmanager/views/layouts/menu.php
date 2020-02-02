@@ -15,9 +15,11 @@ $menu = [
 	['List of Conference', ['site/index'], 'home', null],
 ];
 $sub = [
+	['Papers', ['paper/index', 'conf' => $confurl], 'files-o', $conf->paperCount],
 	['Website', ['conference/update', 'conf' => $confurl], 'globe', null],
 	['Registration', ['register/index', 'conf' => $confurl], 'users', $conf->userCount],
-	['Papers', ['paper/index', 'conf' => $confurl], 'files-o', $conf->paperCount],
+	
+	
 	['Important Date', ['conference/dates', 'conf' => $confurl], 'calendar', null],
 	['Downloads', ['download/index','conf' => $confurl], 'download', null],
 	['Fees', ['conference/fees', 'conf' => $confurl], 'dollar', null],
@@ -39,7 +41,7 @@ $sub = [
 					<ul class="nav">
 					
 					
-						<li><a href="<?=Url::to(['site/index'])?>"><i class="lnr lnr-home"></i> <span>List of Conference</span></a></li>
+						<li><a href="<?=Url::to(['site/index'])?>" ><i class="lnr lnr-home"></i> <span>List of Conference</span></a></li>
 						
 						<?php if(Yii::$app->getRequest()->getQueryParam('conf')){?>
 						
@@ -53,27 +55,52 @@ $sub = [
 					
 						
 						
-						<?php 
+						<?php
+						
+						$controller = Yii::$app->controller->id;
+					if($controller == 'paper'){
+							$collapse = 'collapse in';
+							$collapsed = 'active';
+							$ariaexpanded = 'aria-expanded="true"';
+						}else{
+							$collapse = 'collapse';
+							$collapsed = 'collapsed';
+							$ariaexpanded = 'aria-expanded="false"';
+						}
+						
+						$paper_menu = [
+							['Abstract', 'fa fa-file-o',  ['paper/abstract', 'conf' => $confurl], $conf->paperCountAbstract],
+							['Full Paper', 'fa fa-file', ['paper/full-paper', 'conf' => $confurl], $conf->paperCountFullPaper],
+							//['Review', 'fa fa-search', ['paper/review', 'conf' => $confurl], 0],
+							['Payment', 'fa fa-dollar', ['paper/payment', 'conf' => $confurl], $conf->paperCountPayment],
+							['Complete', 'fa fa-check', ['paper/complete', 'conf' => $confurl], $conf->paperCountComplete],
+							//['Presenter', 'fa fa-microphone', [''], 0],
+							['Overview', 'fa fa-table', ['paper/overview', 'conf' => $confurl], 0],
+							];
+						
 						
 						foreach($sub as $s){
 							
 								if($s[0] == 'Papers'){
 									echo '<li class="has-sub">';
-									
-									echo '<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Papers <span class="badge badge-primary">'.$s[3].'</span></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>';
-									
+									echo '<a href="#subPagesx" data-toggle="collapse" class="'.$collapsed.'" '.$ariaexpanded.'><i class="fa fa-files-o"></i> <span>Papers\' Flow  <span class="badge badge-primary">'.$s[3].'</span></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>';
+						
+							
 									
                             echo '
-							<div id="subPages" class="collapse ">
+							<div id="subPagesx" class="'.$collapse.'" '.$ariaexpanded.'>
 							<ul class="nav">
 							';
-							echo '<li><a href="'.Url::to(['paper/abstract', 'conf' => $confurl]).'"><i class="fa fa-file"></i> Abstract '.badge($conf->paperCountAbstract). '</a></li>';
-							echo '<li><a href="'.Url::to(['paper/full-paper', 'conf' => $confurl]).'"><i class="fa fa-file-alt"></i> Full Paper '.badge($conf->paperCountFullPaper). '</a></li>';
-							echo '<li><a href="'.Url::to(['paper/review', 'conf' => $confurl]).'"><i class="fa fa-search"></i> Review</a></li>';
-							echo '<li><a href="'.Url::to(['paper/payment', 'conf' => $confurl]).'"><i class="fa fa-dollar"></i> Payment '.badge($conf->paperCountPayment). '</a></li>';
-							echo '<li><a href=""><i class="fas fa-check"></i> Complete</a></li>';
 							
-							echo '<li><a href="'.Url::to(['paper/overwrite', 'conf' => $confurl]).'"><i class="fas fa-edit"></i> Overview Table</a></li>';
+							
+							
+							foreach($paper_menu as $pm){
+								echo '<li><a href="'.Url::to($pm[2]).'"><i class="'.$pm[1].'"></i> '.$pm[0].' '.badge($pm[3]). '</a></li>';
+							}
+							
+						
+							
+	
 							
 							echo '</ul>
 							</div>

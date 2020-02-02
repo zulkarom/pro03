@@ -11,6 +11,7 @@ use confmanager\models\AbstractSearch;
 use confmanager\models\FullPaperSearch;
 use confmanager\models\PaymentSearch;
 use confmanager\models\OverwriteSearch;
+use confmanager\models\CompleteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -75,6 +76,18 @@ class PaperController extends Controller
         ]);
     }
 	
+	public function actionComplete($conf)
+    {
+        $searchModel = new CompleteSearch();
+		$searchModel->conf_id = $conf;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('complete', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+	
 	public function actionPayment($conf)
     {
         $searchModel = new PaymentSearch();
@@ -87,13 +100,13 @@ class PaperController extends Controller
         ]);
     }
 	
-	public function actionOverwrite($conf)
+	public function actionOverview($conf)
     {
         $searchModel = new OverwriteSearch();
 		$searchModel->conf_id = $conf;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('overwrite', [
+        return $this->render('overview', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -216,6 +229,20 @@ class PaperController extends Controller
 		
 		$model = $this->findModel($id);
 		
+		if ($model->load(Yii::$app->request->post())) {
+			$option = Yii::$app->request->post('wfaction');
+			if($option == 1){
+				$model->status = 100;//paper accepted
+			}else if($option == 0){
+				$model->status = 95;//rejected
+			}
+			
+			if($model->save()){
+				return $this->redirect(['paper/payment', 'conf' => $conf]);
+			}
+            
+        }
+		
         return $this->render('payment-view', [
             'model' => $model,
         ]);
@@ -241,6 +268,30 @@ class PaperController extends Controller
         }
 		
         return $this->render('full-paper-view', [
+            'model' => $model,
+        ]);
+    }
+	
+	public function actionCompleteView($conf, $id)
+    {
+		
+		$model = $this->findModel($id);
+		
+		if ($model->load(Yii::$app->request->post())) {
+			/* $option = $model->abstract_decide;
+			if($option == 1){
+				$model->status = 80;//paper accepted
+				$model->invoice_ts = time();
+			}else if($option == 0){
+				$model->status = 10;//rejected
+			}
+			if($model->save()){
+				return $this->redirect(['paper/complete', 'conf' => $conf]);
+			} */
+            
+        }
+		
+        return $this->render('complete-view', [
             'model' => $model,
         ]);
     }
@@ -340,7 +391,7 @@ class PaperController extends Controller
     }
 	
 	protected function clean($string){
-        $allowed = ['paper'];
+        $allowed = ['paper', 'payment'];
         
         foreach($allowed as $a){
             if($string == $a){

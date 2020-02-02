@@ -35,8 +35,17 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/manager
 	<link rel="apple-touch-icon" sizes="76x76" href="<?=$dirAsset?>/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="<?=$dirAsset?>/img/favicon.png">
 </head>
+<?php
+$controller = Yii::$app->controller;
+$full = '';
+$arrow = 'left';
+if($controller->action->id == 'overview' && $controller->id == 'paper'){
+	$full = 'class="layout-fullwidth"';
+	$arrow = 'right';
+}
 
-<body>
+?>
+<body <?=$full?>>
 <?php $this->beginBody() ?>
 	<!-- WRAPPER -->
 	<div id="wrapper">
@@ -51,7 +60,7 @@ $dirAsset = Yii::$app->assetManager->getPublishedUrl('@confmanager/views/manager
 			</div>
 			<div class="container-fluid">
 				<div class="navbar-btn">
-					<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+					<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-<?=$arrow?>-circle"></i></button>
 				</div>
 				<form class="navbar-form navbar-left">
 					<div class="input-group">
