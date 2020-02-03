@@ -132,6 +132,10 @@ class ConfPaper extends \yii\db\ActiveRecord
 		return $this->hasOne(ConfFee::className(), ['id' => 'myrole']);
 	}
 	
+	public function getNiceRole(){
+		return $this->authorRole->fee_name;
+	}
+	
 	public function getAuthors()
     {
         return $this->hasMany(ConfAuthor::className(), ['paper_id' => 'id'])->orderBy('author_order ASC');
@@ -236,6 +240,10 @@ class ConfPaper extends \yii\db\ActiveRecord
 		}else{
 			return 1;
 		}
+	}
+	
+	public function getNiceAmount(){
+		return $this->invoice_currency . ' ' . number_format($this->invoice_amount, 2);
 	}
 
 

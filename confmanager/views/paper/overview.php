@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			[
 				'label' => 'Amount',
 				'value' => function($model){
-					return $model->invoice_currency . ' ' . number_format($model->invoice_amount, 2);
+					return $model->niceAmount;
 					
 				}
 				

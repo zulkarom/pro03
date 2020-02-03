@@ -32,10 +32,10 @@ $html = '
 <div align="center">
 <img src="'.$this->logo .'" /><br />
 <b style="font-size:11pt">'.$this->conf->conf_name .'</b>
-<br /><b style="font-size:9pt">'.nl2br($this->conf->conf_address).'</b>
+<br /><b style="font-size:8pt">'.nl2br($this->conf->conf_address).'</b>
 
 
-<br /><br />
+<br />
 
 <hr />
 </div>
@@ -58,15 +58,43 @@ REFERENCE: '.$this->model->paperRef .'<br />
 <br />
 <br />
 '.$this->model->user->associate->title .' '.$this->model->user->fullname .'
+<br /><br />
+'. nl2br($this->model->user->associate->assoc_address) .'
 
 
 </div>
+<br />
 
+<table border="1" cellpadding="3">
+
+<tr style="background-color:#cccccc">
+<td width="75%" align="center"><b>PAYMENT FOR</b></td><td width="25%" align="center"><b>AMOUNT</b></td>
+
+</tr>
+
+<tr>
+<td>
+
+CONFERENCE FEE: '.$this->conf->conf_name .'<br />
+PAPER ID: '.$this->model->paperRef .'<br />
+PAPER TITLE: '.$this->model->pap_title .'<br />
+USER REGISTRATION: Presenter<br />
+USER STATUS: '.$this->model->niceRole .'<br />
+PAYMENT TYPE: Bank Transfer<br />
+OTHERS: '.$this->model->paperRef .'
+
+</td><td align="center">'.$this->model->niceAmount.'</td>
+
+</tr>
+
+</table>
+<br /><br />
+Thank you for the payment.
 
 
 ';
 
-$this->pdf->SetFont('times', '', 10);
+$this->pdf->SetFont('times', '', 9.5);
 $tbl = <<<EOD
 $html
 EOD;
@@ -89,7 +117,7 @@ $this->pdf->writeHTML($tbl, true, false, false, false, '');
 		// set default monospaced font
 		$this->pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
-		$this->pdf->SetMargins(25, 0, 20);
+		$this->pdf->SetMargins(20, 0, 17);
 		//$this->pdf->SetHeaderMargin(10);
 		$this->pdf->SetFooterMargin(20);
 
