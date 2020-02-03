@@ -8,6 +8,8 @@ use backend\modules\conference\models\ConferenceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Expression;
+use yii\filters\AccessControl;
 
 /**
  * ConferenceController implements the CRUD actions for Conference model.
@@ -17,13 +19,19 @@ class ConferenceController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
+	
+	    
+
+	public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
@@ -66,7 +74,11 @@ class ConferenceController extends Controller
     {
         $model = new Conference();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+			$model->created_at = new Expression('NOW()');
+			if($model->save()){
+				
+			}
             return $this->redirect(['index']);
         }
 

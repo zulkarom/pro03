@@ -16,14 +16,9 @@ $menu = [
 ];
 $sub = [
 	['Papers', ['paper/index', 'conf' => $confurl], 'files-o', $conf->paperCount],
+	['Conference Setting', ['setting/index', 'conf' => $confurl], 'cog', null],
 	['Website', ['conference/update', 'conf' => $confurl], 'globe', null],
-	['Registration', ['register/index', 'conf' => $confurl], 'users', $conf->userCount],
-	
-	
-	['Important Date', ['conference/dates', 'conf' => $confurl], 'calendar', null],
-	['Downloads', ['download/index','conf' => $confurl], 'download', null],
-	['Fees', ['conference/fees', 'conf' => $confurl], 'dollar', null],
-	['Tentative', ['conference/tentative', 'conf' => $confurl], 'clock-o', null],
+	['Participants', ['register/index', 'conf' => $confurl], 'users', $conf->userCount],
 	//['Organized By', ['site/index'], 'bank', null],
 	//['Secretariat', ['site/index'], 'phone', null]
 ];
@@ -68,6 +63,16 @@ $sub = [
 							$ariaexpanded = 'aria-expanded="false"';
 						}
 						
+					if($controller == 'conference' or $controller == 'download'){
+							$wcollapse = 'collapse in';
+							$wcollapsed = 'active';
+							$wariaexpanded = 'aria-expanded="true"';
+						}else{
+							$wcollapse = 'collapse';
+							$wcollapsed = 'collapsed';
+							$wariaexpanded = 'aria-expanded="false"';
+						}
+						
 						$paper_menu = [
 							['Abstract', 'fa fa-file-o',  ['paper/abstract', 'conf' => $confurl], $conf->paperCountAbstract],
 							['Full Paper', 'fa fa-file', ['paper/full-paper', 'conf' => $confurl], $conf->paperCountFullPaper],
@@ -77,45 +82,61 @@ $sub = [
 							//['Presenter', 'fa fa-microphone', [''], 0],
 							['Overview', 'fa fa-table', ['paper/overview', 'conf' => $confurl], 0],
 							];
+							
+							
+						$web_menu = [
+							['Content', 'fa fa-file',  ['conference/update', 'conf' => $confurl], 0],
+							['Important Dates', 'fa fa-calendar', ['conference/dates', 'conf' => $confurl], 0],
+							['Fees & Payment', 'fa fa-dollar', ['conference/fees', 'conf' => $confurl], 0],
+							['Tentative', 'fa fa-clock-o', ['conference/tentative', 'conf' => $confurl], 0],
+							['Downloads', 'fa fa-download', ['download/index','conf' => $confurl], 0],
+							];
 						
 						
 						foreach($sub as $s){
 							
-								if($s[0] == 'Papers'){
-									echo '<li class="has-sub">';
-									echo '<a href="#subPagesx" data-toggle="collapse" class="'.$collapsed.'" '.$ariaexpanded.'><i class="fa fa-files-o"></i> <span>Papers\' Flow  <span class="badge badge-primary">'.$s[3].'</span></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>';
-						
-							
-									
+							if($s[0] == 'Papers'){
+							echo '<li class="has-sub">';
+							echo '<a href="#subPagesx" data-toggle="collapse" class="'.$collapsed.'" '.$ariaexpanded.'><i class="fa fa-files-o"></i> <span>Papers\' Flow  <span class="badge badge-primary">'.$s[3].'</span></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>';
                             echo '
 							<div id="subPagesx" class="'.$collapse.'" '.$ariaexpanded.'>
 							<ul class="nav">
 							';
-							
-							
-							
 							foreach($paper_menu as $pm){
 								echo '<li><a href="'.Url::to($pm[2]).'"><i class="'.$pm[1].'"></i> '.$pm[0].' '.badge($pm[3]). '</a></li>';
 							}
-							
-						
-							
-	
-							
 							echo '</ul>
 							</div>
 							';
-									echo '</li>';
-									
-									
-									}else{
-										echo '<li>
-											<a href="'.Url::to($s[1]).'">
-												<i class="fa fa-'.$s[2].'"></i>'.$s[0].' </a>';
-												
-									
-										echo '</li>';
-									}
+							echo '</li>';
+							
+							
+							}else if($s[0] == 'Website'){
+								
+								
+							echo '<li class="has-sub">';
+							echo '<a href="#subPagesw" data-toggle="collapse" class="'.$wcollapsed.'" '.$wariaexpanded.'><i class="fa fa-globe"></i> <span>Website </span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>';
+                            echo '
+							<div id="subPagesw" class="'.$wcollapse.'" '.$wariaexpanded.'>
+							<ul class="nav">
+							';
+							foreach($web_menu as $pm){
+								echo '<li><a href="'.Url::to($pm[2]).'"><i class="'.$pm[1].'"></i> '.$pm[0].' '.badge($pm[3]). '</a></li>';
+							}
+							echo '</ul>
+							</div>
+							';
+							echo '</li>';
+							
+							
+							}else{
+								echo '<li>
+									<a href="'.Url::to($s[1]).'">
+										<i class="fa fa-'.$s[2].'"></i>'.$s[0].' </a>';
+										
+							
+								echo '</li>';
+							}
 									
 										
 									

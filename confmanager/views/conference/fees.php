@@ -66,7 +66,7 @@ $curr = [$local => $local, $int=>$int];
         <?php foreach ($fees as $i => $fee): ?>
             <tr class="date-item">
                 <td class="sortable-handle text-center vcenter" style="cursor: move;">
-                        <i class="fas fa-arrows-alt"></i>
+                        <i class="fa fa-arrows-alt"></i>
                     </td>
             
                 <td class="vcenter">

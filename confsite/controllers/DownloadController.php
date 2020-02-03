@@ -6,7 +6,7 @@ use Yii;
 use backend\modules\conference\models\ConfDownload;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use common\models\UploadFile;
+use backend\modules\conference\models\UploadConfFile as UploadFile;
 
 /**
  * ConferenceController implements the CRUD actions for Conference model.

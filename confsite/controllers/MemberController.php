@@ -10,12 +10,14 @@ use yii\helpers\Json;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use common\models\Model;
+use common\models\User;
 use backend\modules\conference\models\ConfPaper;
 use backend\modules\conference\models\ConfAuthor;
 use backend\modules\conference\models\Conference;
 use backend\modules\conference\models\pdf\InvoicePdf;
+use backend\modules\conference\models\pdf\ReceiptPdf;
 use backend\modules\conference\models\pdf\AcceptLetterPdf;
-use confsite\models\UploadFile;
+use backend\modules\conference\models\UploadPaperFile as UploadFile;
 use confsite\models\ConfPaperSearch;
 
 /**
@@ -124,12 +126,38 @@ class MemberController extends Controller
         
     }
 	
+	public function actionCompleteView($confurl=null, $id)
+    {
+		$this->layout = 'main-member';
+        $model = $this->findModel($id);
+		if($confurl){
+			
+			return $this->render('complete-view', [
+				'model' => $model
+			]);
+		}
+        
+    }
+	
 	public function actionProfile($confurl=null)
     {
 		$this->layout = 'main-member';
 		
 		if($confurl){
+			$user = User::findOne(Yii::$app->user->identity->id);
+			
+			if ($user->load(Yii::$app->request->post()) && $user->associate->load(Yii::$app->request->post())) {
+			
+			if($user->save() && $user->associate->save()){
+				Yii::$app->session->addFlash('success', "Profile Updated");
+				return $this->redirect(['member/profile', 'confurl' => $confurl]);
+			}
+			
+			}
+			
+			
 			return $this->render('profile', [
+			'user' => $user
 			]);
 		}
         
@@ -169,6 +197,7 @@ class MemberController extends Controller
 			$model->updated_at = new Expression('NOW()');
 			$model->abstract_at = new Expression('NOW()');
 			$model->status = 30;
+			$model->confly_number = $model->nextConflyNumber();
 			$abstract_full = $model->form_abstract_only;
 
 				
@@ -477,9 +506,13 @@ class MemberController extends Controller
         $attr = $this->clean($attr);
         $model = $this->findModel($id);
         $filename = strtoupper($attr) . ' ' . Yii::$app->user->identity->fullname;
-        
-        
-        
+        UploadFile::download($model, $attr, $filename);
+    }
+	
+	public function actionDownloadConfFile($attr, $id, $identity = true){
+        $attr = $this->clean($attr);
+        $model = $this->findModel($id);
+        $filename = strtoupper($attr) . ' ' . Yii::$app->user->identity->fullname;
         UploadFile::download($model, $attr, $filename);
     }
 	
@@ -495,6 +528,23 @@ class MemberController extends Controller
 		$pdf = new InvoicePdf;
 		$pdf->model = $model;
 		$pdf->generatePdf();
+		
+	}
+	
+	public function actionReceiptPdf($id){
+		$model = $this->findModel($id);
+		$file = Yii::getAlias('@upload/' . $model->conference->logo_file);
+		$random = '';
+		$random = rand(1000000,100000000);
+		$to = 'images/logo_'.$random.'.png';
+		copy($file, $to);
+		$pdf = new ReceiptPdf;
+		$pdf->logo = $to;
+		$pdf->conf = $model->conference;
+		$pdf->model = $model;
+		$pdf->generatePdf();
+		
+		unlink($to);
 		
 	}
 

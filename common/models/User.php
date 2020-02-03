@@ -111,7 +111,7 @@ class User extends ActiveRecord implements IdentityInterface
 			['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email has already been taken'],
 			
 			[['username'], 'string', 'max' => 32],
-			[['user_image'], 'string', 'max' => 200],
+			[['user_image', 'fullname'], 'string', 'max' => 200],
             [['rawPassword'], 'string', 'min' => 6],
 			[['username'], 'string', 'min' => 5],
         ];

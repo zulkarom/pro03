@@ -32,8 +32,8 @@ class ConfRegistration extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['conf_id', 'user_id', 'reg_at'], 'required'],
-            [['conf_id', 'user_id'], 'integer'],
+            [['conf_id', 'user_id', 'reg_at', 'confly_number'], 'required'],
+            [['conf_id', 'user_id', 'confly_number'], 'integer'],
             [['reg_at'], 'safe'],
             [['conf_id'], 'exist', 'skipOnError' => true, 'targetClass' => Conference::className(), 'targetAttribute' => ['conf_id' => 'id']],
         ];
@@ -66,4 +66,14 @@ class ConfRegistration extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+	
+	
+	public function nextConflyNumber(){
+		$max = self::find()->where(['conf_id' => $this->conf_id])->max('confly_number');
+		if($max){
+			return $max + 1;
+		}else{
+			return 1;
+		}
+	}
 }

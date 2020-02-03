@@ -70,6 +70,10 @@ $this->params['breadcrumbs'][] = $this->title;
 							return Html::a('RESUBMIT PAYMENT',['member/invoice-view/', 'confurl' => $model->conference->conf_url ,'id' => $model->id],['class'=>'btn btn-info btn-sm']);
 							break;
 							
+							case 100:
+							return Html::a('VIEW',['member/complete-view/', 'confurl' => $model->conference->conf_url ,'id' => $model->id],['class'=>'btn btn-info btn-sm']);
+							break;
+							
 						}
                        
                     }

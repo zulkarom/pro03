@@ -46,7 +46,7 @@ class ConfPaper extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['conf_id', 'user_id', 'pap_title', 'pap_abstract', 'created_at', 'status', 'keyword'], 'required', 'on' => 'create'],
+            [['conf_id', 'confly_number', 'user_id', 'pap_title', 'pap_abstract', 'created_at', 'status', 'keyword'], 'required', 'on' => 'create'],
 			
 			[['conf_id', 'user_id', 'pap_title', 'pap_abstract', 'created_at', 'status', 'paper_file', 'keyword', 'myrole'], 'required', 'on' => 'fullpaper'],
 			
@@ -54,7 +54,7 @@ class ConfPaper extends \yii\db\ActiveRecord
 			
 			[['abstract_decide'], 'required', 'on' => 'abstract_decide'],
 			
-            [['conf_id', 'user_id', 'status', 'form_abstract_only', 'abstract_decide', 'invoice_ts', 'myrole'], 'integer'],
+            [['conf_id', 'user_id', 'status', 'form_abstract_only', 'abstract_decide', 'invoice_ts', 'myrole', 'confly_number'], 'integer'],
 			
 			[['invoice_amount'], 'number'],
 			
@@ -98,6 +98,12 @@ class ConfPaper extends \yii\db\ActiveRecord
 			'payment_file' => 'Uploaded Payment File'
         ];
     }
+	
+	public function getPaperRef(){
+		//str_pad($value, 8, '0', STR_PAD_LEFT);
+		$reg = $this->userRegistration;
+		return $this->conference->conf_abbr . ': ' . str_pad($reg->confly_number, 3 , '0', STR_PAD_LEFT) . '-' .  str_pad($this->confly_number, 3 , '0', STR_PAD_LEFT);
+	}
 
     /**
      * @return \yii\db\ActiveQuery
@@ -113,6 +119,13 @@ class ConfPaper extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+	
+	public function getUserRegistration()
+    {
+        return ConfRegistration::find()
+		->where(['user_id' => $this->user_id, 'conf_id' => $this->conf_id])
+		->one();
     }
 	
 	public function getAuthorRole(){
@@ -205,6 +218,24 @@ class ConfPaper extends \yii\db\ActiveRecord
 			0 => 'Reject Payment',
 			
 		];
+	}
+	
+	public function nextConflyNumber(){
+		$max = self::find()->where(['conf_id' => $this->conf_id])->max('confly_number');
+		if($max){
+			return $max + 1;
+		}else{
+			return 1;
+		}
+	}
+	
+	public function nextReceiptConflyNumber(){
+		$max = self::find()->where(['conf_id' => $this->conf_id])->max('receipt_confly_no');
+		if($max){
+			return $max + 1;
+		}else{
+			return 1;
+		}
 	}
 
 

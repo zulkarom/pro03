@@ -15,7 +15,7 @@ use confmanager\models\CompleteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use confsite\models\UploadFile;
+use backend\modules\conference\models\UploadPaperFile as UploadFile;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use common\models\Model;
@@ -109,6 +109,7 @@ class PaperController extends Controller
         return $this->render('overview', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+			'conf' => $conf
         ]);
     }
 	
@@ -161,7 +162,7 @@ class PaperController extends Controller
                     if ($flag) {
                         $transaction->commit();
 							Yii::$app->session->addFlash('success', "Paper Information is updated");
-							return $this->redirect(['paper/overwrite', 'conf'=> $conf]);
+							return $this->redirect(['paper/overview', 'conf'=> $conf]);
                     } else {
                         $transaction->rollBack();
                     }
@@ -177,7 +178,7 @@ class PaperController extends Controller
 
     }
     
-     return $this->render('overwrite-form', [
+     return $this->renderAjax('overwrite-form', [
             'model' => $model,
             'authors' => (empty($authors)) ? [new ConfAuthor] : $authors
         ]);
@@ -233,6 +234,8 @@ class PaperController extends Controller
 			$option = Yii::$app->request->post('wfaction');
 			if($option == 1){
 				$model->status = 100;//paper accepted
+				$model->receipt_ts = time();
+				$model->receipt_confly_no = $model->nextReceiptConflyNumber();
 			}else if($option == 0){
 				$model->status = 95;//rejected
 			}

@@ -18,6 +18,7 @@ use common\models\User;
 class Conference extends \yii\db\ActiveRecord
 {
 	public $banner_instance;
+	public $logo_instance;
 	public $file_controller;
 
     /**
@@ -40,7 +41,7 @@ class Conference extends \yii\db\ActiveRecord
 			
             [['conf_name', 'conf_venue'], 'string', 'max' => 200],
 			
-			 [['conf_background', 'conf_scope', 'conf_lang', 'conf_publication', 'conf_contact', 'conf_submission', 'payment_info', 'announcement', 'conf_accommodation', 'conf_award', 'conf_committee'], 'string'],
+			 [['conf_background', 'conf_scope', 'conf_lang', 'conf_publication', 'conf_contact', 'conf_submission', 'payment_info', 'announcement', 'conf_accommodation', 'conf_award', 'conf_committee', 'conf_address'], 'string'],
 			 
 			 [['currency_local', 'currency_int'], 'string', 'max' => 10],
 			
@@ -51,8 +52,12 @@ class Conference extends \yii\db\ActiveRecord
 			[['user_id', 'created_by'], 'integer'],
 			
 			[['banner_file'], 'required', 'on' => 'banner_upload'],
-            [['banner_instance'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png', 'maxSize' => 2000000],
+            [['banner_instance'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 2000000],
             [['updated_at'], 'required', 'on' => 'banner_delete'],
+			
+			[['logo_file'], 'required', 'on' => 'logo_upload'],
+            [['logo_instance'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 2000000],
+            [['updated_at'], 'required', 'on' => 'logo_delete'],
         ];
     }
 
@@ -66,11 +71,13 @@ class Conference extends \yii\db\ActiveRecord
             'conf_name' => 'Conference Name',
             'conf_abbr' => 'Conference Abbr',
             'date_start' => 'Conference Date',
+			'conf_address' => 'Organizer\' Address',
             'conf_venue' => 'Conference Venue',
             'conf_url' => 'Conference Url',
 			'user_id' => 'Manager',
 			'currency_int' => 'International Currency',
 			'currency_local' => 'Local Currency',
+			'logo_file' => 'Document Logo',
 			
         ];
     }

@@ -72,7 +72,7 @@ $this->title = 'Update Tentative';
 					<div class="col-md-4">
 					<div class="form-group">&nbsp;</div>
 					
-					<button style="font-size:15px" type="button" class="remove-day btn btn-default btn-sm"><span class="fa fa-remove"></span> Remove Day</button></div>
+					<button type="button" class="remove-day btn btn-default btn-sm"><span class="fa fa-remove"></span> Remove Day</button></div>
 
 </div>
 					 
@@ -95,7 +95,7 @@ $this->title = 'Update Tentative';
 	<tfoot>
             <tr>
                 <td colspan="2">
-                <button style="font-size:15px" type="button" class="add-day btn btn-default btn-sm"><span class="fa fa-plus"></span> Add Day</button>
+                <button type="button" class="add-day btn btn-default btn-sm"><span class="fa fa-plus"></span> Add Day</button>
                 
                 </td>
              
@@ -105,7 +105,7 @@ $this->title = 'Update Tentative';
     <?php DynamicFormWidget::end(); ?>
     
     <div class="form-group">
-        <?= Html::submitButton('SIMPAN', ['class' => 'btn btn-primary', 'style' => 'font-size:19px']) ?>
+        <?= Html::submitButton('Save Tentative', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

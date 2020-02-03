@@ -38,7 +38,7 @@ class Associate extends \yii\db\ActiveRecord
 			
             [['institution'], 'string', 'max' => 200],
 			
-			[['assoc_address'], 'string'],
+			[['assoc_address', 'phone'], 'string'],
         ];
     }
 

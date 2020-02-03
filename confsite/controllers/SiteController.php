@@ -129,10 +129,16 @@ class SiteController extends Controller
 					$reg->conf_id = $conf->id;
 					$reg->user_id = Yii::$app->user->identity->id;
 					$reg->reg_at = new Expression('NOW()');
-					$reg->save();
+					$reg->confly_number = $reg->nextConflyNumber();
+					if($reg->save()){
+						Yii::$app->session->addFlash('success', "Welcome, you have been successfully registered to the conference.");
+						return $this->redirect(['member/index', 'confurl' => $confurl]);
+					}
+				}else{
+					return $this->redirect(['member/index', 'confurl' => $confurl]);
 				}
 				//check registration
-				return $this->redirect(['member/index', 'confurl' => $confurl]);
+				
 			} else {
 				return $this->render('login', [
 					'model' => $model,

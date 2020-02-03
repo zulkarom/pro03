@@ -55,7 +55,7 @@ use kartik\time\TimePicker;
                 <?= $form->field($time, "[{$indexDay}][{$indexTime}]ttf_item")->label(false)->textarea(['rows' => 3]) ?>
             </td>
             <td class="text-center vcenter" style="width: 50px;">
-                <button type="button" style="font-size:15px" class="remove-time btn btn-default btn-sm"><span class="fa fa-remove"></span></button>
+                <button type="button" class="remove-time btn btn-default btn-sm"><span class="fa fa-remove"></span></button>
             </td>
         </tr>
      <?php endforeach; ?>
@@ -64,7 +64,7 @@ use kartik\time\TimePicker;
 	<tfoot>
             <tr>
                 <td colspan="3">
-                <button style="font-size:15px" type="button" class="add-time btn btn-default btn-sm"><span class="fa fa-plus"></span> Add Activities</button>
+                <button type="button" class="add-time btn btn-default btn-sm"><span class="fa fa-plus"></span> Add Activities</button>
                 
                 </td>
              

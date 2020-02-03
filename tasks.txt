@@ -1,5 +1,9 @@
 ALTER TABLE `conf_paper` ADD `receipt_ts` INT NOT NULL AFTER `payment_file`;
 ALTER TABLE `conf_paper` ADD `attending` TINYINT(1) NOT NULL AFTER `receipt_ts`;
+ALTER TABLE `conf_reg` ADD `confly_number` INT NOT NULL AFTER `reg_at`;
+ALTER TABLE `conf_paper` ADD `confly_number` INT NOT NULL AFTER `conf_id`;
+ALTER TABLE `conf_paper` ADD `receipt_confly_no` INT NOT NULL AFTER `receipt_ts`;
+ALTER TABLE `conference` ADD `logo_file` TEXT NOT NULL AFTER `conf_venue`, ADD `conf_address` TEXT NOT NULL AFTER `logo_file`;
 
 mintak contoh acceptance letter
 

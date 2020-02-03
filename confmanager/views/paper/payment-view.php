@@ -89,7 +89,12 @@ table.detail-view th {
 				}
 				
 			],
-			'payment_at:datetime',
+			[
+				'attribute' => 'payment_at',
+				'label' => 'Submitted At',
+				'format' => 'datetime'
+				
+			],
 			'payment_info:ntext',
 			[
 				'attribute' => 'payment_file',

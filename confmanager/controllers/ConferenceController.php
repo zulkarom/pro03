@@ -11,7 +11,7 @@ use yii\filters\AccessControl;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 use yii\db\Expression;
-use common\models\UploadFile;
+use backend\modules\conference\models\UploadConfFile as UploadFile;
 use common\models\Model;
 use backend\modules\conference\models\Conference;
 use backend\modules\conference\models\ConfDate;
@@ -73,7 +73,7 @@ class ConferenceController extends Controller
 			$model->page_menu = json_encode(Yii::$app->request->post('page-menu'));
 			$model->page_featured = json_encode(Yii::$app->request->post('page-featured'));
 			if($model->save()){
-				Yii::$app->session->addFlash('success', "Data Updated");
+				Yii::$app->session->addFlash('success', "Website Content Updated");
 				return $this->redirect(['update', 'conf' => $conf]);
 			}
 			

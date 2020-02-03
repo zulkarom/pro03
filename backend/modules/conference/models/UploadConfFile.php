@@ -9,7 +9,7 @@ use yii\web\UploadedFile;
 use yii\helpers\Json;
 use yii\db\Expression;
 
-class UploadFile
+class UploadConfFile
 {
    
 	public static function fileInput($model, $attr, $image = false, $multiple = false, $redirect = false){
@@ -124,7 +124,7 @@ class UploadFile
             }",
             'progressall'=> "function (e, data) {
 				
-                var progress = parseInt(data.loaded / data.total * 100, 10);
+                var progress = parseInt(data.loaded / data.total * 99, 10);
                 $('#progress_".$attr."_".$model->id ." .progress-bar').css(
                     'width',
                     progress + '%'
@@ -140,7 +140,6 @@ class UploadFile
 
 	}
 	
-	
 	public static function upload($model, $attr, $ts = false){
 		
 		$model->scenario = $attr . '_upload';
@@ -153,14 +152,16 @@ class UploadFile
 		$model->{$instance} = $upFile;
 		$uid = uniqid(time(), true);
 		
-		$ext = $upFile->extension;
+		$year_created = date('Y', strtotime($model->created_at)) + 0 ;
 		
-		$conf = $model->conference;
-		$year_created = date('Y', strtotime($conf->created_at)) + 0 ;
+	
+		$ext = $upFile->extension;
+	
+		
 		
 		$fileName = $attr . '_' . $uid . '.' . $ext;
 		
-		$path = 'conference/' . $year_created . '/'.$conf->conf_url . '/papers/' . Yii::$app->user->identity->username .  '/' ;
+		$path = 'conference/' . $year_created . '/'.$model->conf_url . '/' . Yii::$app->user->identity->username .  '/' ;
 		
 	
 		

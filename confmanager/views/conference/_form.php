@@ -35,90 +35,12 @@ $model->file_controller = 'conference';
 
     <?php $form = ActiveForm::begin(); ?>
 
-
-    <?= $form->field($model, 'conf_name')->textInput(['maxlength' => true]) ?>
-	
-	<div class="row">
-<div class="col-md-4"><?= $form->field($model, 'conf_abbr')->textInput(['maxlength' => true])->label('Abbreviation') ?></div>
-
-<div class="col-md-4"> <?=$form->field($model, 'date_start')->widget(DatePicker::classname(), [
-    'removeButton' => false,
-    'pluginOptions' => [
-        'autoclose'=>true,
-        'format' => 'yyyy-mm-dd',
-        'todayHighlight' => true,
-        
-    ],
-    
-    
-])->label('Date Start');
-?>
-</div>
-
-<div class="col-md-4"> <?=$form->field($model, 'date_end')->widget(DatePicker::classname(), [
-    'removeButton' => false,
-    'pluginOptions' => [
-        'autoclose'=>true,
-        'format' => 'yyyy-mm-dd',
-        'todayHighlight' => true,
-        
-    ],
-    
-    
-]);
-?>
-</div>
-
-</div>
-
-    
-    <?= $form->field($model, 'conf_venue')->textInput(['maxlength' => true]) ?>
-	
-
-
-<!-- for image -->
-<?=UploadFile::fileInput($model, 'banner', true)?>
-<i>Dimensions (px) : 1349 x 316 </i>
-<br /><br />
-<div class="row">
-<div class="col-md-3">
-<?php 
-if(empty($model->currency_int)){
-	$model->currency_int = 'USD';
-}
-$arr_curr = ArrayHelper::map(Country::find()->all(), 'currency_code', 'currency_code');
-echo $form->field($model, 'currency_int')->widget(Select2::classname(), [
-    'data' => $arr_curr,
-    'language' => 'en',
-    'options' => ['multiple' =>false,'placeholder' => 'Select...'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]);
-
-?>
-
-</div>
-<div class="col-md-3"><?php echo $form->field($model, 'currency_local')->widget(Select2::classname(), [
-    'data' => $arr_curr,
-    'language' => 'en',
-    'options' => ['multiple' =>false,'placeholder' => 'Select...'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]);
-
-?></div>
-
-
-
-</div>
-
-<br />
 <div class="row">
 <div class="col-md-6">
 <div class="form-group">
-<label>MENUS</label><br />
+<label>LEFT MENU</label><br />
+* please select at least one for left menu
+<br /><br />
 <?php 
 $old_page_menu = $model->page_menu ? json_decode($model->page_menu) : [];
 
@@ -141,6 +63,8 @@ foreach($model->pages as $key=>$val){
 <div class="form-group">
 
 <label>SHOWING AT FRONT</label><br />
+* please select at least one to show at front
+<br /><br />
 <?php 
 $old_page_featured = $model->page_featured ? json_decode($model->page_featured) : [];
 foreach($model->pages as $key=>$val){

@@ -3,22 +3,22 @@
 namespace confmanager\controllers;
 
 use Yii;
-use backend\modules\conference\models\Conference;
-use backend\modules\conference\models\ConfDownload;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use backend\modules\conference\models\UploadConfFile as UploadFile;
-use common\models\Model;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 use yii\db\Expression;
+use backend\modules\conference\models\UploadConfFile as UploadFile;
+use backend\modules\conference\models\Conference;
+
 
 /**
  * ConferenceController implements the CRUD actions for Conference model.
  */
-class DownloadController extends Controller
+class SettingController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -41,68 +41,22 @@ class DownloadController extends Controller
     }
 
 
-    /**
-     * Lists all Conference models.
-     * @return mixed
-     */
     public function actionIndex($conf)
-    {
-		$model = $this->findConference($conf);
-		$downloads = $model->confDownloads;
-		
-		if(Yii::$app->request->post()){
-            if(Yii::$app->request->validateCsrfToken()){
-                $post = Yii::$app->request->post('ConfDownload');
-				if($post){
-					foreach(array_filter($post) as $pdata){
-						$id = $pdata["id"];
-						$d = $this->findModel($id);
-						$d->download_name = $pdata['download_name'];
-						$d->save();
-					}
-					return $this->redirect(['index', 'conf' => $conf]);
-				}
-				
-            }
-            
-        }
-
-	
-		return $this->render('download', [
-            'model' => $model,
-            'downloads' => $downloads
-        ]);
-    }
-
-
-    /**
-     * Updates an existing Conference model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($conf)
     {
         $model = $this->findModel($conf);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['site/index']);
+        if ($model->load(Yii::$app->request->post())) {
+			if($model->save()){
+				Yii::$app->session->addFlash('success', "Conference Setting Updated");
+				return $this->redirect(['index', 'conf' => $conf]);
+			}
+			
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
     }
-	
-	public function actionCreate($conf){
-		$model = new ConfDownload;
-		$model->scenario = 'create';
-		$model->conf_id = $conf;
-		if($model->save()){
-			return $this->redirect(['index', 'conf' => $conf]);
-		}
-	}
 	
     
 
@@ -115,34 +69,27 @@ class DownloadController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = ConfDownload::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-	
-	protected function findConference($id)
-    {
         if (($model = Conference::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+	
+	
 
 
 	public function actionUploadFile($attr, $id){
         $attr = $this->clean($attr);
         $model = $this->findModel($id);
-        $model->file_controller = 'download';
+        $model->file_controller = 'setting';
 
         return UploadFile::upload($model, $attr, 'updated_at');
 
     }
 
 	protected function clean($string){
-        $allowed = ['download'];
+        $allowed = ['banner', 'logo'];
         
         foreach($allowed as $a){
             if($string == $a){
@@ -153,13 +100,6 @@ class DownloadController extends Controller
         throw new NotFoundHttpException('Invalid Attribute');
 
     }
-	
-	public function actionDeleteRow($id, $conf){
-		$model = $this->findModel($id);
-		if($model->delete()){
-			$this->redirect(['index', 'conf' => $conf]);
-		}
-	}
 
 	public function actionDeleteFile($attr, $id)
     {
@@ -195,10 +135,10 @@ class DownloadController extends Controller
         $attr = $this->clean($attr);
         $model = $this->findModel($id);
         $filename = strtoupper($attr) . ' ' . Yii::$app->user->identity->fullname;
-        
-        
-        
         UploadFile::download($model, $attr, $filename);
     }
+
+
+
 
 }

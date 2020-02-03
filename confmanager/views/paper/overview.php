@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
+use richardfan\widget\JSRegister;
 
 /* @var $this yii\web\View */
 /* @var $searchModel confmanager\models\ConfPaperSearch */
@@ -23,7 +24,16 @@ $this->params['breadcrumbs'][] = $this->title;
         //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-			'pap_title:ntext',
+			[
+			 'attribute' => 'pap_title',
+			 'format' => 'raw',
+			 //'contentOptions' => [ 'style' => 'width: 60%;' ],
+			 'value' => function($model){
+
+					 return "<a href='#' data-toggle='modal' idx='".$model->id."' data-target='#modal-article-info'>".Html::encode($model->pap_title) ."    &nbsp;<span class='glyphicon glyphicon-pencil'></span> </a>";
+				 
+			 }
+			],
 			[
 				'attribute' => 'status',
 				'format' => 'raw',
@@ -102,9 +112,13 @@ $this->params['breadcrumbs'][] = $this->title;
 				
 			],
 			[
-				'label' => 'Attending',
+				'label' => 'Presenter',
 				'value' => function($model){
-					return '';
+					if($model->attending == 0){
+						return 'NO';
+					}else{
+						return 'YES';
+					}
 				}
 				
 			],
@@ -115,3 +129,43 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 </div></div>
 </div>
+
+
+
+<div class="modal fade" id="modal-article-info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Paper Details</h4>
+      </div>
+      <div class="modal-body" id="con-info">
+	  Loading...
+		
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+	
+    </div>
+  </div>
+</div>
+
+
+
+<?php JSRegister::begin(); ?>
+<script>
+$('#modal-article-info').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) ;
+  var manuscript = button.attr('idx') ;
+  var modal = $(this);
+  modal.find('#con-info').load("<?=Url::to(['paper/overwrite-form', 'conf' => $conf, 'id' => ''])?>" + manuscript);
+});
+
+$('body').on('hidden.bs.modal', '.modal', function () {
+  $(this).removeData('bs.modal');
+});
+
+</script>
+<?php JSRegister::end(); ?>
