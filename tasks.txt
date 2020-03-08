@@ -1,9 +1,49 @@
-ALTER TABLE `conf_paper` ADD `receipt_ts` INT NOT NULL AFTER `payment_file`;
-ALTER TABLE `conf_paper` ADD `attending` TINYINT(1) NOT NULL AFTER `receipt_ts`;
-ALTER TABLE `conf_reg` ADD `confly_number` INT NOT NULL AFTER `reg_at`;
-ALTER TABLE `conf_paper` ADD `confly_number` INT NOT NULL AFTER `conf_id`;
-ALTER TABLE `conf_paper` ADD `receipt_confly_no` INT NOT NULL AFTER `receipt_ts`;
-ALTER TABLE `conference` ADD `logo_file` TEXT NOT NULL AFTER `conf_venue`, ADD `conf_address` TEXT NOT NULL AFTER `logo_file`;
+ALTER TABLE `conference` ADD `payment_info_inv` TEXT NOT NULL AFTER `payment_info`;
+
+CREATE TABLE `conf_date_name` (
+  `id` int(11) NOT NULL,
+  `date_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+INSERT INTO `conf_date_name` (`id`, `date_name`) VALUES
+(1, 'Abstract Deadline'),
+(2, 'Abstract Acceptance Notification'),
+(3, 'Full Paper Deadline'),
+(4, 'Acceptance Notification'),
+(5, 'Early Bird Deadline'),
+(6, 'Camera-ready Paper Deadline'),
+(7, 'Payment Deadline'),
+(8, 'Participant Registration Deadline');
+
+
+ALTER TABLE `conf_date_name`
+  ADD PRIMARY KEY (`id`);
+
+
+ALTER TABLE `conf_date_name`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+
+ALTER TABLE `conf_date` ADD `date_id` INT NOT NULL AFTER `conf_id`;
+
+ALTER TABLE `conf_paper` ADD `invoice_final` DOUBLE NOT NULL AFTER `invoice_amount`;
+
+ALTER TABLE `conf_paper` ADD `payment_amount` DOUBLE NOT NULL AFTER `payment_at`;
+
+ALTER TABLE `conf_paper` ADD `invoice_confly_no` INT NOT NULL AFTER `invoice_currency`;
+
+ALTER TABLE `conf_paper` ADD `invoice_early` DOUBLE NOT NULL AFTER `invoice_final`;
+
+ALTER TABLE `conf_paper` ADD `fp_accept_ts` INT NOT NULL AFTER `full_paper_at`;
+
+ALTER TABLE `conference` ADD `phone_contact` VARCHAR(100) NOT NULL AFTER `page_menu`, ADD `email_contact` VARCHAR(100) NOT NULL AFTER `phone_contact`;
+
+ALTER TABLE `conference` ADD `fax_contact` VARCHAR(100) NOT NULL AFTER `email_contact`;
+
+
+
+org masuk login, page register dulu
 
 mintak contoh acceptance letter
 

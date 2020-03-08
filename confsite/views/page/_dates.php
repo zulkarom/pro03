@@ -13,11 +13,14 @@ if($dates){
 		</thead>
 	';
 	foreach($dates as $date){
-		echo '<tr>';
-			echo '<td>' . $date->date_name . '</td>';
+		if($date->published == 1){
+				echo '<tr>';
+			echo '<td>' . $date->dateName->date_name . '</td>';
 			echo '<td> <i class="fa fa-calendar"></i> ' . date('d F Y', strtotime($date->date_start)) . '</td>';
 			
 		echo '</tr>';
+		}
+	
 	}
 	echo '</table>';
 }

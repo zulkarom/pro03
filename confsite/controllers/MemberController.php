@@ -525,9 +525,18 @@ class MemberController extends Controller
 	
 	public function actionInvoicePdf($id){
 		$model = $this->findModel($id);
+		$file = Yii::getAlias('@upload/' . $model->conference->logo_file);
+		$random = '';
+		$random = rand(1000000,100000000);
+		$to = 'images/logo_'.$random.'.png';
+		copy($file, $to);
 		$pdf = new InvoicePdf;
+		$pdf->logo = $to;
+		$pdf->conf = $model->conference;
 		$pdf->model = $model;
 		$pdf->generatePdf();
+		
+		unlink($to);
 		
 	}
 	

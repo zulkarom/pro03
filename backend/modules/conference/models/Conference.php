@@ -4,6 +4,7 @@ namespace backend\modules\conference\models;
 
 use Yii;
 use common\models\User;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "conference".
@@ -41,13 +42,17 @@ class Conference extends \yii\db\ActiveRecord
 			
             [['conf_name', 'conf_venue'], 'string', 'max' => 200],
 			
-			 [['conf_background', 'conf_scope', 'conf_lang', 'conf_publication', 'conf_contact', 'conf_submission', 'payment_info', 'announcement', 'conf_accommodation', 'conf_award', 'conf_committee', 'conf_address'], 'string'],
+			 [['conf_background', 'conf_scope', 'conf_lang', 'conf_publication', 'conf_contact', 'conf_submission', 'payment_info', 'announcement', 'conf_accommodation', 'conf_award', 'conf_committee', 'conf_address', 'payment_info_inv', 'phone_contact', 'email_contact', 'fax_contact'], 'string'],
 			 
 			 [['currency_local', 'currency_int'], 'string', 'max' => 10],
 			
             [['conf_abbr'], 'string', 'max' => 50],
             [['conf_url'], 'string', 'max' => 100],
+			
 			[['conf_url'], 'unique'],
+            [['conf_abbr'], 'unique'],
+			
+			[['email_contact'], 'unique'],
 			
 			[['user_id', 'created_by'], 'integer'],
 			
@@ -71,13 +76,17 @@ class Conference extends \yii\db\ActiveRecord
             'conf_name' => 'Conference Name',
             'conf_abbr' => 'Conference Abbr',
             'date_start' => 'Conference Date',
-			'conf_address' => 'Organizer\' Address',
+			'conf_address' => 'Organizer\'s Address',
+			'phone_contact' => 'Organizer\'s Phone',
+			'email_contact' => 'Organizer\'s Email',
+			'fax_contact' => 'Organizer\'s Fax',
             'conf_venue' => 'Conference Venue',
             'conf_url' => 'Conference Url',
 			'user_id' => 'Manager',
 			'currency_int' => 'International Currency',
 			'currency_local' => 'Local Currency',
-			'logo_file' => 'Document Logo',
+			'logo_file' => 'Invoice/Receipt Logo',
+			'payment_info_inv' => 'Invoice Payment Info',
 			
         ];
     }
@@ -91,6 +100,59 @@ class Conference extends \yii\db\ActiveRecord
 			return date('d M Y', strtotime($this->date_start));
 		}else{
 			return date('d M Y', strtotime($this->date_end)) . $sep . date('d M Y', strtotime($this->date_end));
+		}
+	}
+	
+	public function getConferenceDateRange($long = false){
+		$start = $this->date_start;
+		$end = $this->date_end;
+		if($end == '0000-00-00' or $start == $end){
+			if($long){
+				return date('d F Y', strtotime($start));
+			}else{
+				return date('d M Y', strtotime($start));
+			}
+			
+		}else{
+			if($long){
+				return $this->dateFormatTwo($start, $end, true);
+			}else{
+				return $this->dateFormatTwo($start, $end);
+			}
+			
+		}
+	}
+	
+	private function dateFormatTwo($date1, $date2, $long = false){
+		$day1 = date('j', strtotime($date1));
+		if($long){
+			$month_str1 = date('F', strtotime($date1));
+		}else{
+			$month_str1 = date('M', strtotime($date1));
+		}
+		$year1 = date('Y', strtotime($date1));
+		
+		$day2 = date('j', strtotime($date2));
+		if($long){
+			$month_str2 = date('F', strtotime($date2));
+		}else{
+			$month_str2 = date('M', strtotime($date2));
+		}
+		$year2 = date('Y', strtotime($date2));
+		
+		if($month_str1 == $month_str2){
+			if($year1 == $year2){
+				return $day1 . ' - '.$day2.' ' . $month_str1 . ' ' . $year1;
+			}else{
+				return $day1 . ' ' . $month_str1 . ' ' . $year1 . ' - '. $day2 . ' ' . $month_str2 . ' ' . $year2 ;
+			}
+			
+		}else{
+			if($year1 == $year2){
+				return $day1 . ' ' . $month_str1 . ' - '.$day2.' ' . $month_str2 . ' ' . $year1;
+			}else{
+				return $day1 . ' ' . $month_str1 . ' ' . $year1 . ' - '. $day2 . ' ' . $month_str2 . ' ' . $year2 ;
+			}
 		}
 	}
 	
@@ -182,6 +244,17 @@ class Conference extends \yii\db\ActiveRecord
 		->where(['user_id' => Yii::$app->user->identity->id ,'conf_id' => $this->id])
 		->count();
 		return $kira ? $kira : 0;
+	}
+	
+	public function getEarlyBirdDate(){
+		$find = ConfDate::find()->where(['conf_id' => $this->id, 'date_id' => 5])->one();
+		if($find){
+			return $find->date_start;
+		}
+	}
+	
+	public static function listDateNames(){
+		return ConfDateName::find()->all();
 	}
 
 }

@@ -71,55 +71,30 @@ $model->file_controller = 'setting';
 
 </div>
 
+
+
     
     <?= $form->field($model, 'conf_venue')->textInput(['maxlength' => true]) ?>
 	
-
-
-<!-- for image -->
-<?=UploadFile::fileInput($model, 'banner', true)?>
-<i>Dimensions (px) : 1349 x 316 </i>
-<br /><br />
 <div class="row">
-<div class="col-md-3">
-<?php 
-if(empty($model->currency_int)){
-	$model->currency_int = 'USD';
-}
-$arr_curr = ArrayHelper::map(Country::find()->all(), 'currency_code', 'currency_code');
-echo $form->field($model, 'currency_int')->widget(Select2::classname(), [
-    'data' => $arr_curr,
-    'language' => 'en',
-    'options' => ['multiple' =>false,'placeholder' => 'Select...'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]);
+<div class="col-md-4">
+ <?= $form->field($model, 'phone_contact')->textInput(['maxlength' => true]) ?>
+</div>
 
-?>
+<div class="col-md-4">
+ <?= $form->field($model, 'email_contact')->textInput(['maxlength' => true]) ?>
+</div>
+
+<div class="col-md-4">
+ <?= $form->field($model, 'fax_contact')->textInput(['maxlength' => true]) ?>
+</div>
 
 </div>
-<div class="col-md-3"><?php echo $form->field($model, 'currency_local')->widget(Select2::classname(), [
-    'data' => $arr_curr,
-    'language' => 'en',
-    'options' => ['multiple' =>false,'placeholder' => 'Select...'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]);
 
-?></div>
-
-
-
-</div>
 <br />
-Invoice / Receipt Information
-<hr />
-
-<?=UploadFile::fileInput($model, 'logo', true)?>
-
 <?= $form->field($model, 'conf_address')->textarea(['rows' => 5]) ?>
+<br />
+
 
     <div class="form-group">
         <?= Html::submitButton('Save Setting', ['class' => 'btn btn-success']) ?>

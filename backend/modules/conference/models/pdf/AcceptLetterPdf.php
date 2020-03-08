@@ -10,127 +10,186 @@ class AcceptLetterPdf
 {
 	public $model;
 	public $pdf;
+	public $conf;
 	public $directoryAsset;
-	public $bhg_a_Y;
-	public $bhg_b_Y;
-	public $bhg_bstart_Y;
-	public $bhg_bstart_Y_data;
+	public $upload_dir;
+	public $logo;
 	
-	public $sum_begin_y;
-	
-	public $total_lec = 0;
-	public $total_tut = 0;
-	public $total_prac = 0;
-	public $total_hour = 0;
 	
 	public function generatePdf(){
 
-		$this->directoryAsset = Yii::$app->assetManager->getPublishedUrl('@frontend/views/myasset');
-		
 		$this->pdf = new AcceptLetterPdfStart(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-		
-		$this->writeHeaderFooter();
 		$this->startPage();
-		$this->writeLetter();
-		
-		//$this->writeTop();
-		//$this->writeDetails();
-		
-		$this->pdf->Output('letter-of-acceptance-.pdf', 'I');
+		$this->writeReceipt();
+		$this->pdf->Output('acceptance-letter-'. $this->model->invoice_confly_no .'-'.$this->conf->conf_abbr .'.pdf', 'I');
 	}
 	
-	public function writeHeaderFooter(){
-		
-	}
-
-	public function writeLetter(){
-		
-	$this->pdf->SetFont('helvetica', '', 11);
-	//$hari = date("jS \of F Y");
-	$hari = date("F j, Y");
-	
-	$authors = $this->model->authors;
-	$str = '';
-		if($authors){
-			$i = 1;
-			$total = count($authors);
-			foreach($authors as $au){
-				$br = $i == $total ? '' : '<br />';
-				$str .= $au->fullname . $br;
-			$i++;
-			}
-	}
-	$assoc = $this->model->user->associate;
-	
-	$html = '
-	<table border="0"><tr><td><div align="right"><strong>Ref: '.$this->model->id.'</strong></div></td></tr></table>
-	<p><b>'.$str.' </b><br/>
-	';
-
-	$html .= $assoc->institution
-	. '<br />' . 
-	$assoc->assoc_address . '<br/>
-	</p>
-
-	<table border="0"><tr><td><div align="right"><strong>Dated: '.$hari.'</strong></div></td></tr></table>
-
-	<strong><u>NOTIFICATION OF PAPER ACCEPTANCE </u>
-	<p>
-	Dear Sir (s)/Madam (s)</strong></p>
-
-	<table border="0"><tr><td><p style="text-align:justify">Congratulations! We are pleased to inform you that based on peer review process your submission entitled: <strong>'.$this->model->pap_title.'</strong> has been <strong>ACCEPTED</strong> for journal publication volume x issue x 20xx. </p></td></tr></table>
-
-	<p>Please complete the following steps at your earliest.</p> 
-	<ul>
-
-	<li>xxx. </li>
-	<li>xxx. </li>
-	</ul>
-
-	<p>Please feel free to contact us if you have any query through email by quoting your manuscript number. We are looking forward to welcome you in UMK.</p>
+	public function writeReceipt(){
+		$this->pdf->setY(15);
+ $this->pdf->setImageScale(1.53);
+ 
+$html = '
+<div align="center">
+<img src="'.$this->logo .'" /><br />
+<b style="font-size:11pt">'.$this->conf->conf_name .'</b>
+<br /><b style="font-size:8pt">'.nl2br($this->conf->conf_address).'</b>
 
 
-	<p>
+<br />
 
-	<p>Thank you for your submission.</p>
+<hr />
+</div>
 
-	<strong>Sincerely yours,</strong><br />
-	<br />
-	<strong>Editorial Committees </strong><br />
-	IJOEB<br />
-	Email: ijeobofficial@umk.edu.my
-	</p>
+<table border="0" cellpadding="5">
+<tr>
+
+<td width="20%">Name</td>
+<td width="2%">:</td>
+<td width="78%">{USER_NAME}</td>
+</tr>
+
+<tr>
+<td>Institution</td>
+<td>:</td>
+<td>{INSTITUTION}</td>
+</tr>
+
+<tr>
+<td>Address</td>
+<td>:</td>
+<td>
+{USER_ADDRESS}
+</td>
+</tr>
+
+<tr>
+<td>Paper ID</td>
+<td>:</td>
+<td>
+{PAPER_ID}
+</td>
+</tr>
+
+<tr>
+<td>Author</td>
+<td>:</td>
+<td>
+{AUTHOR}
+</td>
+</tr>
+
+<tr>
+<td>Co-Author</td>
+<td>:</td>
+<td>
+{CO_AUTHOR}
+</td>
+</tr>
+
+<tr>
+<td>Paper Title</td>
+<td>:</td>
+<td>
+{PAPER_TITLE}
+</td>
+</tr>
+
+<tr>
+<td>Date</td>
+<td>:</td>
+<td>
+{ACCEPT_DATE}
+</td>
+</tr>
+
+</table>
+<br /><br />
+<table cellpadding="5">
+<tr>
+<td style="border-bottom: 1px  solid #000000"><b>NOTIFICATION OF PAPER ACCEPTANCE</b></td>
+</tr>
+</table>
+<br /><br />
+<table cellpadding="5">
+<tr>
+<td>
+Dear {USER_NAME},
+<br /><br />
+On behalf of the {CONF_ABBR} Committee, we are pleased to inform you that your submitted full paper ({PAPER_ID}) entitled "{PAPER_TITLE}", has been <b><u>ACCEPTED</u></b> for the conference. Congratulation!
+<br /><br />
+You may wish to update you Presenter Name. Simply Login > My Submission > Paper Submission > Click on "EDIT".
+<br /><br />
+Please be informed that Conference Fee shall be paid by now. (Login > My Payment). Upload your proof of payment in the system after the payment is made.
+
+<br /><br />
+
+As a reminder, the {CONF_NAME} will be held on {CONF_DATE} at {CONF_VENUE}. We look forward to seeing you at the conference.
+
+<br /><br />
+
+Please be reminded that the <b>Conference Fee shall be paid 2 weeks before the conference</b>.
+
+<br /><br /><br />
+
+Again, thank you very much for your submission.
+<br /><br /><br /><br />
+Secretariat {CONF_ABBR}<br />
+Tel: {PHONE_CONTACT}<br />
+Fax: {FAX_CONTACT}<br />
+Email: {EMAIL_CONTACT}<br />
+Website: {WEBSITE}
+
+</td>
+</tr>
+</table>
+<br /><br />
+';
+
+$url = 'https://site.confvalley.com/' . $this->conf->conf_url ;
+
+$searchReplaceArray = array(
+'{USER_NAME}' => $this->model->userTitleName, 
+'{INSTITUTION}' => $this->model->user->associate->institution, 
+'{CONF_DATE}' => $this->conf->getConferenceDateRange(true), 
+'{USER_ADDRESS}' => nl2br($this->model->user->associate->assoc_address),
+'{PAPER_ID}' => $this->model->paperRef,
+'{AUTHOR}' => $this->model->firstAuthor,
+'{CO_AUTHOR}' => $this->model->getCoAuthors(', '),
+'{PAPER_TITLE}' => $this->model->pap_title,
+'{ACCEPT_DATE}' => $this->model->acceptDateStr,
+'{CONF_ABBR}' => $this->conf->conf_abbr,
+'{CONF_NAME}' => $this->conf->conf_name,
+'{CONF_VENUE}' => $this->conf->conf_venue,
+'{PHONE_CONTACT}' => $this->conf->phone_contact,
+'{EMAIL_CONTACT}' => $this->conf->email_contact,
+'{FAX_CONTACT}' => $this->conf->fax_contact,
+'{WEBSITE}' => '<a href="'.$url.'">'.$url.'</a>',
+);
+
+$html= str_replace(
+  array_keys($searchReplaceArray), 
+  array_values($searchReplaceArray), 
+  $html
+); 
 
 
-	';
 
-
+$this->pdf->SetFont('helvetica', '', 9.5);
 $tbl = <<<EOD
 $html
-
 EOD;
-
-	$this->pdf->SetMargins(PDF_MARGIN_LEFT, 10, PDF_MARGIN_RIGHT);
-	$this->pdf->writeHTML($tbl, true, false, false, false, '');
-
-
+$this->pdf->writeHTML($tbl, true, false, false, false, '');
+		
+		
 	}
-	
-	
-	
-	
-	
-	
+
 	public function startPage(){
 		// set document information
 		$this->pdf->SetCreator(PDF_CREATOR);
 		$this->pdf->SetAuthor('Administrator');
-		$this->pdf->SetTitle('LETTER OF ACCEPTANCE');
-		$this->pdf->SetSubject('LETTER OF ACCEPTANCE');
+		$this->pdf->SetTitle('ACCEPTANCE LETTER '.$this->model->id);
+		$this->pdf->SetSubject('ACCEPTANCE LETTER');
 		$this->pdf->SetKeywords('');
-
-
-
 		// set header and footer fonts
 		$this->pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 		$this->pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
@@ -138,17 +197,12 @@ EOD;
 		// set default monospaced font
 		$this->pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
-		// set margins
-		$this->pdf->SetMargins(0, 0, 0);
-		
-		$this->pdf->SetHeaderMargin(0);
-
-		 //$this->pdf->SetHeaderMargin(0, 0, 0);
-		 
-		$this->pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+		$this->pdf->SetMargins(20, 0, 17);
+		//$this->pdf->SetHeaderMargin(10);
+		$this->pdf->SetFooterMargin(20);
 
 		// set auto page breaks
-		$this->pdf->SetAutoPageBreak(TRUE, -13); //margin bottom
+		$this->pdf->SetAutoPageBreak(TRUE, 20); //margin bottom
 
 		// set image scale factor
 		$this->pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
@@ -159,11 +213,6 @@ EOD;
 			$this->pdf->setLanguageArray($l);
 		}
 
-		// ---------------------------------------------------------
-
-
-
-		// add a page
 		$this->pdf->AddPage("P");
 	}
 	

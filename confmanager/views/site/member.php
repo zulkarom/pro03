@@ -11,7 +11,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myas
 
 <div class="panel panel-headline">
 						<div class="panel-heading">
-							<h3 class="panel-title"></h3>
+							<h3 class="panel-title">
+							List of My Conference
+							</h3>
 							<p class="panel-subtitle"></p>
 						</div>
 						<div class="panel-body">
@@ -23,19 +25,37 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myas
         //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'conf_name',
+			[
+				'label' => 'Date',
+				'value' => function($model){
+					return $model->conferenceDateRange;
+				}
+				
+			],
+			[
+				'label' => 'Conference',
+				'value' => function($model){
+					return Html::encode($model->conf_name . ' (' .$model->conf_abbr . ')' );
+				}
+				
+			],
+			
+			[
+				'label' => 'Location',
+				'value' => function($model){
+					return Html::encode($model->conf_venue);
+				}
+				
+			],
             
-            'date_start:date',
-  
-
+			
             ['class' => 'yii\grid\ActionColumn',
-                 'contentOptions' => ['style' => 'width: 13%'],
+                 'contentOptions' => ['style' => 'width: 24%'],
                 'template' => '{update}',
                 //'visible' => false,
                 'buttons'=>[
                     'update'=>function ($url, $model) {
-                        return Html::a('<span class="fas fa-pencil-alt"></span> Update',['conference/update/', 'conf' => $model->id],['class'=>'btn btn-warning btn-sm']);
+                        return Html::a('<span class="fa fa-pencil"></span> Update',['setting/index/', 'conf' => $model->id],['class'=>'btn btn-info btn-sm']) . ' ' . Html::a('<span class="fa fa-globe"></span> Website',['setting/index/', 'conf' => $model->id],['target'=> '_blank', 'class'=>'btn btn-default btn-sm']);
                     },
                    
                 ],

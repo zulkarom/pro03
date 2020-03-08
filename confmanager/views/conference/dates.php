@@ -47,30 +47,37 @@ $this->params['breadcrumbs'][] = 'Update';
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th width="5%"></th>
+			<th width="1%" align="center">#</th>
                 <th>Date Label</th>
+				
                 <th width="25%">Date</th>
+				<th width="5%">Show</td>
                 <th class="text-center" style="width: 90px;">
                     
                 </th>
             </tr>
         </thead>
         <tbody class="container-items">
-        <?php foreach ($dates as $i => $date): ?>
+        <?php 
+		$no = 1;
+		foreach ($dates as $i => $date): ?>
             <tr class="date-item">
-                <td class="sortable-handle text-center vcenter" style="cursor: move;">
-                        <i class="fa fa-arrows-alt"></i>
-                    </td>
-            
-                <td class="vcenter">
+            <td style="vertical-align:middle"><?=$no?>. </td>
+                <td class="vcenter" style="vertical-align:middle">
                     <?php
                         // necessary for update action.
                         if (! $date->isNewRecord) {
                             echo Html::activeHiddenInput($date, "[{$i}]id");
                         }
                     ?>
-                    <?= $form->field($date, "[{$i}]date_name")->label(false) ?>
+                    <?php
+					if($date->dateName){
+						echo $date->dateName->date_name;
+					}
+					 ?>
                 </td>
+				
+				
                 
                 <td class="vcenter">
           
@@ -90,27 +97,22 @@ $this->params['breadcrumbs'][] = 'Update';
                     ?>
 
                 </td>
+				
+				<td>
+				
+				<?= $form->field($date, "[{$i}]published")->checkbox(['value' => '1', 'label'=> '']); ?>
+				</td>
 
                 <td class="text-center vcenter" style="width: 90px; verti">
-                    <button type="button" class="remove-date btn btn-default btn-sm"><span class="fa fa-remove"></span></button>
+                   
                 </td>
             </tr>
-         <?php endforeach; ?>
+         <?php 
+		 $no++;
+		 endforeach; ?>
         </tbody>
         
-        <tfoot>
-            <tr>
-            <td></td>
-                <td colspan="2">
-                <button type="button" class="add-date btn btn-default btn-sm"><span class="fa fa-plus"></span> New Dates</button>
-                
-                </td>
-                <td>
-                
-                
-                </td>
-            </tr>
-        </tfoot>
+
         
     </table>
     <?php DynamicFormWidget::end(); ?>
@@ -142,28 +144,9 @@ jQuery(".dynamicform_wrapper").on("afterInsert", function(e, item) {
   });          
 });
 
-var fixHelperSortable = function(e, ui) {
-    ui.children().each(function() {
-        $(this).width($(this).width());
-    });
-    return ui;
-};
-
-$(".container-items").sortable({
-    items: "tr",
-    cursor: "move",
-    opacity: 0.6,
-    axis: "y",
-    handle: ".sortable-handle",
-    helper: fixHelperSortable,
-    update: function(ev){
-        $(".dynamicform_wrapper").yiiDynamicForm("updateContainer");
-    }
-}).disableSelection();
 
 EOD;
 
-JuiAsset::register($this);
 $this->registerJs($js);
 ?>
 

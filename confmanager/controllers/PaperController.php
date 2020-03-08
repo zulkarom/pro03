@@ -258,15 +258,35 @@ class PaperController extends Controller
 		
 		if ($model->load(Yii::$app->request->post())) {
 			$option = $model->abstract_decide;
+			
 			if($option == 1){
-				$model->status = 80;//paper accepted
-				$model->invoice_ts = time();
+				$action = Yii::$app->request->post('wfaction');
+				//save?
+				if($action == 'accept'){
+					$model->status = 80;//paper accepted
+					$model->invoice_confly_no = $model->nextInvoiceConflyNumber();
+					$model->invoice_ts = time();
+					$model->fp_accept_ts = time();
+					if($model->save()){
+						Yii::$app->session->addFlash('success', "Full paper accepted & Invoice issued successfully");
+						return $this->redirect(['paper/full-paper', 'conf' => $conf]);
+					}
+				}else{
+					$model->invoice_ts = time();
+					if($model->save()){
+						Yii::$app->session->addFlash('success', "Data Updated");
+						return $this->redirect(['paper/full-paper-view', 'conf' => $conf, 'id' => $id]);
+					}
+				}
+				
+				
 			}else if($option == 0){
 				$model->status = 10;//rejected
+				if($model->save()){
+					return $this->redirect(['paper/full-paper', 'conf' => $conf]);
+				}
 			}
-			if($model->save()){
-				return $this->redirect(['paper/full-paper', 'conf' => $conf]);
-			}
+			
             
         }
 		
@@ -300,18 +320,37 @@ class PaperController extends Controller
     }
 	
 	public function actionAcceptLetterPdf($id){
+		
 		$model = $this->findModel($id);
+		$file = Yii::getAlias('@upload/' . $model->conference->logo_file);
+		$random = '';
+		$random = rand(1000000,100000000);
+		$to = 'images/logo_'.$random.'.png';
+		copy($file, $to);
 		$pdf = new AcceptLetterPdf;
+		$pdf->logo = $to;
+		$pdf->conf = $model->conference;
 		$pdf->model = $model;
 		$pdf->generatePdf();
+		
+		unlink($to);
 	}
 	
 	public function actionInvoicePdf($id){
 		
 		$model = $this->findModel($id);
+		$file = Yii::getAlias('@upload/' . $model->conference->logo_file);
+		$random = '';
+		$random = rand(1000000,100000000);
+		$to = 'images/logo_'.$random.'.png';
+		copy($file, $to);
 		$pdf = new InvoicePdf;
+		$pdf->logo = $to;
+		$pdf->conf = $model->conference;
 		$pdf->model = $model;
 		$pdf->generatePdf();
+		
+		unlink($to);
 		
 	}
 

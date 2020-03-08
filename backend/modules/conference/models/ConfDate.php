@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int $conf_id
- * @property int $date_name
+ * @property int $date_id
  * @property string $date_start
  * @property string $date_end
  * @property int $published
@@ -32,12 +32,9 @@ class ConfDate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date_name', 'date_start'], 'required'],
+            [['date_id', 'date_start'], 'required'],
 			
-            [['conf_id', 'published', 'date_order'], 'integer'],
-			
-			[['date_name'], 'string'],
-			
+            [['conf_id', 'published', 'date_order', 'date_id'], 'integer'],
 			
             [['date_start', 'date_end'], 'safe'],
 			
@@ -54,7 +51,7 @@ class ConfDate extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'conf_id' => 'Conf ID',
-            'date_name' => 'Date Name',
+            'date_id' => 'Date Name',
             'date_start' => 'Date Start',
             'date_end' => 'Date End',
             'published' => 'Published',
@@ -68,4 +65,10 @@ class ConfDate extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Conference::className(), ['id' => 'conf_id']);
     }
+	
+	public function getDateName()
+    {
+        return $this->hasOne(ConfDateName::className(), ['id' => 'date_id']);
+    }
+	
 }

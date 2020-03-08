@@ -34,6 +34,12 @@ $model->file_controller = 'conference';
 
 
     <?php $form = ActiveForm::begin(); ?>
+	
+	
+	<!-- for image -->
+<?=UploadFile::fileInput($model, 'banner', true)?>
+<i>Dimensions (px) : 1349 x 316 </i>
+<br /><br />
 
 <div class="row">
 <div class="col-md-6">

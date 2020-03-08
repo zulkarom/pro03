@@ -170,8 +170,24 @@ class ConferenceController extends Controller
 
 	public function actionDates($conf)
     {
+		for($n=1;$n<=8;$n++){
+			$kira = ConfDate::find()
+			->where(['conf_id' => $conf, 'date_id' => $n])->count();
+			if($kira == 0){
+				$date = new ConfDate;
+				$date->conf_id = $conf;
+				$date->date_id = $n;
+				$date->date_start = date('Y-m-d');
+				$date->published = 1;
+				$date->date_order = $n;
+				$date->save();
+			}
+			
+		}
 		$model = $this->findModel($conf);
 		$dates = $model->confDates;
+		
+		//kena check list
        
         if ($model->load(Yii::$app->request->post())) {
             

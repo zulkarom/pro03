@@ -54,9 +54,9 @@ class ConfPaper extends \yii\db\ActiveRecord
 			
 			[['abstract_decide'], 'required', 'on' => 'abstract_decide'],
 			
-            [['conf_id', 'user_id', 'status', 'form_abstract_only', 'abstract_decide', 'invoice_ts', 'myrole', 'confly_number'], 'integer'],
+            [['conf_id', 'user_id', 'status', 'form_abstract_only', 'abstract_decide', 'invoice_ts', 'myrole', 'confly_number', 'receipt_confly_no', 'invoice_confly_no'], 'integer'],
 			
-			[['invoice_amount'], 'number'],
+			[['invoice_amount', 'invoice_final', 'payment_amount', 'invoice_early'], 'number'],
 			
             [['pap_title', 'pap_abstract', 'paper_file', 'invoice_currency', 'reject_note', 'payment_file', 'payment_info'], 'string'],
 			
@@ -95,7 +95,9 @@ class ConfPaper extends \yii\db\ActiveRecord
 			'payment_file' => 'Payment Evidence File (optional)',
 			'payment_at' => 'Payment Submitted At',
 			'payment_info' => 'Payment Details',
-			'payment_file' => 'Uploaded Payment File'
+			'payment_file' => 'Uploaded Payment File',
+			'invoice_final' => 'Invoice Final Amount (after rounding)',
+			'invoice_early' => 'Early Bird Amount'
         ];
     }
 	
@@ -120,6 +122,10 @@ class ConfPaper extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+	
+	public function getUserTitleName(){
+		return $this->user->associate->title . ' ' . $this->user->fullname;
+	}
 	
 	public function getUserRegistration()
     {
@@ -149,6 +155,41 @@ class ConfPaper extends \yii\db\ActiveRecord
 			foreach($authors as $au){
 				$br = $i == 1 ? '' :  $break;
 				$str .= $br. Html::encode($au->fullname);
+			$i++;
+			}
+		}
+		return $str;
+	}
+	
+	public function getFirstAuthor(){
+		$authors = $this->authors;
+		$str = '';
+		if($authors){
+			$au = $authors[0];
+			$str = Html::encode($au->fullname);
+		}
+		return $str;
+	}
+	
+	public function getAcceptDateStr(){
+		$date = $this->fp_accept_ts;
+		if($date == 0){
+			return 'to_be_determined';
+		}else{
+			return date('F dS, Y', $date);
+		}
+	}
+	
+	public function getCoAuthors($break = '<br />'){
+		$authors = $this->authors;
+		$str = '';
+		if($authors){
+			$i = 1;
+			foreach($authors as $au){
+				$br = $i == 2 ? '' :  $break;
+				if($i > 1){
+					$str .= $br. Html::encode($au->fullname);
+				}
 			$i++;
 			}
 		}
@@ -235,6 +276,15 @@ class ConfPaper extends \yii\db\ActiveRecord
 	
 	public function nextReceiptConflyNumber(){
 		$max = self::find()->where(['conf_id' => $this->conf_id])->max('receipt_confly_no');
+		if($max){
+			return $max + 1;
+		}else{
+			return 1;
+		}
+	}
+	
+	public function nextInvoiceConflyNumber(){
+		$max = self::find()->where(['conf_id' => $this->conf_id])->max('invoice_confly_no');
 		if($max){
 			return $max + 1;
 		}else{

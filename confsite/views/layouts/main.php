@@ -104,11 +104,14 @@ $conf = Conference::findOne(['conf_url' => $confurl]);
 						$dates = $conf->confDates;
 						if($dates){
 							foreach($dates as $date){
-								echo '<li class="p-t-6 p-b-8 bo7">
+								if($date->published == 1){
+									echo '<li class="p-t-6 p-b-8 bo7">
 								<a href="#" class="s-text13 p-t-5 p-b-5">
-									'.$date->date_name .': <br /><strong style="margin-left:20px"><i class="fa fa-calendar"></i> '.date('d F Y', strtotime($date->date_start)) .'</strong>
+									'.$date->dateName->date_name .': <br /><strong style="margin-left:20px"><i class="fa fa-calendar"></i> '.date('d F Y', strtotime($date->date_start)) .'</strong>
 								</a>
 							</li>';
+								}
+								
 							}
 						}
 						

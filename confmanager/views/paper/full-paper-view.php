@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="panel panel-headline">
 						<div class="panel-heading">
-							<h3 class="panel-title">Review Full Paper</h3>
+							<h3 class="panel-title">View Full Paper</h3>
 							<p class="panel-subtitle"><?=$this->title?></p>
 						</div>
 						<div class="panel-body">
@@ -68,10 +68,10 @@ table.detail-view th {
 			],
 			[
 				'attribute' => 'paper_file',
-				'label' => 'Uploaded File',
+				'label' => 'Uploaded Full Paper',
 				'format' => 'raw',
 				'value' => function($model){
-					return Html::a('DOWNLOAD FILE', ['paper/download-file', 'id' => $model->id, 'attr' => 'paper'], ['target' => '_blank']);
+					return Html::a('<span class="glyphicon glyphicon-download-alt"></span> DOWNLOAD FILE', ['paper/download-file', 'id' => $model->id, 'attr' => 'paper'], ['class' => 'btn btn-default','target' => '_blank']);
 				}
 			]
   
@@ -113,8 +113,19 @@ $int = $model->conference->currency_int;
 $curr = [$local => $local, $int=>$int];
 
 if($model->myrole){
-	$model->invoice_currency = $model->authorRole->fee_currency;
-	$model->invoice_amount = $model->authorRole->fee_amount;
+	if(!$model->invoice_currency){
+		$model->invoice_currency = $model->authorRole->fee_currency;
+	}
+	if($model->invoice_amount == 0){
+		$model->invoice_amount = $model->authorRole->fee_amount;
+	}
+	if($model->invoice_final == 0){
+		$model->invoice_final = $model->authorRole->fee_amount;
+	}
+	if($model->invoice_early == 0){
+		$model->invoice_early = $model->authorRole->fee_early;
+	}
+	
 }
 
 echo $form->field($model, "invoice_currency")->dropDownList($curr);
@@ -124,18 +135,44 @@ echo $form->field($model, "invoice_currency")->dropDownList($curr);
 
 
 </div>
+
+
+
 </div>
 
 <div class="row">
 <div class="col-md-3"><?= $form->field($model, 'invoice_amount'); ?></div>
+
 </div>
+
+<div class="row">
+<div class="col-md-4"><?= $form->field($model, 'invoice_final'); ?></div>
+</div>
+
+<div class="row">
+<div class="col-md-4"><?= $form->field($model, 'invoice_early'); ?></div>
+</div>
+
+
+	
 <div class="form-group">
+<?= Html::submitButton('Save', ['class' => 'btn btn-default', 'name' => 'wfaction', 'value' => 'save'
+    ])?> 
+	
 <?= Html::submitButton('Accept Full Paper & Issue Invoice', ['class' => 'btn btn-primary', 'name' => 'wfaction', 'value' => 'accept', 'data' => [
                 'confirm' => 'Are you sure to accept this paper and issue an invoice?'
             ],
     ])?>
 
     </div>
+	
+	<div class="form-group">
+	<i>
+	<?= Html::a('<span class="glyphicon glyphicon-search"></span> Preview Invoice', ['paper/invoice-pdf', 'id' => $model->id], ['target' => '_blank'])?>   
+
+<?= Html::a('<span class="glyphicon glyphicon-search"></span> Preview Acceptance Notice', ['paper/accept-letter-pdf', 'id' => $model->id], ['target' => '_blank'])?></i>
+	
+	</div>
 	
 	
 </div>
@@ -158,11 +195,47 @@ echo $form->field($model, "invoice_currency")->dropDownList($curr);
     </div>
 	
 	
+	
 </div>
 </div>
 
 <?php ActiveForm::end(); ?>
 
+</div>
+
+<p>
+* Early Bird Date: <?=$model->conference->earlyBirdDate?><br />
+<b>* Payment Table</b></p>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Categories</th>
+        <th>Early Bird</th>
+        <th>Normal</th>
+      </tr>
+    </thead>
+    <tbody>
+	
+	<?php 
+	$fees = $model->conference->confFees;
+	if($fees ){
+		foreach($fees as $fee){
+			echo '<tr>
+        <td>'.$fee->fee_name .'</td>
+        <td>'.$fee->fee_currency .' '.$fee->fee_early .'</td>
+        <td>'.$fee->fee_currency .' '.$fee->fee_amount .'</td>
+      </tr>';
+		}
+		
+	}
+	
+	
+	?>
+      
+    </tbody>
+  </table>
 </div>
 
 

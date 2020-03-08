@@ -58,6 +58,23 @@ class SettingController extends Controller
         ]);
     }
 	
+	public function actionPayment($conf)
+    {
+        $model = $this->findModel($conf);
+
+        if ($model->load(Yii::$app->request->post())) {
+			if($model->save()){
+				Yii::$app->session->addFlash('success', "Payment Information Updated");
+				return $this->redirect(['payment', 'conf' => $conf]);
+			}
+			
+        }
+
+        return $this->render('payment', [
+            'model' => $model,
+        ]);
+    }
+	
     
 
     /**
