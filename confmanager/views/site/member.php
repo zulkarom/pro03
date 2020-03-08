@@ -55,7 +55,10 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@confsite/views/myas
                 //'visible' => false,
                 'buttons'=>[
                     'update'=>function ($url, $model) {
-                        return Html::a('<span class="fa fa-pencil"></span> Update',['setting/index/', 'conf' => $model->id],['class'=>'btn btn-info btn-sm']) . ' ' . Html::a('<span class="fa fa-globe"></span> Website',['setting/index/', 'conf' => $model->id],['target'=> '_blank', 'class'=>'btn btn-default btn-sm']);
+                        return Html::a('<span class="fa fa-pencil"></span> Update',['setting/index/', 'conf' => $model->id],['class'=>'btn btn-info btn-sm']) . ' 
+						
+						<a href="https://site.confvalley.com/'.$model->conf_url.'" target="_blank" class="btn btn-default btn-sm"><span class="fa fa-globe"></span> Website</a>
+						';
                     },
                    
                 ],
