@@ -28,8 +28,11 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@ijeob/views/myasset
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 			[
-				'attribute' => 'issue_name',
-				'label' => 'Archived Journals'
+				'attribute' => 'issue_month',
+				'label' => 'Archived Journals',
+				'value' => function($model){
+					return $model->issue_month . ' ' . $model->issue_year;
+				}
 			]
             ,
             'volume',
