@@ -90,7 +90,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@ijeob/views/myasset
 			<br /><br />
 			
 			<b>ISSN online</b><br />
-			1234-5678
+			<?=$journal->journal_issn?>
 			<br /><br />
 			4 Issues per year</td>
 			
